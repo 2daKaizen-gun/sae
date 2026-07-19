@@ -5,6 +5,11 @@
 
 - 기획: `docs/CONCEPT.md` — 무엇을 만드는가
 - **헌법: `docs/CONSTITUTION.md` — 모든 결정의 최상위 판단 기준. 코드가 헌법과 충돌하면 헌법이 이긴다.**
+- 협업 방식: `docs/collaboration.md` — 어떻게 함께 일하는가
+- 작업 사이클: `docs/workflow.md` — PCTC(Plan→Code→Test→Commit)
+- 인수인계: `docs/handoff.md` — 단계·세션 경계에서 맥락을 넘기는 템플릿 (최신 인수인계부터 이어서 시작)
+- 데이터 모델: `docs/data-model.md` — SwiftData 스키마 ERD
+- 기술 스택: `docs/tech-stack.md` — 무엇을·왜 쓰는가 (조항 근거)
 
 ## 헌법 요약
 
