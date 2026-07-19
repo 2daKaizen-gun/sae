@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"[세션 시작 리추얼 — 사용자 규칙] 어떤 작업이든 시작하기 전에 반드시 docs/CONSTITUTION.md, docs/collaboration.md, docs/workflow.md, docs/handoff.md 네 문서를 Read로 읽어라. 다 읽은 뒤 사용자에게 (1) 네 문서를 읽었음을 명시적으로 알리고 (2) handoff.md 최신 인수인계의 다음 할 일을 요약 보고한 다음, 사용자의 진행 확인(go)을 받고 나서 작업을 시작하라. 확인을 받기 전에는 코드·구현을 시작하지 말 것.\"}}'",
+            "statusMessage": "세션 시작 리추얼 로드 중…"
+          }
+        ]
+      }
+    ]
+  }
+}
