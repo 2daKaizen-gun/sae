@@ -30,5 +30,8 @@ Icon?
 fastlane/report.xml
 fastlane/screenshots/**/*.png
 
+# Claude Code (로컬 전용 설정 — 커밋하지 않음)
+.claude/settings.local.json
+
 # 기타
 *.log
