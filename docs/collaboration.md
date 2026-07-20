@@ -116,4 +116,5 @@ workflow.md       PCTC 사이클 (한 작업을 어떻게)
 handoff.md        단계 인수인계 템플릿 (맥락을 어떻게 넘기는가)
 data-model.md     데이터 모델 (SwiftData ERD)
 tech-stack.md     기술 스택 (무엇을·왜)
+score-algorithm.md 冴え度 점수 공식 (설명 가능성 — 제2조)
 ```

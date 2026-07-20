@@ -93,7 +93,7 @@
 ## 다음 작업
 
 - [ ] **1주차 — PVT 반응시간 엔진 설계** (밀리초 정밀 타이밍, HeartTruth 코드 개선)
-- [ ] 冴え度 점수 알고리즘 설계
+- [x] 冴え度 점수 알고리즘 설계 → `docs/score-algorithm.md`
 - [ ] SwiftData 스키마 + 추이 차트
 - [ ] CoreMotion 손떨림 측정
 - [ ] HealthKit HRV 연동

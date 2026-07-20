@@ -10,6 +10,7 @@
 - 인수인계: `docs/handoff.md` — 단계·세션 경계에서 맥락을 넘기는 템플릿 (최신 인수인계부터 이어서 시작)
 - 데이터 모델: `docs/data-model.md` — SwiftData 스키마 ERD
 - 기술 스택: `docs/tech-stack.md` — 무엇을·왜 쓰는가 (조항 근거)
+- 점수 알고리즘: `docs/score-algorithm.md` — 冴え度 0~100 공식·가중치·설명 로직 (제2조 설명 가능성)
 
 ## 헌법 요약
 
