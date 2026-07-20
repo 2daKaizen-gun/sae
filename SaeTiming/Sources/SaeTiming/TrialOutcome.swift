@@ -10,6 +10,15 @@ public enum TrialOutcome: Equatable {
     case falseStart
     /// 무응답 — 타임아웃까지 탭 없음. RT는 null(data-model: `reactionTimeMs` nil).
     case noResponse
+
+    /// 이 trial의 반응시간(ms). 응답(valid·lapse)만 값을 갖고, false start·무응답은 nil이다
+    /// (data-model: `reactionTimeMs`는 무응답이면 null). 집계·저장의 단일 출처.
+    public var reactionTimeMs: Double? {
+        switch self {
+        case .valid(let rt), .lapse(let rt): return rt
+        case .falseStart, .noResponse: return nil
+        }
+    }
 }
 
 /// trial 판정 로직 — 순수 함수(제1조 3항: 정확도는 테스트로 증명, "나중에 테스트" 없음).
