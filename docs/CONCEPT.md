@@ -97,6 +97,6 @@
 - [ ] SwiftData 스키마 + 추이 차트
 - [ ] CoreMotion 손떨림 측정
 - [ ] HealthKit HRV 연동
-- [ ] サエちゃん 캐릭터 페르소나 & 대사 시스템
+- [x] サエちゃん 캐릭터 페르소나 & 대사 시스템 → `docs/character-voice.md`
 - [ ] 다국어(일/영/한) String Catalog
 - [ ] (스트레치) 카메라 PPG

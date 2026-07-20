@@ -118,4 +118,5 @@ data-model.md     데이터 모델 (SwiftData ERD)
 tech-stack.md     기술 스택 (무엇을·왜)
 score-algorithm.md 冴え度 점수 공식 (설명 가능성 — 제2조)
 timing-engine.md   PVT 타이밍·보정 설계 (정확도 — 제1조)
+character-voice.md さえちゃん 페르소나·대사 (따뜻한 전달 — 제4·5조)
 ```
