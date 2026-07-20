@@ -11,6 +11,7 @@
 - 데이터 모델: `docs/data-model.md` — SwiftData 스키마 ERD
 - 기술 스택: `docs/tech-stack.md` — 무엇을·왜 쓰는가 (조항 근거)
 - 점수 알고리즘: `docs/score-algorithm.md` — 冴え度 0~100 공식·가중치·설명 로직 (제2조 설명 가능성)
+- 타이밍 엔진: `docs/timing-engine.md` — 밀리초 반응시간 측정·보정·테스트 설계 (제1조 정확도)
 
 ## 헌법 요약
 

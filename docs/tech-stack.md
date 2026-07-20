@@ -30,6 +30,7 @@
 - 고정밀 단조 시계(`mach_absolute_time` / `DispatchTime`)로 반응시간을 잰다. 벽시계(`Date`)는 표시용, 측정용 아님.
 - **터치·디스플레이 지연을 측정·보정**하고 그 값을 `PVTSession.calibrationOffsetMs`에 남긴다(제1조 2항).
 - 타이밍 루프에 애니메이션·비동기·레이아웃 같은 **불확실한 지연을 넣지 않는다**(제1조 1항).
+- 상세 설계(오차원·보정·테스트 전략)는 `docs/timing-engine.md`.
 
 ### 2. 저장 — `SwiftData`
 - 온디바이스 로컬 저장(제3조). 스키마는 `docs/data-model.md`.
