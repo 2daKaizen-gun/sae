@@ -4,7 +4,7 @@
 > 대화가 길어져 요약·압축돼도 "어디까지 했고 다음에 뭘 하는지"가 살아남게 한다(헌법 제8조 3·4항).
 > 새 세션은 진실의 원천 순서(`collaboration.md` §3)를 본 뒤, 이 파일의 **최신 인수인계**로 이어서 시작한다.
 
-- **최종 수정:** 2026-07-20
+- **최종 수정:** 2026-07-20 (Phase 1 착수 직전)
 
 ---
 
@@ -56,6 +56,41 @@
 ## 인수인계 로그 (최신이 위)
 
 <!-- 여기부터 실제 인수인계를 쌓는다. 최신 항목을 이 줄 바로 아래에 붙인다. -->
+
+## [2026-07-20] Phase 1 착수 준비 — 이슈 생성 (Mac 환경 전환)
+
+**한 줄 상태:** 다른(Windows) 컴퓨터가 force-push한 Phase 0.5 설계 문서군을 Mac에서 pull·정렬하고, **Phase 1 GitHub 이슈 #1을 영어로 생성**했다. 코드는 아직 없음 — 다음 세션에서 착수.
+
+### ✅ 완료된 것 (검증됨)
+- 원격 force-update 동기화: 로컬 고유 변경 없음 확인 후 `git reset --hard origin/main` (`feae8a2`). 로컬=원격 일치, tree clean
+- 새 설계 3문서 정독·파악: `timing-engine.md`·`score-algorithm.md`·`character-voice.md` + 영어 `README`
+- **Phase 1 이슈 #1 생성**: `Phase 1: PVT reaction-time engine` (영어, §7 틀 — Goal/Scope/Done when/Out of scope/Constitution). https://github.com/2daKaizen-gun/sae/issues/1
+- `gh` 활성계정 `2daKaizen-gun`(keyring, repo scope) 확인 — 이 레포 소유자와 일치
+- SessionStart 훅 저장·커밋 확인, 이번 세션에서 실제 발동 확인
+
+### 🔄 진행 중 (미완)
+- 없음 (이슈까지만. Phase 1 구현은 다음 세션)
+
+### ▶️ 다음 할 일 (우선순위 순)
+1. **Phase 1 구현 착수** (이슈 #1) — PCTC: Plan→Code부터. **여기부터 Xcode 필요, 현재 세션은 Mac(darwin)이라 가능**
+2. **Xcode 프로젝트 셋업**: SwiftUI 앱, min iOS 17, String Catalog(`.xcstrings`) 처음부터(제5조)
+3. **순수 타이밍 함수 + 합성 타임스탬프 테스트부터**(제1조 3항) — `rt(stimulusTs, touchTs, offset)`, lapse/false-start 분류, 시드 ISI 스케줄러. 설계는 `timing-engine.md` §8
+
+### 🧭 이번에 내린 결정 · 이유
+- **환경 전환: Windows → Mac** — handoff의 "빌드 불가" 제약이 풀림. Phase 1 실제 구현·정확도 테스트 가능
+- **이슈 먼저, 코드는 다음 세션** — §7(페이즈 시작 전 이슈)·§9(한 번에 하나씩) 준수. 사용자가 여기서 세션 종료 선택
+
+### ❓ 열린 질문 · 막힌 곳
+- 보정 상수 실측(포토다이오드)은 여전히 별도 하드웨어 필요 → 그전까지 offset "미보정" 표기(timing-engine §8-3)
+- 타임아웃 문턱·최소 유효 trial 수 등은 구현 중 확정(timing-engine·score-algorithm 열린 결정)
+
+### 🔬 검증 상태
+- **코드·테스트 없음.** 이슈·문서·동기화 상태만. 정확도 엔진 증명은 Phase 1 구현부터
+
+### 📎 관련 파일 · 커밋
+- 이슈: #1 (https://github.com/2daKaizen-gun/sae/issues/1)
+- 설계: `docs/timing-engine.md`, `docs/score-algorithm.md`, `docs/data-model.md`
+- 현재 HEAD: `feae8a2`
 
 ## [2026-07-20] Phase 0.5 — 계획 문서 보강 (설계 문서군)
 
