@@ -4,7 +4,7 @@
 > 대화가 길어져 요약·압축돼도 "어디까지 했고 다음에 뭘 하는지"가 살아남게 한다(헌법 제8조 3·4항).
 > 새 세션은 진실의 원천 순서(`collaboration.md` §3)를 본 뒤, 이 파일의 **최신 인수인계**로 이어서 시작한다.
 
-- **최종 수정:** 2026-07-20 (Phase 1 착수 직전)
+- **최종 수정:** 2026-07-21 (Phase 1 순수 코어 완료)
 
 ---
 
@@ -56,6 +56,51 @@
 ## 인수인계 로그 (최신이 위)
 
 <!-- 여기부터 실제 인수인계를 쌓는다. 최신 항목을 이 줄 바로 아래에 붙인다. -->
+
+## [2026-07-21] Phase 1 — PVT 타이밍 코어 (순수 모듈, 첫 구현)
+
+**한 줄 상태:** Mac+Xcode 환경에서 Phase 1 착수. PVT 반응시간의 **순수 코어**(`SaeTiming` Swift 패키지)를 구현하고 Swift Testing 26개로 로직 정확도를 증명, 레포 루트에 6커밋으로 나눠 드래프트 PR #2로 올렸다. **UIKit 런타임·SwiftData·앱 셸은 아직 없음 — 이슈 #1은 계속 OPEN.**
+
+### ✅ 완료된 것 (검증됨)
+- `SaeTiming` 로컬 Swift 패키지 (레포 루트, `.claude` 밖) — 순수·플랫폼 독립, `swift test`로 시뮬레이터 없이 검증
+- `ReactionTime.milliseconds` — RT=(touch−stim)×1000−offset, 부호·분수ms 보존 (timing-engine §4)
+- `TrialClassifier` — valid / lapse(>500ms) / falseStart(자극 전 탭, 음수 방지) / noResponse(타임아웃) 분류
+- `ISIScheduler` + `SeededGenerator` — 시드 고정 결정적 ISI 2~10초 (SplitMix64, 재현 가능)
+- `PVTSessionSummary` — mean/median RT · fastest10% · lapse/falseStart/noResponse 카운트 (data-model `PVTSession` 요약 필드)
+- `SessionValidator` — falseStart≥3 또는 유효 trial<5 → 무효, 사유 보존 (score-algorithm §1-3)
+- **Swift Testing 26개 그린** (5 suites): 합성 타임스탬프 주입 · 경계값(lapse 500 배타, 음수 방지, 타임아웃, 오프셋 lapse경계) · 집계(홀짝 중앙값·빈 세션·무응답 제외) · 타당도 게이트 경계
+- 환경 발견: **Xcode 26.4가 실제로 설치돼 있음.** `xcode-select`가 CLT를 가리켜 `xcodebuild`가 실패했던 것 → `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`로 sudo 없이 사용(iOS 26.4 시뮬레이터 존재). `swift test`도 이 툴체인으로
+
+### 🔄 진행 중 (미완)
+- 없음 (순수 코어는 마무리). 아래 런타임 항목은 착수 전 — **이슈 #1의 남은 Done-when**이다.
+
+### ▶️ 다음 할 일 (우선순위 순) — 전부 이슈 #1의 남은 범위
+1. **iOS 앱 Xcode 셸** — SwiftUI 앱, min iOS 17, String Catalog(`.xcstrings`) 처음부터(제5조), 로컬 `SaeTiming` 의존
+2. **타이밍 런타임 배선** — 자극 온셋=`CADisplayLink` 프레임 타임스탬프, 응답=`UITouch.timestamp` 저수준 경로(고수준 제스처 금지), ISI를 CADisplayLink로 소비 (timing-engine §3·§4·§6)
+3. **시계 계약 테스트** — `UITouch.timestamp`와 `CADisplayLink.timestamp`가 같은 단조 기준인지 (timing-engine §8-2, #1 Done-when)
+4. **SwiftData 영속화** — `PVTTrial` 원자료 + `PVTSession.displayRefreshHz`/`calibrationOffsetMs` (data-model)
+5. **온디바이스 1회 세션 end-to-end** — trial 원자료 저장까지 (#1 Done-when)
+
+### 🧭 이번에 내린 결정 · 이유
+- **"iOS 앱 + 내부 모듈" = 앱 프로젝트 + 로컬 SPM 패키지** — 정확도 엔진을 `swift test`로 시뮬레이터 없이 증명하고 측정/표현 계층을 물리적으로 분리(timing-engine §6). 순수 코어 먼저, 앱 셸은 다음 사이클
+- **테스트는 Swift Testing** (XCTest 아님) — tech-stack 우선순위
+- **기본 상수:** 타임아웃 30초 · lapse 500ms · 유효 trial 최소 5 · falseStart 무효 임계 3 — 문서 기본값 채택, 원자료 보존이라 재조정 가능(열린 결정)
+- **작업 위치를 `.claude/worktrees`→ 레포 루트로 이동** — 사용자 요청. bgIsolation 해제 플래그는 `settings.local.json`(gitignore, 미커밋)
+- **이슈 #1은 닫지 않고 OPEN 유지** — Done-when 다수(온디바이스 런타임·SwiftData·시계계약·end-to-end)가 미완. 순수 코어만 완료로 닫으면 미완을 완료로 오표기(제2조). 남은 범위를 #1에 그대로 둔다
+
+### ❓ 열린 질문 · 막힌 곳
+- PR #2 머지 시점(드래프트) — 리뷰 후. 머지해도 #1은 런타임까지 열어둠
+- 보정 상수 실측(포토다이오드)은 하드웨어 필요 → offset "미보정"(0) 유지 (timing-engine §8-3)
+- 시계 계약(§8-2)·on-device 런타임은 실기기/시뮬레이터 필요 — 다음 사이클
+
+### 🔬 검증 상태
+- **Swift Testing 26개 통과** (로직 정확도, timing-engine §8-1). Build 성공(Xcode 26.4 툴체인)
+- **미검증:** 절대 오프셋 물리 보정(§8-3, 하드웨어) · 시계 계약(§8-2, 실기기) · on-device 런타임 — 전부 다음 사이클/하드웨어
+
+### 📎 관련 파일 · 커밋
+- 코드: `SaeTiming/Sources/SaeTiming/{ReactionTime,TrialOutcome,ISIScheduler,PVTSessionSummary,SessionValidator}.swift`
+- 테스트: `SaeTiming/Tests/SaeTimingTests/*`
+- 브랜치: `phase1-timing-engine` (head `b163945`), 6커밋 / PR: #2 (draft) / 이슈: #1 (OPEN)
 
 ## [2026-07-20] Phase 1 착수 준비 — 이슈 생성 (Mac 환경 전환)
 
