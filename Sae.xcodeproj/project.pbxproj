@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		000000000000000000000012 /* SaeTiming in Frameworks */ = {isa = PBXBuildFile; productRef = 000000000000000000000011 /* SaeTiming */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		000000000000000000000005 /* Sae.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sae.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -19,6 +23,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				000000000000000000000012 /* SaeTiming in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,6 +65,9 @@
 				000000000000000000000006 /* Sae */,
 			);
 			name = Sae;
+			packageProductDependencies = (
+				000000000000000000000011 /* SaeTiming */,
+			);
 			productName = Sae;
 			productReference = 000000000000000000000005 /* Sae.app */;
 			productType = "com.apple.product-type.application";
@@ -90,6 +98,9 @@
 			);
 			mainGroup = 000000000000000000000002;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				000000000000000000000010 /* XCLocalSwiftPackageReference "SaeTiming" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 000000000000000000000003 /* Products */;
 			projectDirPath = "";
@@ -312,6 +323,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		000000000000000000000010 /* XCLocalSwiftPackageReference "SaeTiming" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = SaeTiming;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		000000000000000000000011 /* SaeTiming */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SaeTiming;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 000000000000000000000001 /* Project object */;
 }
