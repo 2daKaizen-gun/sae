@@ -24,6 +24,121 @@
         }
       }
     },
+    "timinglab.link" : {
+      "comment" : "Navigation link from the home screen to the developer timing-runtime check.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timing lab (dev)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タイミング検証（開発）"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "타이밍 검증 (개발)"
+          }
+        }
+      }
+    },
+    "timinglab.title" : {
+      "comment" : "Navigation title of the timing-runtime check screen.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timing lab"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タイミング検証"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "타이밍 검증"
+          }
+        }
+      }
+    },
+    "timinglab.run" : {
+      "comment" : "Button that re-runs the stimulus schedule on CADisplayLink.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Run again"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再実行"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다시 실행"
+          }
+        }
+      }
+    },
+    "timinglab.refresh" : {
+      "comment" : "Measured display refresh rate. %lld = hertz.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Display refresh: %lld Hz"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リフレッシュレート：%lld Hz"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "화면 주사율: %lld Hz"
+          }
+        }
+      }
+    },
+    "timinglab.onsets" : {
+      "comment" : "Count of stimulus onsets captured so far. %lld = count.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onsets captured: %lld"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "捕捉した onset：%lld"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "포착한 자극 수: %lld"
+          }
+        }
+      }
+    },
     "app.tagline" : {
       "comment" : "App tagline shown under the title on the placeholder screen.",
       "localizations" : {
