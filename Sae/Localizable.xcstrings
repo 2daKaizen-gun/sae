@@ -24,6 +24,75 @@
         }
       }
     },
+    "timinglab.tap_area" : {
+      "comment" : "Label inside the low-level touch-capture area in the timing lab.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap to capture time"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タップで時刻を捕捉"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "탭하면 시각 포착"
+          }
+        }
+      }
+    },
+    "timinglab.last_tap" : {
+      "comment" : "Shows the monotonic timestamp of the last low-level touch. %.3f = seconds.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last tap: %.3f s"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最終タップ：%.3f s"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "마지막 탭: %.3f s"
+          }
+        }
+      }
+    },
+    "timinglab.no_tap" : {
+      "comment" : "Placeholder shown before any touch has been captured.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No tap yet"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "まだタップなし"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "아직 탭 없음"
+          }
+        }
+      }
+    },
     "timinglab.link" : {
       "comment" : "Navigation link from the home screen to the developer timing-runtime check.",
       "localizations" : {
