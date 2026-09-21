@@ -4,7 +4,7 @@
 > 범위는 MVP 4주 계획(`CONCEPT.md` §7). 그 너머는 **Deferred**로 명시해 미리 만들지 않는다(헌법 제7조).
 > 모든 데이터는 **온디바이스**에 남고 서버로 보내지 않는다(제3조).
 
-- **최종 수정:** 2026-07-19
+- **최종 수정:** 2026-09-22 (Phase 1 구현 반영: `invalidReason` 추가, `stimulusAt` optional)
 - **저장소:** SwiftData (로컬)
 
 ---
@@ -39,6 +39,7 @@ erDiagram
         Double displayRefreshHz "측정 조건 (제1조)"
         Double calibrationOffsetMs "터치·디스플레이 지연 보정값"
         Bool isValid "false start 과다 등 무효 판정"
+        String invalidReason "무효 사유 코드 (유효하면 null)"
     }
 
     PVTTrial {
@@ -48,8 +49,8 @@ erDiagram
         Double reactionTimeMs "무응답이면 null"
         Bool isLapse ">500ms"
         Bool isFalseStart "자극 전 탭"
-        Date stimulusAt
-        Date respondedAt
+        Date stimulusAt "false start면 null (자극이 아직 없었음)"
+        Date respondedAt "무응답이면 null"
     }
 
     HRVReading {
@@ -86,8 +87,12 @@ erDiagram
 ### `PVTSession` — 한 번의 PVT 측정 (제품의 심장)
 90초 측정 1회. 세션 요약 지표(평균 RT, lapse, fastest 10%, false start)를 담되, **원자료는 `PVTTrial`에** 둔다. `displayRefreshHz`·`calibrationOffsetMs`는 제1조의 "측정하고 보정한다"를 데이터로 증명하는 필드다. false start가 과하면 `isValid=false`로 세션을 무효 처리.
 
+`invalidReason`은 무효 판정의 **근거**를 안정된 코드(`tooManyFalseStarts` / `tooFewValidTrials`)로 남긴다. "왜 무효인가"에 답하지 못하면 판정이 블랙박스가 된다(제2조 2항). 화면 문장은 코드가 아니라 String Catalog가 만든다(제5조 1항).
+
 ### `PVTTrial` — 한 번의 자극-반응
 한 세션은 여러 trial을 가진다(`||--|{`). 각 trial은 랜덤 대기(`interStimulusMs`, 2~10초) 후 자극→탭까지의 반응시간을 밀리초로 기록. 무응답(타임아웃)이면 `reactionTimeMs`는 null, `isLapse=true`. **이 원자료가 있어야 정확도를 사후 검증**할 수 있다(제1조 3항, 제2조 1항).
+
+`stimulusAt`은 **null일 수 있다**: false start는 자극이 켜지기 전에 누른 것이라 기록할 온셋이 없다. 예정돼 있던 목표 시각을 마치 표시된 것처럼 적으면 없는 측정을 지어내는 셈이 된다(제2조 1항). 벽시계 값(`stimulusAt`·`respondedAt`)은 **사람이 읽기 위한 기록**이고, 반응시간은 단조 시계로 이미 계산돼 저장된다 — 저장된 두 Date를 빼서 RT를 재구성하지 않는다(timing-engine §2).
 
 ### `HRVReading` — 자율신경/회복 (2~3주차)
 HealthKit(애플워치) 또는 스트레치의 카메라 PPG에서 온 HRV(RMSSD). `source`로 출처, `isEstimated`로 추정 여부를 명시한다(제2조 3항).
