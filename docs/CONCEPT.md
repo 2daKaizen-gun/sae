@@ -92,11 +92,11 @@
 
 ## 다음 작업
 
-- [ ] **1주차 — PVT 반응시간 엔진 설계** (밀리초 정밀 타이밍, HeartTruth 코드 개선)
+- [x] **1주차 — PVT 반응시간 엔진** (밀리초 정밀 타이밍) → 순수 코어 + 런타임 구현·검증. **단 시뮬레이터까지이고 보정 오프셋은 미측정** (`docs/handoff.md` 최신 항목)
 - [x] 冴え度 점수 알고리즘 설계 → `docs/score-algorithm.md`
-- [ ] SwiftData 스키마 + 추이 차트
+- [ ] SwiftData 스키마 + 추이 차트 — PVT 세션·trial 스키마는 구현됨, **추이 차트는 2주차**
 - [ ] CoreMotion 손떨림 측정
 - [ ] HealthKit HRV 연동
 - [x] サエちゃん 캐릭터 페르소나 & 대사 시스템 → `docs/character-voice.md`
-- [ ] 다국어(일/영/한) String Catalog
+- [ ] 다국어(일/영/한) String Catalog — 엔진 화면까지는 3언어 적용, **나머지 화면의 카피는 4주차**
 - [ ] (스트레치) 카메라 PPG
