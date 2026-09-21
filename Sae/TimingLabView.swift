@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 import SaeTiming
 
 /// 타이밍 런타임 검증 화면(개발용).
@@ -13,6 +14,12 @@ struct TimingLabView: View {
     @StateObject private var runner = PVTSessionRunner()
     /// 터치 타임스탬프가 공통 기준과 같은 단조 기준인지의 확인 결과(timing-engine §8-2).
     @State private var touchClockCheck: ClockContractResult?
+    /// 저장 실패를 삼키지 않기 위한 플래그 — 실패했으면 실패했다고 화면에 말한다(제9조 6항).
+    @State private var didSaveFail = false
+
+    @Environment(\.modelContext) private var modelContext
+    /// 저장된 세션들. 앱을 다시 켜도 남아 있는지가 영속화의 관찰 가능한 증거다.
+    @Query(sort: \PVTSession.startedAt, order: .reverse) private var savedSessions: [PVTSession]
 
     var body: some View {
         VStack(spacing: 12) {
@@ -22,12 +29,15 @@ struct TimingLabView: View {
 
             trialList
 
-            if let summary = runner.summary {
-                summaryView(summary)
+            if let result = runner.result {
+                summaryView(result)
             }
+
+            storageRow
 
             Button {
                 touchClockCheck = nil
+                didSaveFail = false
                 runner.run()
             } label: {
                 Text("timinglab.run")
@@ -40,6 +50,24 @@ struct TimingLabView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear { runner.run() }
         .onDisappear { runner.stop() }
+        // 저장은 세션이 끝난 뒤에만 — 측정 중 디스크 접근은 타이밍 경로를 오염시킨다(제1조 1항).
+        .onChange(of: runner.result) { _, result in
+            guard let result else { return }
+            do {
+                try PVTSessionStore.save(result, in: modelContext)
+            } catch {
+                didSaveFail = true
+            }
+        }
+    }
+
+    /// 저장 상태 — 지금까지 남은 세션 수. 실패했으면 실패했다고 말한다.
+    private var storageRow: some View {
+        Text(didSaveFail
+             ? String(localized: "timinglab.save_failed")
+             : String(format: String(localized: "timinglab.saved_sessions"), savedSessions.count))
+            .font(.caption.monospacedDigit())
+            .foregroundStyle(didSaveFail ? Color.red : Color.secondary)
     }
 
     /// 측정 조건 — 주사율·시계 계약·보정 오프셋. 재현에 필요한 값을 공개한다(timing-engine §9).
@@ -90,34 +118,33 @@ struct TimingLabView: View {
 
     /// trial 원자료 — 판정과 반응시간을 그대로 나열한다(요약만 보여주지 않는다, 제1·2조).
     private var trialList: some View {
-        List(Array(runner.outcomes.enumerated()), id: \.offset) { index, outcome in
+        List(Array(runner.trials.enumerated()), id: \.offset) { position, record in
             HStack {
-                Text(String(format: "#%lld", index))
+                Text(String(format: "#%lld", record.index))
                 Spacer()
-                Text(label(for: outcome))
+                Text(label(for: record.outcome))
             }
             .font(.footnote.monospacedDigit())
+            .id(position)
         }
         .listStyle(.plain)
         .frame(maxHeight: 160)
     }
 
     /// 세션 요약 + 타당도. 무효면 사유까지 말한다 — 억지 숫자보다 "못 쟀다"가 정직하다(제2조).
-    private func summaryView(_ summary: PVTSessionSummary) -> some View {
+    private func summaryView(_ result: PVTSessionResult) -> some View {
         VStack(spacing: 4) {
             Text(String(
                 format: String(localized: "timinglab.summary_line"),
-                summary.medianRTms ?? 0,
-                summary.lapseCount,
-                summary.falseStartCount
+                result.summary.medianRTms ?? 0,
+                result.summary.lapseCount,
+                result.summary.falseStartCount
             ))
             .font(.subheadline.monospacedDigit())
 
-            if let validity = runner.validity {
-                Text(validityLabel(validity))
-                    .font(.caption)
-                    .foregroundStyle(validity == .valid ? Color.secondary : Color.red)
-            }
+            Text(validityLabel(result.validity))
+                .font(.caption)
+                .foregroundStyle(result.validity == .valid ? Color.secondary : Color.red)
         }
     }
 

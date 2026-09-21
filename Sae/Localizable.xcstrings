@@ -369,6 +369,52 @@
         }
       }
     },
+    "timinglab.save_failed": {
+      "comment": "Shown when persisting the session failed; failures are never swallowed.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saving the session failed"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "セッションの保存に失敗しました"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "세션 저장 실패"
+          }
+        }
+      }
+    },
+    "timinglab.saved_sessions": {
+      "comment": "Number of PVT sessions persisted on device. %lld = count.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved sessions on device: %lld"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "端末に保存されたセッション: %lld"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "기기에 저장된 세션: %lld"
+          }
+        }
+      }
+    },
     "timinglab.stimulus_tap": {
       "comment": "Shown the moment the stimulus turns on; the user must tap as fast as possible.",
       "localizations": {
