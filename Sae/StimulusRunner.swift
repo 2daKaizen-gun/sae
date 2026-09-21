@@ -18,6 +18,9 @@ final class StimulusRunner: NSObject, ObservableObject {
     @Published private(set) var displayRefreshHz: Int = 0
     /// 지금까지 캡처한 자극 온셋들(프레임 타임스탬프 기준).
     @Published private(set) var onsets: [StimulusOnset] = []
+    /// 프레임 타임스탬프가 공통 기준과 같은 단조 기준인지의 확인 결과(timing-engine §8-2).
+    /// 첫 프레임에서 한 번 확인한다 — 기준이 다르면 차이가 초 단위 이상이라 한 번으로 드러난다.
+    @Published private(set) var displayClockCheck: ClockContractResult?
 
     private var displayLink: CADisplayLink?
     private var schedule: StimulusSchedule?
@@ -47,6 +50,11 @@ final class StimulusRunner: NSObject, ObservableObject {
         // 자극 온셋의 기준은 이 프레임의 타임스탬프(직전 프레임 스캔아웃 시각).
         let frameTime = link.timestamp
         if schedule == nil {
+            // 측정을 시작하기 전에 시계 계약부터 확인한다 — 프레임 타임스탬프가 터치와 다른
+            // 기준에서 오면 이후 계산한 반응시간이 전부 무의미해진다(timing-engine §2·§8-2).
+            displayClockCheck = RuntimeClockCheck.verify(
+                sampleTs: frameTime, referenceTs: CACurrentMediaTime(), source: "CADisplayLink.timestamp"
+            )
             schedule = StimulusSchedule(intervalsMs: pendingIntervals, startTime: frameTime)
             let period = link.targetTimestamp - link.timestamp
             if period > 0 { displayRefreshHz = Int((1.0 / period).rounded()) }
