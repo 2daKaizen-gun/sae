@@ -208,29 +208,6 @@
         }
       }
     },
-    "timinglab.last_tap": {
-      "comment": "Shows the monotonic timestamp of the last low-level touch. %.3f = seconds.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Last tap: %.3f s"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "最終タップ：%.3f s"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "마지막 탭: %.3f s"
-          }
-        }
-      }
-    },
     "timinglab.link": {
       "comment": "Navigation link from the home screen to the developer timing-runtime check.",
       "localizations": {
@@ -254,48 +231,94 @@
         }
       }
     },
-    "timinglab.no_tap": {
-      "comment": "Placeholder shown before any touch has been captured.",
+    "timinglab.outcome_false_start": {
+      "comment": "A tap that landed before the stimulus appeared.",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "No tap yet"
+            "value": "false start"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "まだタップなし"
+            "value": "フライング"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "아직 탭 없음"
+            "value": "false start"
           }
         }
       }
     },
-    "timinglab.onsets": {
-      "comment": "Count of stimulus onsets captured so far. %lld = count.",
+    "timinglab.outcome_lapse": {
+      "comment": "A trial answered slower than the lapse threshold. %.1f = milliseconds.",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Onsets captured: %lld"
+            "value": "%.1f ms · lapse"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "捕捉した onset：%lld"
+            "value": "%.1f ms・ラプス"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "포착한 자극 수: %lld"
+            "value": "%.1f ms · 랩스"
+          }
+        }
+      }
+    },
+    "timinglab.outcome_no_response": {
+      "comment": "No tap arrived before the timeout.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "no response"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無反応"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "무응답"
+          }
+        }
+      }
+    },
+    "timinglab.outcome_rt": {
+      "comment": "A valid trial's reaction time. %.1f = milliseconds.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f ms"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f ms"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f ms"
           }
         }
       }
@@ -346,25 +369,140 @@
         }
       }
     },
-    "timinglab.tap_area": {
-      "comment": "Label inside the low-level touch-capture area in the timing lab.",
+    "timinglab.stimulus_tap": {
+      "comment": "Shown the moment the stimulus turns on; the user must tap as fast as possible.",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to capture time"
+            "value": "TAP!"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "タップで時刻を捕捉"
+            "value": "タップ！"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "탭하면 시각 포착"
+            "value": "탭!"
+          }
+        }
+      }
+    },
+    "timinglab.stimulus_wait": {
+      "comment": "Shown in the stimulus area while waiting out the inter-stimulus interval.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wait for the stimulus"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "刺激を待つ"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "자극을 기다리세요"
+          }
+        }
+      }
+    },
+    "timinglab.summary_invalid_false_starts": {
+      "comment": "Session rejected: too many taps before the stimulus.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "invalid — too many false starts"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無効 — フライングが多すぎます"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "무효 — false start가 너무 많음"
+          }
+        }
+      }
+    },
+    "timinglab.summary_invalid_few_trials": {
+      "comment": "Session rejected: not enough responses to trust the metrics.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "invalid — too few responses"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無効 — 応答が少なすぎます"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "무효 — 응답이 너무 적음"
+          }
+        }
+      }
+    },
+    "timinglab.summary_line": {
+      "comment": "Session summary. %1$.1f = median reaction time in ms, %2$lld = lapses, %3$lld = false starts.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "median %1$.1f ms · lapse %2$lld · false start %3$lld"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "中央値 %1$.1f ms・ラプス %2$lld・フライング %3$lld"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "중앙값 %1$.1f ms · 랩스 %2$lld · false start %3$lld"
+          }
+        }
+      }
+    },
+    "timinglab.summary_valid": {
+      "comment": "Session passed the validity gate.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "valid session"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "有効なセッション"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "유효한 세션"
           }
         }
       }
@@ -388,6 +526,29 @@
           "stringUnit": {
             "state": "translated",
             "value": "타이밍 검증"
+          }
+        }
+      }
+    },
+    "timinglab.uncalibrated": {
+      "comment": "Calibration offset actually applied. %.0f = milliseconds. Must keep saying it is uncalibrated (Article 2).",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calibration offset %.0f ms (uncalibrated)"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "補正オフセット %.0f ms（未補正）"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "보정 오프셋 %.0f ms (미보정)"
           }
         }
       }
