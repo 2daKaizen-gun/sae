@@ -59,7 +59,7 @@
 
 ## [2026-09-22] Phase 1 — 시계 계약 · 세션 배선 · 영속화 (C·D·E)
 
-**한 줄 상태:** 지난 세션이 남긴 C·D·E를 한 번에 끝냈다. 시계 계약을 순수 명세 + 런타임 실측으로 **양쪽 다 검증**했고, 온셋과 탭을 묶어 **PVT 세션이 end-to-end로 돌아가며**, trial 원자료가 **SwiftData에 남아 앱 재실행 후에도 살아남는** 것까지 확인했다. README·data-model 정합까지 6커밋. **아직 push·PR 안 했고 이슈 #1도 그대로 OPEN**(체크박스 미갱신) — 외부 반영은 사용자 확인 후.
+**한 줄 상태:** 지난 세션이 남긴 C·D·E를 한 번에 끝냈다. 시계 계약을 순수 명세 + 런타임 실측으로 **양쪽 다 검증**했고, 온셋과 탭을 묶어 **PVT 세션이 end-to-end로 돌아가며**, trial 원자료가 **SwiftData에 남아 앱 재실행 후에도 살아남는** 것까지 확인했다. README·data-model 정합까지 6커밋. **PR #3(12커밋)로 `main`에 머지 완료**(`4871926`), 작업 브랜치는 삭제. **이슈 #1은 계속 OPEN** — "on device" Done-when이 시뮬레이터로는 충족되지 않기 때문(본문 체크박스는 아직 미갱신).
 
 ### ✅ 완료된 것 (검증됨)
 
@@ -72,11 +72,11 @@
 
 ### 🔄 진행 중 (미완)
 
-- 없음. 다만 **커밋만 로컬에 쌓여 있음** — `phase1-timing-runtime`에 6커밋(`36ef22a`…`(이 커밋)`), origin 미반영
+- 없음. 6커밋 전부 `main`에 머지됨(PR #3)
 
 ### ▶️ 다음 할 일 (우선순위 순)
 
-1. **push + PR 생성** — `phase1-timing-runtime` → `main`. 이슈 #1 본문 체크박스를 실제 완료분으로 갱신(Scope 8개 중 7개, Done-when 3개 충족). **단, "on device" Done-when은 시뮬만이라 미충족 → #1은 계속 OPEN**
+1. **이슈 #1 본문 체크박스 갱신** — 실제 완료분 반영(Scope 8개 중 7개, Done-when 3개 충족). **"on device" Done-when은 시뮬만이라 미충족 → #1은 계속 OPEN.** 머지 후 남은 옛 브랜치 `phase1-timing-engine`(로컬·원격) 정리도 함께
 2. **실기기 end-to-end** — 시뮬과 실제 기기는 터치 스캔·패널 지연이 다르다. 120Hz ProMotion 기기에서 주사율·온셋 불확실성 재확인
 3. **보정 오프셋 실측**(timing-engine §8-3) — 포토다이오드 하드웨어 필요. 확보 전까지 0/미보정 유지
 4. **Phase 2 착수 전 이슈 먼저** — 冴え度 점수화 + Charts 추이(`score-algorithm.md`)
@@ -108,8 +108,8 @@
 - 순수 코어: `SaeTiming/Sources/SaeTiming/{ClockContract,StimulusSchedule}.swift` (+테스트)
 - 앱 런타임: `Sae/{PVTSessionRunner,RuntimeClockCheck,TouchCatcher,TimingLabView}.swift`
 - 영속화: `Sae/{PVTSessionModels,PVTSessionStore,SaeApp}.swift`
-- 커밋: `36ef22a`(C①) · `370a2fe`(C②) · `4efb93d`(D) · `4125ec5`(E) · `a91d116`(문서) · 이 커밋
-- 브랜치: `phase1-timing-runtime` (**origin 미푸시**) / 이슈: #1 (OPEN, 본문 미갱신) / PR: 없음
+- 커밋: `36ef22a`(C①) · `370a2fe`(C②) · `4efb93d`(D) · `4125ec5`(E) · `a91d116`(문서) · `5605e24`(인수인계)
+- PR: **#3 MERGED** (12커밋, 머지 커밋 `4871926`) / 브랜치: `phase1-timing-runtime` 머지 후 삭제 / 이슈: #1 (**OPEN 유지**, 본문 체크박스 미갱신)
 - 참고: `docs/timing-engine.md` §2·§3·§7·§8-2, `docs/data-model.md`
 
 ## [2026-07-26] Phase 1 — 앱 셸 + 타이밍 런타임 A/A'/B (이슈 상태 정정)
