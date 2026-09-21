@@ -4,7 +4,7 @@
 > 대화가 길어져 요약·압축돼도 "어디까지 했고 다음에 뭘 하는지"가 살아남게 한다(헌법 제8조 3·4항).
 > 새 세션은 진실의 원천 순서(`collaboration.md` §3)를 본 뒤, 이 파일의 **최신 인수인계**로 이어서 시작한다.
 
-- **최종 수정:** 2026-07-21 (Phase 1 순수 코어 완료)
+- **최종 수정:** 2026-09-22 (Phase 1 런타임 C·D·E 완료, 미푸시)
 
 ---
 
@@ -56,6 +56,105 @@
 ## 인수인계 로그 (최신이 위)
 
 <!-- 여기부터 실제 인수인계를 쌓는다. 최신 항목을 이 줄 바로 아래에 붙인다. -->
+
+## [2026-09-22] Phase 1 — 시계 계약 · 세션 배선 · 영속화 (C·D·E)
+
+**한 줄 상태:** 지난 세션이 남긴 C·D·E를 한 번에 끝냈다. 시계 계약을 순수 명세 + 런타임 실측으로 **양쪽 다 검증**했고, 온셋과 탭을 묶어 **PVT 세션이 end-to-end로 돌아가며**, trial 원자료가 **SwiftData에 남아 앱 재실행 후에도 살아남는** 것까지 확인했다. README·data-model 정합까지 6커밋. **아직 push·PR 안 했고 이슈 #1도 그대로 OPEN**(체크박스 미갱신) — 외부 반영은 사용자 확인 후.
+
+### ✅ 완료된 것 (검증됨)
+
+- **C① 시계 계약 순수 명세** — `ClockContract.verify(sampleTs:referenceTs:tolerance:)`가 부호 있는 차이와 판정을 낸다. 경계·대칭·벽시계 혼입·다른 단조 기준까지 **9개 테스트**. 허용오차 0.25초는 "정밀도 판정"이 아니라 **기준 식별**용이라는 근거를 주석에 남김 (`36ef22a`)
+- **C② 런타임 실측** — `CADisplayLink.timestamp`는 첫 프레임에서, `UITouch.timestamp`는 매 탭마다 `CACurrentMediaTime()`과 대조. DEBUG에서 위반 시 assert, 화면에 Δ와 판정 노출. **시뮬 실측: 프레임 Δ 0.0~15.8ms, 터치 Δ 4.1~16.7ms — 전부 동일 단조 기준** (`370a2fe`)
+- **D 세션 배선** — 대기→자극→응답→다음 대기 사이클 완성. 시뮬 관찰: **유효 세션**(RT 367.7/332.9/309.4/263.7/381.2ms, 중앙값 332.9, 랩스 0, FS 0) / **무효(FS 과다)** / **무효(응답 부족)** / **무응답(30초 타임아웃)** 4경로 전부 확인 (`4efb93d`)
+- **E 영속화** — 세션 1 + trial 5가 SwiftData에 저장되고 **앱 재실행 후에도 유지**. SQLite 직접 확인: ISI 5847/6887/2066/9509/7270ms(전부 2~10초), `displayRefreshHz=60`, `calibrationOffsetMs=0`, `isValid=1`, `durationMs=33295` (`4125ec5`)
+- **문서 정합** — README Status가 "No app code yet"으로 거짓이던 것을 실제 상태로 교체(+ 미보정·시뮬한정을 명시). data-model에 `invalidReason`·`stimulusAt` optional 반영 (`a91d116`)
+- **테스트:** `swift test` **45개 / 7 스위트 그린**. 앱 빌드 성공(Xcode 26.4, iPhone 17 Pro / iOS 26.4 시뮬)
+
+### 🔄 진행 중 (미완)
+
+- 없음. 다만 **커밋만 로컬에 쌓여 있음** — `phase1-timing-runtime`에 6커밋(`36ef22a`…`(이 커밋)`), origin 미반영
+
+### ▶️ 다음 할 일 (우선순위 순)
+
+1. **push + PR 생성** — `phase1-timing-runtime` → `main`. 이슈 #1 본문 체크박스를 실제 완료분으로 갱신(Scope 8개 중 7개, Done-when 3개 충족). **단, "on device" Done-when은 시뮬만이라 미충족 → #1은 계속 OPEN**
+2. **실기기 end-to-end** — 시뮬과 실제 기기는 터치 스캔·패널 지연이 다르다. 120Hz ProMotion 기기에서 주사율·온셋 불확실성 재확인
+3. **보정 오프셋 실측**(timing-engine §8-3) — 포토다이오드 하드웨어 필요. 확보 전까지 0/미보정 유지
+4. **Phase 2 착수 전 이슈 먼저** — 冴え度 점수화 + Charts 추이(`score-algorithm.md`)
+
+### 🧭 이번에 내린 결정 · 이유
+
+- **자극 온셋 = `targetTimestamp`(직전 프레임 `timestamp` 아님)** — 콜백에서 플래그를 켜면 그 변경은 *지금 준비 중인* 프레임에 실려 나간다. `timestamp`를 쓰면 온셋을 한 프레임(60Hz 16.7ms) 이르게 잡아 **모든 RT가 그만큼 부풀려진다**. 프레임 드랍 시 실제 점등이 더 늦어지는 잔여 오차는 상수로 못 없애므로 정직하게 남김(제1조 2항, §7)
+- **스케줄 다음 목표 = trial 종료 시각 기준**(온셋 기준 아님) — 응답에 걸린 시간을 0으로 가정하면 느린 응답 때 다음 자극이 **겹쳐 뜬다**. 상태기계를 `waiting`/`showingStimulus`/`finished`로 명시화
+- **false start도 순수 `TrialClassifier`로 판정** — 앱에서 `.falseStart`를 직접 만들면 분류 규칙이 코어와 갈라져, 테스트가 증명한 것과 실제가 달라진다. 또한 false start는 **trial을 소비하지 않는다**(자극은 여전히 온다)
+- **스키마 2건 변경 + 문서 반영** — `PVTSession.invalidReason`(왜 무효인지, 제2조 2항), `PVTTrial.stimulusAt` optional(false start엔 자극이 없었다 — 예정 시각을 표시된 것처럼 적으면 날조). 조용히 어긋나게 두지 않고 data-model.md를 고침
+- **커밋 트레일러를 `Claude Opus 5`로** — `collaboration.md` §7 예시는 4.8이지만 실제 작성 모델을 적는 게 정직(제2조). 문서의 예시 문자열은 손대지 않음
+- **시뮬 탭 자동화 방법을 찾음** — `simctl`엔 탭이 없지만 **CGEvent(마우스 다운/업) 포스팅이 통한다**(접근성 권한이 이제 허용됨). 자극 점등 판정은 `simctl io screenshot --type=bmp` + BMP 픽셀 직접 읽기. 지난 세션의 "수동 탭만 가능" 제약이 풀림
+
+### ❓ 열린 질문 · 막힌 곳
+
+- **실기기 미검증** — 전부 시뮬레이터 관찰이다. 터치 스캔 지연·패널 응답은 실기기에서 달라진다
+- **보정 오프셋 미측정** — 하드웨어 필요, `calibrationOffsetMs=0`("미보정") 유지
+- **세션 trial 수 5는 임시** — 90초 세션의 최종 trial 수는 score-algorithm 열린 결정. 원자료를 남기므로 나중에 조정 가능
+- **타임아웃 30초가 UX상 긴가** — PVT 표준값을 따랐지만, 실사용에선 무응답 1건에 30초를 버린다. Phase 2에서 재검토
+
+### 🔬 검증 상태
+
+- **순수 로직:** `swift test` 45개 그린(RT수학·분류·ISI·집계·타당도·자극스케줄·시계계약)
+- **런타임 관찰(유닛 아님):** 시계 계약 양쪽 실측 / 세션 4경로 / 저장·재실행 유지 / SQLite 원자료 직접 확인
+- **미검증:** 실기기 end-to-end, 물리 보정 오프셋(§8-3), 120Hz 환경
+
+### 📎 관련 파일 · 커밋
+
+- 순수 코어: `SaeTiming/Sources/SaeTiming/{ClockContract,StimulusSchedule}.swift` (+테스트)
+- 앱 런타임: `Sae/{PVTSessionRunner,RuntimeClockCheck,TouchCatcher,TimingLabView}.swift`
+- 영속화: `Sae/{PVTSessionModels,PVTSessionStore,SaeApp}.swift`
+- 커밋: `36ef22a`(C①) · `370a2fe`(C②) · `4efb93d`(D) · `4125ec5`(E) · `a91d116`(문서) · 이 커밋
+- 브랜치: `phase1-timing-runtime` (**origin 미푸시**) / 이슈: #1 (OPEN, 본문 미갱신) / PR: 없음
+- 참고: `docs/timing-engine.md` §2·§3·§7·§8-2, `docs/data-model.md`
+
+## [2026-07-26] Phase 1 — 앱 셸 + 타이밍 런타임 A/A'/B (이슈 상태 정정)
+
+**한 줄 상태:** 지난 세션에 만든 앱 셸(미기록)을 실측 반영하고, 타이밍 런타임을 사이클 단위로 A(순수 자극 스케줄러)·A'(CADisplayLink 배선)·B(저수준 UITouch)까지 구현·커밋했다. **이슈 #1이 COMPLETED로 잘못 닫혀 있던 것을 재오픈**하고(제2조), 재발 방지 규칙을 메모리에 남겼다. C(시계 계약)부터는 다음 세션.
+
+### ✅ 완료된 것 (검증됨)
+- **GitHub 상태 정정(실측):** PR #2 = **MERGED**(순수 코어가 origin/main `de7c239`에 병합), 이슈 #1 = 지난 세션에 **COMPLETED로 오마감** → **재오픈**(OPEN/REOPENED). Done-when(런타임·시계계약·SwiftData·end-to-end) 미완이라 정직성 위반이었음. 코멘트로 남은 범위 명시
+- **재발 방지 메모리:** `collaboration-protocol.md`에 "이슈는 Done-when 전부 충족 시에만 닫기" + "상태 기록 전 gh/git 실측" 2규칙 추가
+- **브랜치 정리:** 로컬 `main`을 `origin/main`으로 ff. 새 작업 브랜치 `phase1-timing-runtime` 생성(머지된 옛 `phase1-timing-engine` 재사용 회피)
+- **앱 셸(지난 세션, 이번에 실측 반영):** SwiftUI 셸 + ja/en/ko String Catalog + SaeTiming 링크. 시뮬 3언어 렌더 확인 (`7cc7fd1`, `102b19d`)
+- **A — 순수 자극 스케줄러:** `StimulusSchedule`(ISI 소비 + `frameTime ≥ target` 첫 프레임 온셋 확정, 다음 목표=실제 온셋+ISI). Swift Testing 7개 추가 → **33개 그린** (`b0fa29d`)
+- **A' — CADisplayLink 드라이버:** `StimulusRunner`가 순수 스케줄에 실제 프레임 타임스탬프 공급. 시뮬 실측: **60Hz**, 온셋 5개, 간격 6.90/2.07/9.52/7.28s(전부 2–10s ISI). dev용 `TimingLabView` + `-autolab` 실행인자 딥링크(#if DEBUG) (`9ee2817`)
+- **B — 저수준 UITouch:** `TouchCatcher`(UIViewRepresentable, `touchesBegan`의 `touch.timestamp`, 고수준 제스처 금지). 시뮬 탭 실측 23529.616s가 온셋(~23427s)과 **동일 단조 스케일** → 시계 계약 전제 실기 확인 (`55b184f`)
+
+### 🔄 진행 중 (미완)
+- 없음. 각 사이클은 빌드/테스트/관찰 후 커밋 완료. `phase1-timing-runtime` origin에 push됨(PR 미생성)
+
+### ▶️ 다음 할 일 (우선순위 순) — 이슈 #1의 남은 범위
+1. **C — 시계 계약 테스트** (다음 세션 착수 지점): 순수 유닛으로 완전증명 불가(런타임 사실). 계획 = ① `SaeTiming`에 "샘플이 공통기준 `CACurrentMediaTime`과 허용오차 내면 같은 단조 기준" 순수 명세 + 경계 테스트, ② 앱에서 `CADisplayLink.timestamp`·`UITouch.timestamp`를 각각 `CACurrentMediaTime()`과 실측 비교 + 디버그 assert (timing-engine §8-2)
+2. **D — 1 trial → 세션 배선:** A'(온셋)+B(탭) 묶어 RT 계산 → `SaeTiming` 분류/집계 연결. 자극 시각화(플래그 토글, 애니메이션 금지) 포함
+3. **E — SwiftData 영속화:** `PVTTrial` 원자료 + `PVTSession.displayRefreshHz`/`calibrationOffsetMs`
+4. 런타임 완성 후 새 PR로 `origin/main`에 올리고 #1 Done-when 충족분 반영
+
+### 🧭 이번에 내린 결정 · 이유
+- **이슈 #1 재오픈** — Done-when 미완인데 COMPLETED는 미완을 완료로 오표기(제2조). core 완료는 PR #2가 이미 증명하므로 재오픈해도 성과는 남고 원래 정의와 일치
+- **순수/런타임 물리 분리 유지** — 온셋 판정(A)·시계 계약 명세(C①)는 `SaeTiming`에서 `swift test`로 증명, CADisplayLink·UITouch 배선(A'·B·C②)은 앱에서 시뮬 관찰. 정확도는 순수층이 증명하고 런타임층은 "실제 타임스탬프 전달"만 책임(제1조 3항)
+- **`-autolab` 딥링크 훅(#if DEBUG)** — simctl에 탭 기능 없고 osascript는 접근성 권한(-1719)에 막힘 → 실행인자로 랩 자동 진입. 릴리즈엔 빠짐
+- **pbxproj 재포맷 노이즈는 커밋서 제외** — xcodebuild가 동기화 그룹 정의를 재포맷하나 기능 동일, 소스 커밋 오염 방지 위해 `git checkout`으로 원복
+
+### ❓ 열린 질문 · 막힌 곳
+- **시뮬 탭 자동화 불가** — simctl 탭 없음·osascript 접근성 차단·idb 미설치. 터치 관련 검증은 사용자 수동 탭 + 스크린샷으로 관찰(이번 B가 그 방식). 자동화 원하면 접근성 권한 부여 또는 idb 설치 필요
+- **보정 오프셋 미측정** — 포토다이오드 하드웨어 필요, `calibrationOffsetMs`=0 "미보정" 유지(§8-3)
+- C의 순수 명세 tolerance 값은 구현 중 실측(프레임 이내)으로 확정
+
+### 🔬 검증 상태
+- **Swift Testing 33개 그린**(순수 로직: RT수학·분류·ISI·집계·타당도·자극스케줄). Build 성공(Xcode 26.4)
+- **런타임 관찰(유닛 아님):** A' 온셋 캡처·주사율, B 탭 캡처·시계 스케일 일치 — 시뮬 스크린샷으로 확인
+- **미검증:** 시계 계약 자동 assert(C), 보정 오프셋 물리 실측(§8-3), on-device end-to-end(D·E)
+
+### 📎 관련 파일 · 커밋
+- 순수 코어: `SaeTiming/Sources/SaeTiming/StimulusSchedule.swift` (+테스트)
+- 앱 런타임: `Sae/{StimulusRunner,TouchCatcher,TimingLabView,ContentView}.swift`, `Sae/Localizable.xcstrings`
+- 브랜치: `phase1-timing-runtime` (origin push, PR 미생성) / 커밋: `7cc7fd1`·`102b19d`·`b0fa29d`·`9ee2817`·`55b184f` / 이슈: #1 (재OPEN)
+- 참고: `docs/timing-engine.md` §3·§4·§8-2
 
 ## [2026-07-21] Phase 1 — PVT 타이밍 코어 (순수 모듈, 첫 구현)
 

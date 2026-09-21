@@ -53,7 +53,21 @@ Development is governed by a small **[project constitution](docs/CONSTITUTION.md
 
 ## Status
 
-🚧 **In active development.** The design phase is complete — product concept, constitution, data model, and detailed designs for the timing engine, score algorithm, and character voice are documented. Implementation follows a 4-week MVP plan (see [`docs/CONCEPT.md`](docs/CONCEPT.md) §7). No app code yet; this repository currently holds the design of record.
+🚧 **In active development — Phase 1 (the timing engine).** Implementation follows a 4-week MVP plan (see [`docs/CONCEPT.md`](docs/CONCEPT.md) §7).
+
+**Working today**
+
+- **Pure timing core** (`SaeTiming`, a local Swift package with no platform dependencies): reaction-time math, lapse / false-start / no-response classification, seeded ISI scheduler, session aggregation, validity gate, stimulus-schedule state machine, and the clock contract. Proven by **45 Swift Testing cases** that run without a simulator.
+- **Measurement runtime**: stimulus onset taken from the `CADisplayLink` frame timestamp, response from `UITouch.timestamp` via a low-level touch path, no animation or async work inside the timing loop.
+- **Clock contract verified at runtime** — both timestamps are checked against a common clock, because reaction time is a direct subtraction and is meaningless if the two come from different bases.
+- **Raw per-trial persistence** (SwiftData, on device) including the refresh rate and calibration offset the session ran under, so past sessions can be recomputed if a threshold changes.
+- **Trilingual from the first screen** (JA / EN / KO) via String Catalog.
+
+**Deliberately not claimed yet**
+
+- The **calibration offset is 0 — uncalibrated.** Deriving the real display/touch latency constant needs photodiode hardware ([`timing-engine.md`](docs/timing-engine.md) §8-3), so the app records "uncalibrated" rather than a made-up number.
+- Verified **in the iOS simulator, not yet on a physical device.**
+- The Sae-do score, HRV, tremor, the character voice layer, and the user-facing UI design are later phases; the current screen is an instrument panel for verifying the engine.
 
 ## Documentation
 

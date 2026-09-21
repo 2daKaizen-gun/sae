@@ -1,0 +1,604 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "app.lapse_threshold_ms": {
+      "comment": "Placeholder showing the lapse threshold constant sourced from the SaeTiming core. %lld = milliseconds.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lapse threshold: %lld ms"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ラプス閾値：%lld ms"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "랩스 임계값: %lld ms"
+          }
+        }
+      }
+    },
+    "app.tagline": {
+      "comment": "App tagline shown under the title on the placeholder screen.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "90 seconds a day to see your sharpness."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "毎日90秒で、あなたの冴えを可視化。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "매일 90초로 당신의 각성도를 시각화."
+          }
+        }
+      }
+    },
+    "app.title": {
+      "comment": "App display title.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sae"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "사에"
+          }
+        }
+      }
+    },
+    "timinglab.clock_broken": {
+      "comment": "Verdict shown when the clock contract is violated; reaction times would be meaningless.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DIFFERENT CLOCK BASE"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "時計の基準が不一致"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "시계 기준 불일치"
+          }
+        }
+      }
+    },
+    "timinglab.clock_display": {
+      "comment": "Label for the clock-contract check on CADisplayLink frame timestamps.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frame clock vs CACurrentMediaTime"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "フレーム時計 vs CACurrentMediaTime"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "프레임 시계 vs CACurrentMediaTime"
+          }
+        }
+      }
+    },
+    "timinglab.clock_ok": {
+      "comment": "Verdict shown when both timestamps share one monotonic clock base.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "same monotonic base"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "同一の単調時計"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "동일 단조 기준"
+          }
+        }
+      }
+    },
+    "timinglab.clock_pending": {
+      "comment": "Shown before the clock contract has been measured. Never implies a passing result.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "not measured yet"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未測定"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "미측정"
+          }
+        }
+      }
+    },
+    "timinglab.clock_touch": {
+      "comment": "Label for the clock-contract check on UITouch timestamps.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Touch clock vs CACurrentMediaTime"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "タッチ時計 vs CACurrentMediaTime"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "터치 시계 vs CACurrentMediaTime"
+          }
+        }
+      }
+    },
+    "timinglab.clock_value": {
+      "comment": "Measured clock-contract difference and verdict. %.1f = difference in milliseconds, %@ = verdict.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Δ %.1f ms · %@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Δ %.1f ms · %@"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Δ %.1f ms · %@"
+          }
+        }
+      }
+    },
+    "timinglab.link": {
+      "comment": "Navigation link from the home screen to the developer timing-runtime check.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Timing lab (dev)"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "タイミング検証（開発）"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "타이밍 검증 (개발)"
+          }
+        }
+      }
+    },
+    "timinglab.outcome_false_start": {
+      "comment": "A tap that landed before the stimulus appeared.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "false start"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "フライング"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "false start"
+          }
+        }
+      }
+    },
+    "timinglab.outcome_lapse": {
+      "comment": "A trial answered slower than the lapse threshold. %.1f = milliseconds.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f ms · lapse"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f ms・ラプス"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f ms · 랩스"
+          }
+        }
+      }
+    },
+    "timinglab.outcome_no_response": {
+      "comment": "No tap arrived before the timeout.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "no response"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無反応"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "무응답"
+          }
+        }
+      }
+    },
+    "timinglab.outcome_rt": {
+      "comment": "A valid trial's reaction time. %.1f = milliseconds.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f ms"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f ms"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f ms"
+          }
+        }
+      }
+    },
+    "timinglab.refresh": {
+      "comment": "Measured display refresh rate. %lld = hertz.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Display refresh: %lld Hz"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "リフレッシュレート：%lld Hz"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "화면 주사율: %lld Hz"
+          }
+        }
+      }
+    },
+    "timinglab.run": {
+      "comment": "Button that re-runs the stimulus schedule on CADisplayLink.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Run again"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "再実行"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "다시 실행"
+          }
+        }
+      }
+    },
+    "timinglab.save_failed": {
+      "comment": "Shown when persisting the session failed; failures are never swallowed.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saving the session failed"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "セッションの保存に失敗しました"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "세션 저장 실패"
+          }
+        }
+      }
+    },
+    "timinglab.saved_sessions": {
+      "comment": "Number of PVT sessions persisted on device. %lld = count.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved sessions on device: %lld"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "端末に保存されたセッション: %lld"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "기기에 저장된 세션: %lld"
+          }
+        }
+      }
+    },
+    "timinglab.stimulus_tap": {
+      "comment": "Shown the moment the stimulus turns on; the user must tap as fast as possible.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TAP!"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "タップ！"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "탭!"
+          }
+        }
+      }
+    },
+    "timinglab.stimulus_wait": {
+      "comment": "Shown in the stimulus area while waiting out the inter-stimulus interval.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wait for the stimulus"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "刺激を待つ"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "자극을 기다리세요"
+          }
+        }
+      }
+    },
+    "timinglab.summary_invalid_false_starts": {
+      "comment": "Session rejected: too many taps before the stimulus.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "invalid — too many false starts"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無効 — フライングが多すぎます"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "무효 — false start가 너무 많음"
+          }
+        }
+      }
+    },
+    "timinglab.summary_invalid_few_trials": {
+      "comment": "Session rejected: not enough responses to trust the metrics.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "invalid — too few responses"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無効 — 応答が少なすぎます"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "무효 — 응답이 너무 적음"
+          }
+        }
+      }
+    },
+    "timinglab.summary_line": {
+      "comment": "Session summary. %1$.1f = median reaction time in ms, %2$lld = lapses, %3$lld = false starts.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "median %1$.1f ms · lapse %2$lld · false start %3$lld"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "中央値 %1$.1f ms・ラプス %2$lld・フライング %3$lld"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "중앙값 %1$.1f ms · 랩스 %2$lld · false start %3$lld"
+          }
+        }
+      }
+    },
+    "timinglab.summary_valid": {
+      "comment": "Session passed the validity gate.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "valid session"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "有効なセッション"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "유효한 세션"
+          }
+        }
+      }
+    },
+    "timinglab.title": {
+      "comment": "Navigation title of the timing-runtime check screen.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Timing lab"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "タイミング検証"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "타이밍 검증"
+          }
+        }
+      }
+    },
+    "timinglab.uncalibrated": {
+      "comment": "Calibration offset actually applied. %.0f = milliseconds. Must keep saying it is uncalibrated (Article 2).",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calibration offset %.0f ms (uncalibrated)"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "補正オフセット %.0f ms（未補正）"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "보정 오프셋 %.0f ms (미보정)"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}
