@@ -50,7 +50,54 @@ enum PVTSessionStore {
             context.insert(trial)
         }
 
+        try upsertDailyScore(for: result, session: session, in: context)
+
         try context.save()
+    }
+
+    /// 세션에서 冴え度를 계산해 그날의 `DailyScore`에 반영한다.
+    ///
+    /// **무효 세션이면 아무것도 쓰지 않는다** — `SaeScorer`가 `nil`을 주고, 그 경우 그날 점수는
+    /// 만들어지지 않는다(score-algorithm §1-3). 억지 숫자를 남기는 것보다 빈칸이 정직하다(제2조 1항).
+    ///
+    /// 하루에 여러 번 측정하면 **같은 날의 기존 점수를 갱신**한다(data-model: 하루 1개).
+    /// "그날의 마지막 유효 측정"이 그날의 점수라는 뜻이다 — 최고 기록만 남기면 좋은 날만 모은
+    /// 기록이 되어 추이가 왜곡된다. 어떤 규칙이 맞는지는 실사용 뒤 재검토할 열린 결정이다.
+    private static func upsertDailyScore(
+        for result: PVTSessionResult, session: PVTSession, in context: ModelContext
+    ) throws {
+        guard let sae = SaeScorer.score(from: result.summary, validity: result.validity) else { return }
+
+        let day = Calendar.current.startOfDay(for: result.startedAt)
+        let nextDay = Calendar.current.date(byAdding: .day, value: 1, to: day) ?? day
+        let sameDay = FetchDescriptor<DailyScore>(
+            predicate: #Predicate { $0.day >= day && $0.day < nextDay }
+        )
+
+        if let existing = try context.fetch(sameDay).first {
+            existing.score = sae.score
+            existing.arousalComponent = sae.arousal.score
+            existing.lapseCount = sae.evidence.lapseCount
+            existing.respondedCount = sae.evidence.respondedCount
+            existing.medianRTms = sae.evidence.medianRTms
+            existing.fastest10PctMeanRTms = sae.evidence.fastest10PctMeanRTms
+            existing.falseStartCount = sae.evidence.falseStartCount
+            existing.session = session
+            return
+        }
+
+        let daily = DailyScore(
+            day: day,
+            score: sae.score,
+            arousalComponent: sae.arousal.score,
+            lapseCount: sae.evidence.lapseCount,
+            respondedCount: sae.evidence.respondedCount,
+            medianRTms: sae.evidence.medianRTms,
+            fastest10PctMeanRTms: sae.evidence.fastest10PctMeanRTms,
+            falseStartCount: sae.evidence.falseStartCount,
+            session: session
+        )
+        context.insert(daily)
     }
 
     /// 무효 사유를 **안정된 코드**로 남긴다. 화면에 보일 문장은 String Catalog가 만든다(제5조 1항).

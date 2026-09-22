@@ -36,6 +36,20 @@ struct TrialClassifierTests {
         #expect(outcome == .noResponse)
     }
 
+    /// 확정된 세션 파라미터를 고정한다: 타임아웃 10초(score-algorithm "Phase 2 확정 ③").
+    ///
+    /// 문턱 직전은 응답(느리지만 잰 것)이고 문턱 이상은 무응답이다. 값이 조용히 바뀌면
+    /// 점수의 lapse율 분모가 달라지므로 테스트로 못 박는다.
+    @Test func defaultTimeoutIsTenSeconds() {
+        #expect(TrialClassifier.defaultTimeoutMs == 10_000.0)
+
+        let justInside = TrialClassifier.classify(stimulusTs: 0, touchTs: 9.999)
+        #expect(justInside == .lapse(reactionTimeMs: 9_999.0))
+
+        let atTimeout = TrialClassifier.classify(stimulusTs: 0, touchTs: 10.0)
+        #expect(atTimeout == .noResponse)
+    }
+
     /// 보정 오프셋이 lapse 경계를 넘나드는지: 520ms 원간격 − 30ms 보정 = 490ms → valid.
     @Test func calibrationOffsetMovesAcrossLapseBoundary() {
         let outcome = TrialClassifier.classify(stimulusTs: 0, touchTs: 0.52, calibrationOffsetMs: 30)

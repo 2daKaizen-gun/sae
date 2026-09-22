@@ -26,9 +26,13 @@ public enum TrialClassifier {
     /// 기본 lapse 임계값 500ms (CONCEPT §1, score-algorithm §1-1, timing-engine §8-1).
     public static let defaultLapseThresholdMs = 500.0
 
-    /// 기본 무응답 타임아웃 30초 — PVT 표준. 확정값은 아니며(score-algorithm §1-3 열린 결정),
-    /// 원자료(timestamp)를 보존하므로 나중에 다른 문턱으로 재계산할 수 있다.
-    public static let defaultTimeoutMs = 30_000.0
+    /// 기본 무응답 타임아웃 **10초**.
+    ///
+    /// 이 값은 **문헌값이 아니라 UX 판단**이다(score-algorithm "Phase 2 확정 ③"). 직전의 30초는
+    /// 무응답 한 번에 30초를 써서 90초 세션과 맞지 않았다. PVT 표준의 정확한 관례값은 확인하지
+    /// 못했으므로 "표준"이라고 부르지 않는다(제2조 1항).
+    /// 원자료(timestamp)를 보존하므로 나중에 다른 문턱으로 **재계산할 수 있다.**
+    public static let defaultTimeoutMs = 10_000.0
 
     /// trial 하나를 분류한다. `touchTs == nil`이면 무응답으로 본다.
     ///

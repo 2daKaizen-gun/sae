@@ -70,6 +70,121 @@
         }
       }
     },
+    "score.arousal": {
+      "comment": "Alertness component behind the score. %.1f = 0-100 component value.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alertness component %.1f"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "覚醒スコア %.1f"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "각성 성분 %.1f"
+          }
+        }
+      }
+    },
+    "score.evidence": {
+      "comment": "Raw metrics the score came from. %1$lld = lapse count, %2$.0f = median reaction time in ms.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "lapses %1$lld · median %2$.0f ms"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ラプス %1$lld回・中央値 %2$.0f ms"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "랩스 %1$lld회 · 중앙값 %2$.0f ms"
+          }
+        }
+      }
+    },
+    "score.missing_signals": {
+      "comment": "States plainly that the MVP score uses PVT only; missing signals are never hidden.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "alertness only — HRV and tremor not measured"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "覚醒のみ — HRV・手の震えは未計測"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "각성만 측정 — HRV·손떨림 없음"
+          }
+        }
+      }
+    },
+    "score.unavailable": {
+      "comment": "Shown when the session failed the validity gate; no score is fabricated.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "no score — the session was not valid"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "スコアなし — 測定が有効ではありません"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "점수 없음 — 유효한 측정이 아니에요"
+          }
+        }
+      }
+    },
+    "score.value": {
+      "comment": "The Sae-do score for the session. %lld = 0-100 score.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sae score %lld"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度 %lld"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度 %lld점"
+          }
+        }
+      }
+    },
     "timinglab.clock_broken": {
       "comment": "Verdict shown when the clock contract is violated; reaction times would be meaningless.",
       "localizations": {

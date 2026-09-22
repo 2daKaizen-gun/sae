@@ -31,6 +31,7 @@ struct TimingLabView: View {
 
             if let result = runner.result {
                 summaryView(result)
+                scoreView(for: result)
             }
 
             storageRow
@@ -145,6 +146,38 @@ struct TimingLabView: View {
             Text(validityLabel(result.validity))
                 .font(.caption)
                 .foregroundStyle(result.validity == .valid ? Color.secondary : Color.red)
+        }
+    }
+
+    /// 冴え度 — 점수와 **그 점수의 근거**를 같이 보인다.
+    ///
+    /// 숫자만 크게 띄우면 블랙박스가 된다(제2조 2항). 성분·원지표·결측 신호를 한 화면에 두어
+    /// "왜 이 점수인가"가 화면에서 바로 답해지게 한다. 무효 세션이면 **점수를 만들지 않고**
+    /// 그 사실을 말한다 — 가짜 숫자보다 "못 쟀다"가 정직하다(§1-3).
+    @ViewBuilder
+    private func scoreView(for result: PVTSessionResult) -> some View {
+        if let sae = SaeScorer.score(from: result.summary, validity: result.validity) {
+            VStack(spacing: 2) {
+                Text(String(format: String(localized: "score.value"), sae.score))
+                    .font(.title2.bold().monospacedDigit())
+                Text(String(format: String(localized: "score.arousal"), sae.arousal.score))
+                    .font(.caption.monospacedDigit())
+                    .foregroundStyle(.secondary)
+                Text(String(
+                    format: String(localized: "score.evidence"),
+                    sae.evidence.lapseCount, sae.evidence.medianRTms
+                ))
+                .font(.caption.monospacedDigit())
+                .foregroundStyle(.secondary)
+                // 결측 신호를 숨기지 않는다 — MVP 점수는 PVT 단독이다(제2조 3항).
+                Text("score.missing_signals")
+                    .font(.caption2)
+                    .foregroundStyle(.tertiary)
+            }
+        } else {
+            Text("score.unavailable")
+                .font(.caption)
+                .foregroundStyle(.secondary)
         }
     }
 

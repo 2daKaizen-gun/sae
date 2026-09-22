@@ -173,7 +173,7 @@ reactionTimeMs = (touch.timestamp − stimulusFrameTimestamp) × 1000 − calibr
 ## 열린 결정
 
 - **응답 이벤트 획득 경로** — `UIKit` 저수준 터치(`UITouch.timestamp`)를 SwiftUI에 어떻게 연결할지(`UIViewRepresentable` 등). 고수준 제스처의 지연을 피하는 게 조건.
-- **타임아웃 문턱**(무응답 → lapse 판정) 값 — PVT 관례 재확인 후 확정.
+- ~~**타임아웃 문턱**(무응답 → lapse 판정) 값~~ → **10초로 확정**(2026-09-23, `score-algorithm.md` Phase 2 확정 ③). **문헌값이 아니라 90초 세션에 맞춘 UX 판단**이며, 원자료 보존으로 재계산 가능하다. PVT 표준 관례값을 확인하면 갱신한다.
 - **보정 상수 확보 시점·방법** — Mac+기기+포토다이오드 확보 후 8-3 수행.
 - **최소 유효 trial 수**(타당도 게이트, `score-algorithm.md` §1-3와 공유).
 

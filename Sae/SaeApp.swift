@@ -10,7 +10,8 @@ struct SaeApp: App {
         WindowGroup {
             ContentView()
         }
-        // trial은 세션과의 관계로 함께 담기므로 세션 하나만 지정하면 된다(data-model).
-        .modelContainer(for: PVTSession.self)
+        // trial은 세션과의 관계로 함께 담기지만, `DailyScore`는 세션에서 역참조가 없어
+        // 스키마에 직접 넣어야 한다(data-model).
+        .modelContainer(for: [PVTSession.self, DailyScore.self])
     }
 }

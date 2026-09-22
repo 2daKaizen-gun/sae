@@ -76,7 +76,11 @@ erDiagram
         Double arousalComponent "PVT 기여분"
         Double autonomicComponent "HRV 기여분 (optional)"
         Double fatigueComponent "손떨림 기여분 (optional)"
-        String explanation "점수 근거 요약 (제2조)"
+        Int lapseCount "설명 재료 — 원지표 (제2조)"
+        Int respondedCount "설명 재료"
+        Double medianRTms "설명 재료"
+        Double fastest10PctMeanRTms "설명 재료"
+        Int falseStartCount "설명 재료"
     }
 ```
 
@@ -101,7 +105,11 @@ HealthKit(애플워치) 또는 스트레치의 카메라 PPG에서 온 HRV(RMSSD
 CoreMotion(가속도/자이로) 약 10초 측정에서 뽑은 생리적 손떨림 지표.
 
 ### `DailyScore` — 冴え度 (2주차~)
-하루 1개. 세 신호를 융합한 0~100 점수. **구성요소를 분리 저장**해 설명 가능성을 보장하고(`explanation`), さえちゃん 대사는 이 값을 왜곡 없이 전달한다(제4조). HRV·손떨림이 없는 날은 각성(PVT) 성분만으로도 산출 가능하도록 두 성분은 optional.
+하루 1개. 세 신호를 융합한 0~100 점수. **구성요소를 분리 저장**해 설명 가능성을 보장하고, さえちゃん 대사는 이 값을 왜곡 없이 전달한다(제4조). HRV·손떨림이 없는 날은 각성(PVT) 성분만으로도 산출 가능하도록 두 성분은 optional이며, **MVP에서는 항상 nil**이다(Phase 2 확정 ①).
+
+**`explanation` 문자열 대신 원지표를 저장한다 (2026-09-23 변경).** 설명을 문장으로 저장하면 **저장 시점의 언어가 박제**되어, 사용자가 언어를 바꾸거나 카피를 고치면 과거 기록만 옛 문장으로 남는다(제5조 2항). 그래서 문장 대신 **문장을 만들 재료**(`lapseCount`·`respondedCount`·`medianRTms`·`fastest10PctMeanRTms`·`falseStartCount`)를 저장하고, 문장은 표시 계층이 String Catalog로 만든다. 저장물이 요약문이 아니라 **검증 가능한 숫자**가 되므로 설명 가능성(제2조 2항)은 오히려 강해진다.
+
+**무효 세션은 `DailyScore`를 만들지 않는다.** 억지 점수 대신 그날을 빈칸으로 둔다(score-algorithm §1-3). 하루에 여러 번 측정하면 **그날의 마지막 유효 측정**으로 갱신한다 — 최고 기록만 남기면 좋은 날만 모은 기록이 되어 추이가 왜곡된다. 이 규칙은 실사용 후 재검토할 열린 결정이다.
 
 ---
 
