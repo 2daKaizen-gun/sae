@@ -50,9 +50,11 @@ final class PVTSessionRunner: NSObject, ObservableObject {
     /// 그대로 남긴다(제2조 3항 — 한계를 숨기지 않는다).
     nonisolated static let calibrationOffsetMs: Double = 0
 
-    /// 기본 trial 수. 90초 세션의 최종 trial 수는 아직 확정 전이라(score-algorithm 열린 결정),
-    /// 지금은 검증을 빠르게 돌릴 수 있는 값으로 둔다.
-    nonisolated static let defaultTrialCount = 5
+    /// 기본 trial 수 **12** (score-algorithm "Phase 2 확정 ②").
+    ///
+    /// 시간(90초)이 아니라 **개수를 고정**한다 — lapse율의 분모가 세션마다 같아야 날짜 간 비교가
+    /// 성립하기 때문이다(score-algorithm §1-1). ISI 평균 6초 + 응답으로 실제 소요는 80초 안팎.
+    nonisolated static let defaultTrialCount = 12
 
     /// 측정이 도는 중인가.
     @Published private(set) var isRunning = false
