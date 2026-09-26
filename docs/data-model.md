@@ -4,7 +4,7 @@
 > 범위는 MVP 4주 계획(`CONCEPT.md` §7). 그 너머는 **Deferred**로 명시해 미리 만들지 않는다(헌법 제7조).
 > 모든 데이터는 **온디바이스**에 남고 서버로 보내지 않는다(제3조).
 
-- **최종 수정:** 2026-09-22 (Phase 1 구현 반영: `invalidReason` 추가, `stimulusAt` optional)
+- **최종 수정:** 2026-09-23 (Phase 2: `DailyScore` 원지표 저장·무효 세션 규칙 반영)
 - **저장소:** SwiftData (로컬)
 
 ---
