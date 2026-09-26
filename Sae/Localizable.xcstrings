@@ -1,31 +1,8 @@
 {
   "sourceLanguage": "en",
   "strings": {
-    "app.lapse_threshold_ms": {
-      "comment": "Placeholder showing the lapse threshold constant sourced from the SaeTiming core. %lld = milliseconds.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Lapse threshold: %lld ms"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ラプス閾値：%lld ms"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "랩스 임계값: %lld ms"
-          }
-        }
-      }
-    },
     "app.tagline": {
-      "comment": "App tagline shown under the title on the placeholder screen.",
+      "comment": "App tagline shown under the title on the first screen.",
       "localizations": {
         "en": {
           "stringUnit": {

@@ -18,7 +18,7 @@ public enum SessionValidity: Equatable {
 /// 세션 타당도 게이트 — score-algorithm §1-3.
 ///
 /// 제2조(가짜 숫자 금지): 억지로 점수를 만들기보다 "오늘은 못 쟀어요"가 정직하다.
-/// 무효 세션은 `DailyScore`를 만들지 않거나 "측정 불충분"으로 표시하는 근거가 된다.
+/// 무효 세션은 `DailyScore`를 만들지 않고, 화면에는 점수 대신 무효 사유를 보인다.
 /// 임계값은 문서의 예시값이며 튜닝 대상(score-algorithm 열린 결정).
 public enum SessionValidator {
     /// 이 수 **이상**의 false start면 무효(score-algorithm §1-2 표: 3+ → 세션 무효).

@@ -4,7 +4,7 @@
 > 범위는 MVP 4주 계획(`CONCEPT.md` §7). 그 너머는 **Deferred**로 명시해 미리 만들지 않는다(헌법 제7조).
 > 모든 데이터는 **온디바이스**에 남고 서버로 보내지 않는다(제3조).
 
-- **최종 수정:** 2026-09-23 (Phase 2: `DailyScore` 원지표 저장·무효 세션 규칙 반영)
+- **최종 수정:** 2026-09-26 (코드 정합: 무응답≠lapse, `DailyScore.session` 관계·날짜 조회 확정)
 - **저장소:** SwiftData (로컬)
 
 ---
@@ -22,7 +22,7 @@
 ```mermaid
 erDiagram
     PVTSession ||--|{ PVTTrial : "has trials"
-    DailyScore }o--o{ PVTSession : "aggregates"
+    DailyScore }o--o| PVTSession : "scored from (last valid)"
     DailyScore }o--o{ HRVReading : "aggregates"
     DailyScore }o--o{ TremorReading : "aggregates"
 
@@ -81,6 +81,7 @@ erDiagram
         Double medianRTms "설명 재료"
         Double fastest10PctMeanRTms "설명 재료"
         Int falseStartCount "설명 재료"
+        PVTSession session "근거 세션 (optional)"
     }
 ```
 
@@ -94,7 +95,7 @@ erDiagram
 `invalidReason`은 무효 판정의 **근거**를 안정된 코드(`tooManyFalseStarts` / `tooFewValidTrials`)로 남긴다. "왜 무효인가"에 답하지 못하면 판정이 블랙박스가 된다(제2조 2항). 화면 문장은 코드가 아니라 String Catalog가 만든다(제5조 1항).
 
 ### `PVTTrial` — 한 번의 자극-반응
-한 세션은 여러 trial을 가진다(`||--|{`). 각 trial은 랜덤 대기(`interStimulusMs`, 2~10초) 후 자극→탭까지의 반응시간을 밀리초로 기록. 무응답(타임아웃)이면 `reactionTimeMs`는 null, `isLapse=true`. **이 원자료가 있어야 정확도를 사후 검증**할 수 있다(제1조 3항, 제2조 1항).
+한 세션은 여러 trial을 가진다(`||--|{`). 각 trial은 랜덤 대기(`interStimulusMs`, 2~10초) 후 자극→탭까지의 반응시간을 밀리초로 기록. 무응답(타임아웃)이면 `reactionTimeMs`는 null이고 `isLapse=false`·`isFalseStart=false`다 — **무응답은 lapse와 따로 센다.** lapse는 "느리지만 응답한" trial(RT > 500ms)이라 RT 통계와 lapse율(분모 = 응답 수)에 들어가고, 무응답은 RT가 없어 어느 쪽에도 넣지 않는다(`TrialOutcome`, score-algorithm §1-1). **이 원자료가 있어야 정확도를 사후 검증**할 수 있다(제1조 3항, 제2조 1항).
 
 `stimulusAt`은 **null일 수 있다**: false start는 자극이 켜지기 전에 누른 것이라 기록할 온셋이 없다. 예정돼 있던 목표 시각을 마치 표시된 것처럼 적으면 없는 측정을 지어내는 셈이 된다(제2조 1항). 벽시계 값(`stimulusAt`·`respondedAt`)은 **사람이 읽기 위한 기록**이고, 반응시간은 단조 시계로 이미 계산돼 저장된다 — 저장된 두 Date를 빼서 RT를 재구성하지 않는다(timing-engine §2).
 
@@ -116,7 +117,8 @@ CoreMotion(가속도/자이로) 약 10초 측정에서 뽑은 생리적 손떨�
 ## 관계 요약
 
 - `PVTSession 1 : N PVTTrial` — 소유 관계(cascade delete). 세션을 지우면 trial도 지운다.
-- `DailyScore N : M {PVTSession, HRVReading, TremorReading}` — 하루의 점수는 그날의 측정들을 참조해 계산. (구현 시 날짜 기준 조회로 단순화할지, 명시적 관계로 둘지는 2주차 스키마 작업에서 확정.)
+- `DailyScore → PVTSession` (to-one, optional) — **그날 점수를 만든 마지막 유효 세션**을 가리킨다. 원자료까지 거슬러 올라가 사후 검증하기 위해서다(제1조 3항). 같은 날의 `DailyScore`는 `day`(자정 기준) **날짜 조회**로 찾아 갱신한다(2026-09-23 구현으로 확정).
+- `DailyScore ↔ {HRVReading, TremorReading}` — MVP 점수에 넣지 않으므로 아직 관계 없음. 3주차에 성분으로 합류할 때 정한다.
 
 ---
 
@@ -130,6 +132,6 @@ CoreMotion(가속도/자이로) 약 10초 측정에서 뽑은 생리적 손떨�
 
 ## 열린 결정 (스키마 확정 전 정할 것)
 
-- `DailyScore`의 집계를 **날짜 쿼리**로 할지 **명시적 관계**로 할지 (2주차).
+- ~~`DailyScore`의 집계를 날짜 쿼리로 할지 명시적 관계로 할지~~ → **둘 다**: 같은 날 조회는 `day` 날짜 쿼리, 근거 세션은 to-one 관계 `session`(2026-09-23 구현).
 - 冴え度 산출 **가중치·공식** — `docs/score-algorithm.md`에 정의(제2조 2항, 설명 가능성).
 - SwiftData 마이그레이션 전략 — 스키마 변경이 잦을 초기엔 가벼운 버전만.

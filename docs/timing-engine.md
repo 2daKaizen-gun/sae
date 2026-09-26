@@ -6,7 +6,7 @@
 > 코드 이전의 설계 문서 — 빌드는 macOS+Xcode가 필요하나, **오차원 분석·보정·테스트 전략은
 > 여기서 확정**한다.
 
-- **최종 수정:** 2026-07-20
+- **최종 수정:** 2026-09-26 (앱은 세션마다 새 ISI 시드 · 타임아웃 10초 확정 반영)
 - **상태:** 설계 문서 (구현은 1주차, `CONCEPT.md` §7)
 - **관련 스키마:** `PVTSession.displayRefreshHz` · `PVTSession.calibrationOffsetMs` · `PVTTrial`(`stimulusAt`/`respondedAt`/`reactionTimeMs`)
 
@@ -134,7 +134,7 @@ reactionTimeMs = (touch.timestamp − stimulusFrameTimestamp) × 1000 − calibr
 - RT 계산을 **순수 함수**로 뽑는다: `rt(stimulusTs, touchTs, offset) -> ms`. 부작용·UI 없음.
 - **합성 타임스탬프 주입**으로 검증: 알려진 입력 → 기대 출력. 경계값(오프셋, 음수 방지, 타임아웃=무응답 null), 반올림.
 - lapse(>500ms)·false start(자극 전 탭 → 음수 간격) 분류 로직도 순수 함수로 테스트.
-- ISI 스케줄러: 시드 고정 난수로 **결정적**으로 만들어 재현 가능하게(테스트 용이성).
+- ISI 스케줄러: 시드 고정 난수로 **결정적**으로 만들어 재현 가능하게(테스트 용이성). 단 **앱은 세션마다 새 시드**를 쓴다 — 상수 시드면 매 세션 같은 간격 수열이 나와 자극을 예측할 수 있게 된다. 실제 간격은 `PVTTrial.interStimulusMs`로 남으므로 재현성은 원자료가 보장한다.
 
 ### 8-2. 시계 계약 테스트
 - `UITouch.timestamp`와 `CADisplayLink.timestamp`가 **동일 단조 기준**이라는 가정을 검증(둘의 차가 단조·양수 범위인지). 가정이 깨지면 설계 전제가 무너지므로 명시적으로 확인.
@@ -173,7 +173,7 @@ reactionTimeMs = (touch.timestamp − stimulusFrameTimestamp) × 1000 − calibr
 ## 열린 결정
 
 - **응답 이벤트 획득 경로** — `UIKit` 저수준 터치(`UITouch.timestamp`)를 SwiftUI에 어떻게 연결할지(`UIViewRepresentable` 등). 고수준 제스처의 지연을 피하는 게 조건.
-- ~~**타임아웃 문턱**(무응답 → lapse 판정) 값~~ → **10초로 확정**(2026-09-23, `score-algorithm.md` Phase 2 확정 ③). **문헌값이 아니라 90초 세션에 맞춘 UX 판단**이며, 원자료 보존으로 재계산 가능하다. PVT 표준 관례값을 확인하면 갱신한다.
+- ~~**타임아웃 문턱**(무응답 판정) 값~~ → **10초로 확정**(2026-09-23, `score-algorithm.md` Phase 2 확정 ③). **문헌값이 아니라 90초 세션에 맞춘 UX 판단**이며, 원자료 보존으로 재계산 가능하다. PVT 표준 관례값을 확인하면 갱신한다.
 - **보정 상수 확보 시점·방법** — Mac+기기+포토다이오드 확보 후 8-3 수행.
 - **최소 유효 trial 수**(타당도 게이트, `score-algorithm.md` §1-3와 공유).
 
