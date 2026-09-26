@@ -79,8 +79,13 @@ final class PVTSessionRunner: NSObject, ObservableObject {
     private var sessionStartTime: TimeInterval?
     private var sessionStartedAt: Date?
 
-    /// 시드 고정 ISI로 한 세션을 시작한다. 같은 시드는 같은 자극 간격 수열을 준다(재현 가능성).
-    func run(trialCount: Int = defaultTrialCount, seed: UInt64 = 20_260_726) {
+    /// 한 세션을 시작한다. 시드는 **세션마다 새로 뽑는다.**
+    ///
+    /// 시드를 상수로 두면 매일 같은 12개 간격이 같은 순서로 나와, 사용자가 리듬을 외워 자극을
+    /// **예측**할 수 있다. PVT는 대기가 예측 불가능해야 각성을 재는 검사다 — 예측하면 false start가
+    /// 늘거나 RT가 실제보다 빨라진다(제1조). 재현 가능성은 잃지 않는다: 실제로 쓰인 간격은 trial마다
+    /// `interStimulusMs`로 저장되고, 시드 결정성은 `ISIScheduler` 테스트가 계속 증명한다.
+    func run(trialCount: Int = defaultTrialCount, seed: UInt64 = .random(in: .min ... .max)) {
         stop()
         trials = []
         result = nil

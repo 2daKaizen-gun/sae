@@ -134,7 +134,7 @@ reactionTimeMs = (touch.timestamp − stimulusFrameTimestamp) × 1000 − calibr
 - RT 계산을 **순수 함수**로 뽑는다: `rt(stimulusTs, touchTs, offset) -> ms`. 부작용·UI 없음.
 - **합성 타임스탬프 주입**으로 검증: 알려진 입력 → 기대 출력. 경계값(오프셋, 음수 방지, 타임아웃=무응답 null), 반올림.
 - lapse(>500ms)·false start(자극 전 탭 → 음수 간격) 분류 로직도 순수 함수로 테스트.
-- ISI 스케줄러: 시드 고정 난수로 **결정적**으로 만들어 재현 가능하게(테스트 용이성).
+- ISI 스케줄러: 시드 고정 난수로 **결정적**으로 만들어 재현 가능하게(테스트 용이성). 단 **앱은 세션마다 새 시드**를 쓴다 — 상수 시드면 매 세션 같은 간격 수열이 나와 자극을 예측할 수 있게 된다. 실제 간격은 `PVTTrial.interStimulusMs`로 남으므로 재현성은 원자료가 보장한다.
 
 ### 8-2. 시계 계약 테스트
 - `UITouch.timestamp`와 `CADisplayLink.timestamp`가 **동일 단조 기준**이라는 가정을 검증(둘의 차가 단조·양수 범위인지). 가정이 깨지면 설계 전제가 무너지므로 명시적으로 확인.
