@@ -59,7 +59,7 @@
 
 ## [2026-09-26] 정합 점검 — Phase 2 기록 보강 · 문서/GitHub 동기화
 
-**한 줄 상태:** 전 파일·GitHub 상태를 실측 점검했다. 코드는 건강하다(테스트 70개 그린, 앱 빌드 성공, 로컬=원격). 다만 **Phase 2(PR #6)가 머지됐는데 문서가 한 단계 뒤처져** 있어 handoff·README·CONCEPT·data-model을 실제 상태로 맞추고, 이슈 #4를 Done-when 근거와 함께 닫고, 머지된 원격 브랜치를 정리했다. 새 기능 작업은 없음.
+**한 줄 상태:** 전 파일·GitHub 상태를 실측 점검했다. 코드는 건강하다(테스트 70개 그린, 앱 빌드 성공, 로컬=원격). 다만 **Phase 2(PR #6)가 머지됐는데 문서가 한 단계 뒤처져** 있어 handoff·README·CONCEPT·data-model을 실제 상태로 맞추고, 이슈 #4를 Done-when 근거와 함께 닫고, 머지된 브랜치의 로컬 추적 ref를 정리했다. 새 기능 작업은 없음.
 
 ### ✅ 완료된 것 (검증됨)
 - **실측:** `main` = `origin/main`(`ffe601b`), tree clean / `swift test` **70개·10 스위트 그린** / `xcodebuild` iPhone 17 Pro 시뮬 **BUILD SUCCEEDED** / String Catalog **31키 전부 ja·en·ko**
@@ -67,7 +67,7 @@
 - **README Status** — "Phase 1·45 tests·점수는 이후"였던 것을 Phase 2 완료·70 tests·冴え度 점수 동작으로 교체
 - **CONCEPT 다음 작업** — 점수화 완료, 추이 차트 남음으로 갱신 / **data-model** 헤더 날짜 정합
 - **이슈 #4 CLOSED** — Done-when 5개를 PR #6 검증 기록과 대조해 체크 후 근거 코멘트와 함께 닫음
-- **원격 브랜치 `phase2-sae-score` 삭제**(PR #6 머지 완료분)
+- **브랜치 정리** — `phase2-sae-score`는 GitHub에서 이미 삭제돼 있었고 로컬 추적 ref만 남아 있어 `git fetch --prune`으로 정리. 원격 브랜치는 `main`뿐(API로 확인)
 
 ### 🔄 진행 중 (미완)
 - 없음
