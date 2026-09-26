@@ -3,7 +3,7 @@ import Foundation
 /// 각성 성분 계산 결과 — 점수와 **그 점수가 나온 재료**를 함께 들고 있다.
 ///
 /// 성분값만 돌려주면 "왜 60점인가"에 답할 수 없다(제2조 2항). 하위지표 3개와 벌점까지
-/// 남겨야 화면·`DailyScore.explanation`이 근거를 그대로 옮길 수 있다.
+/// 남겨야 결과 화면이 근거를 그대로 옮길 수 있다.
 public struct ArousalScore: Equatable {
     /// lapse율 하위지표(0~100).
     public let lapseRateScore: Double
