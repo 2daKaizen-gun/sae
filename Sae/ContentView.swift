@@ -3,6 +3,7 @@ import SwiftUI
 /// 앱 내 이동 목적지.
 enum Route: Hashable {
     case timingLab
+    case trend
 }
 
 /// 첫 화면 — 앱 이름·태그라인과 타이밍 랩으로 가는 입구.
@@ -22,15 +23,20 @@ struct ContentView: View {
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
 
+                NavigationLink(value: Route.trend) {
+                    Text("trend.link")
+                }
+                .padding(.top, 8)
+
                 NavigationLink(value: Route.timingLab) {
                     Text("timinglab.link")
                 }
-                .padding(.top, 8)
             }
             .padding()
             .navigationDestination(for: Route.self) { route in
                 switch route {
                 case .timingLab: TimingLabView()
+                case .trend: TrendView()
                 }
             }
         }
