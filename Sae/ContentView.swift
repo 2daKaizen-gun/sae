@@ -42,8 +42,10 @@ struct ContentView: View {
         }
         .onAppear {
             #if DEBUG
-            // 개발 확인용: `-autolab` 실행 인자로 타이밍 랩에 바로 진입(시뮬 자동화).
+            // 개발 확인용 실행 인자(시뮬 자동화). `-autolab`: 타이밍 랩에 바로 진입.
             if CommandLine.arguments.contains("-autolab") { path = [.timingLab] }
+            // `-trendDemo`: 메모리 전용 데모 데이터로 추이 화면에 바로 진입(SaeApp·TrendDemo).
+            if TrendDemo.isRequested { path = [.trend] }
             #endif
         }
     }

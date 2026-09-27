@@ -42,6 +42,17 @@ struct TrendView: View {
         .padding()
         .navigationTitle("trend.title")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            #if DEBUG
+            // 개발 확인용: `-trendSelect N`으로 N일 전을 미리 골라 근거 표시를 확인한다(시뮬 자동화).
+            let args = CommandLine.arguments
+            if let i = args.firstIndex(of: "-trendSelect"), i + 1 < args.count, let daysAgo = Int(args[i + 1]) {
+                selectedDay = Calendar.current.date(
+                    byAdding: .day, value: -daysAgo, to: Calendar.current.startOfDay(for: Date())
+                )
+            }
+            #endif
+        }
     }
 
     /// 점수 있는 날만 표시한다. 빈칸은 마크가 없다는 것 자체로 드러난다.

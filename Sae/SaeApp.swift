@@ -8,7 +8,16 @@ import SwiftData
 struct SaeApp: App {
     var body: some Scene {
         WindowGroup {
+            #if DEBUG
+            // 추이 화면 검증용: 메모리 전용 데모 저장소로 바꿔 끼운다. 실제 저장소는 건드리지 않는다.
+            if TrendDemo.isRequested {
+                ContentView().modelContainer(TrendDemo.container)
+            } else {
+                ContentView()
+            }
+            #else
             ContentView()
+            #endif
         }
         // trial은 세션과의 관계로 함께 담기지만, `DailyScore`는 세션에서 역참조가 없어
         // 스키마에 직접 넣어야 한다(data-model).
