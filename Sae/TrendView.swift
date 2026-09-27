@@ -15,6 +15,11 @@ struct TrendView: View {
 
     private let windowDays = ScoreTrend.defaultWindowDays
 
+    /// 차트가 지금 가리키는 x값. 손을 떼면 `nil`로 돌아간다.
+    @State private var rawSelection: Date?
+    /// 마지막으로 고른 날(자정). 손을 떼도 근거가 화면에 남도록 따로 들고 있는다.
+    @State private var selectedDay: Date?
+
     var body: some View {
         let days = ScoreTrend.days(
             from: scores, day: \.day, endingOn: Date(), windowDays: windowDays, calendar: .current
@@ -23,6 +28,7 @@ struct TrendView: View {
         VStack(alignment: .leading, spacing: 12) {
             if days.contains(where: { $0.entry != nil }) {
                 chart(days)
+                selectionDetail(days)
                 Text("trend.gap_note")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -55,10 +61,47 @@ struct TrendView: View {
                     )
                 }
             }
+            if let selectedDay {
+                RuleMark(x: .value("trend.axis_day", selectedDay, unit: .day))
+                    .foregroundStyle(.secondary.opacity(0.4))
+            }
+        }
+        .chartXSelection(value: $rawSelection)
+        .onChange(of: rawSelection) { _, value in
+            if let value { selectedDay = Calendar.current.startOfDay(for: value) }
         }
         .chartYScale(domain: 0...100)
         .chartXScale(domain: xDomain(days))
         .frame(height: 240)
+    }
+
+    /// 고른 날의 근거 — 점수만이 아니라 **그 점수를 만든 원지표**를 보인다(제2조 2항).
+    ///
+    /// 빈칸을 고르면 "유효한 측정 없음"이라고 말한다. 점수가 없는 날에 숫자를 보이지 않는다.
+    @ViewBuilder
+    private func selectionDetail(_ days: [TrendDay<DailyScore>]) -> some View {
+        if let selectedDay, let day = days.first(where: { $0.day == selectedDay }) {
+            let date = day.day.formatted(date: .abbreviated, time: .omitted)
+            VStack(alignment: .leading, spacing: 2) {
+                if let entry = day.entry {
+                    Text(String(format: String(localized: "trend.day_score"), date, entry.score))
+                        .font(.headline.monospacedDigit())
+                    Text(String(
+                        format: String(localized: "score.evidence"), entry.lapseCount, entry.medianRTms
+                    ))
+                    .font(.caption.monospacedDigit())
+                    .foregroundStyle(.secondary)
+                } else {
+                    Text(String(format: String(localized: "trend.no_measurement"), date))
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+            }
+        } else {
+            Text("trend.select_hint")
+                .font(.caption)
+                .foregroundStyle(.tertiary)
+        }
     }
 
     /// 창 전체를 x축에 고정한다. 데이터가 있는 날만으로 축을 잡으면 빈칸이 축 밖으로 사라진다.

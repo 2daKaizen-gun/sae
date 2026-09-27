@@ -737,6 +737,29 @@
         }
       }
     },
+    "trend.day_score": {
+      "comment": "Selected day and its score. %1$@ = localized date, %2$lld = 0-100 Sae-do score.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ — Sae score %2$lld"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ — 冴え度 %2$lld"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ — 冴え度 %2$lld점"
+          }
+        }
+      }
+    },
     "trend.empty": {
       "comment": "Shown when there is no valid score in the trend window. %lld = number of days in the window.",
       "localizations": {
@@ -802,6 +825,52 @@
           "stringUnit": {
             "state": "translated",
             "value": "冴え度 추이"
+          }
+        }
+      }
+    },
+    "trend.no_measurement": {
+      "comment": "Shown for a selected day that has no valid score. %@ = the localized date.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ — no valid measurement."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ — 有効な測定なし"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ — 유효한 측정 없음"
+          }
+        }
+      }
+    },
+    "trend.select_hint": {
+      "comment": "Hint under the trend chart before any day is selected.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Touch a day to see what produced its score."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日をタッチすると、そのスコアの根拠が表示されます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "날짜를 터치하면 그 점수의 근거가 보입니다."
           }
         }
       }
