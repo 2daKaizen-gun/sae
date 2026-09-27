@@ -690,6 +690,213 @@
           }
         }
       }
+    },
+    "trend.axis_day": {
+      "comment": "Chart axis label (read by VoiceOver) for the calendar day.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Day"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日付"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "날짜"
+          }
+        }
+      }
+    },
+    "trend.axis_score": {
+      "comment": "Chart axis label (read by VoiceOver) for the 0-100 Sae-do score.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sae score"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度"
+          }
+        }
+      }
+    },
+    "trend.day_score": {
+      "comment": "Selected day and its score. %1$@ = localized date, %2$lld = 0-100 Sae-do score.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ — Sae score %2$lld"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ — 冴え度 %2$lld"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ — 冴え度 %2$lld점"
+          }
+        }
+      }
+    },
+    "trend.empty": {
+      "comment": "Shown when there is no valid score in the trend window. %lld = number of days in the window.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No valid score in the last %lld days."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "直近%lld日間に有効なスコアがありません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "최근 %lld일 동안 유효한 점수가 없습니다."
+          }
+        }
+      }
+    },
+    "trend.gap_note": {
+      "comment": "Explains why the line is broken on some days: those days had no valid measurement, and the chart does not fill them in.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blank days had no valid measurement. They are left empty, not filled in."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "空白の日は有効な測定がなかった日です。値で埋めずにそのまま空けています。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "빈 날은 유효한 측정이 없던 날입니다. 값을 채우지 않고 비워 둡니다."
+          }
+        }
+      }
+    },
+    "trend.link": {
+      "comment": "Navigation link from the home screen to the daily score trend.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sae score trend"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度の推移"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度 추이"
+          }
+        }
+      }
+    },
+    "trend.no_measurement": {
+      "comment": "Shown for a selected day that has no valid score. %@ = the localized date.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ — no valid measurement."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ — 有効な測定なし"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ — 유효한 측정 없음"
+          }
+        }
+      }
+    },
+    "trend.select_hint": {
+      "comment": "Hint under the trend chart before any day is selected.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Touch a day to see what produced its score."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日をタッチすると、そのスコアの根拠が表示されます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "날짜를 터치하면 그 점수의 근거가 보입니다."
+          }
+        }
+      }
+    },
+    "trend.title": {
+      "comment": "Title of the daily score trend screen.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trend"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "推移"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "추이"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
