@@ -53,16 +53,17 @@ Development is governed by a small **[project constitution](docs/CONSTITUTION.md
 
 ## Status
 
-🚧 **In active development — week 2 done: the Sae-do score and its daily trend.** Next: tremor (CoreMotion) and HRV (HealthKit). Implementation follows a 4-week MVP plan (see [`docs/CONCEPT.md`](docs/CONCEPT.md) §7).
+🚧 **In active development — week 3 underway: HRV from HealthKit shown as a reference metric.** Next: tremor (CoreMotion) and the design system. Implementation follows a 4-week MVP plan (see [`docs/CONCEPT.md`](docs/CONCEPT.md) §7).
 
 **Working today**
 
-- **Pure timing & scoring core** (`SaeTiming`, a local Swift package with no platform dependencies): reaction-time math, lapse / false-start / no-response classification, seeded ISI scheduler, session aggregation, validity gate, stimulus-schedule state machine, the clock contract, and the Sae-do score. Proven by **76 Swift Testing cases** that run without a simulator.
+- **Pure timing & scoring core** (`SaeTiming`, a local Swift package with no platform dependencies): reaction-time math, lapse / false-start / no-response classification, seeded ISI scheduler, session aggregation, validity gate, stimulus-schedule state machine, the clock contract, the Sae-do score, the day-by-day trend series and HRV sample selection. Proven by **82 Swift Testing cases** that run without a simulator.
 - **Measurement runtime**: stimulus onset taken from the `CADisplayLink` frame timestamp, response from `UITouch.timestamp` via a low-level touch path, no animation or async work inside the timing loop. A session is **12 trials** with a 10s response timeout.
 - **Clock contract verified at runtime** — both timestamps are checked against a common clock, because reaction time is a direct subtraction and is meaningless if the two come from different bases.
 - **Explainable Sae-do score (0–100)** — raw PVT metrics map onto sub-indices, combine into an alertness component, and produce the final score. The tests reproduce the worked example published in [`score-algorithm.md`](docs/score-algorithm.md) §6 to the same number, so the code and the document cannot silently drift. An **invalid session produces no score** rather than a made-up low one.
 - **On-device persistence** (SwiftData): raw per-trial data with the refresh rate and calibration offset the session ran under, plus a daily score that stores the raw metrics behind it (not a frozen sentence), so past results can be recomputed and re-explained in any language.
 - **Daily trend chart** (Swift Charts, last 14 days). A day without a valid score stays **blank** — the line is broken there rather than zero-filled or bridged, because either would draw a value that was never measured. Touching a day shows the raw metrics behind its score.
+- **HRV from HealthKit, as a reference only** — read-only access, requested with its reason at the moment it is needed, kept on device. HealthKit's HRV is **SDNN** (not RMSSD, which the early design assumed), so it is labelled as SDNN and kept **out of the score** until an SDNN mapping can be sourced. A reading older than 24 hours is not shown as today's.
 - **Trilingual from the first screen** (JA / EN / KO) via String Catalog — the result screen shows the score with its breakdown in all three.
 
 **Deliberately not claimed yet**
@@ -70,7 +71,7 @@ Development is governed by a small **[project constitution](docs/CONSTITUTION.md
 - The **calibration offset is 0 — uncalibrated.** Deriving the real display/touch latency constant needs photodiode hardware ([`timing-engine.md`](docs/timing-engine.md) §8-3), so the app records "uncalibrated" rather than a made-up number.
 - Verified **in the iOS simulator, not yet on a physical device** ([#5](https://github.com/2daKaizen-gun/sae/issues/5)).
 - The MVP score is **PVT-only**: HRV and tremor stay out of the headline number until their anchors can be grounded.
-- HRV, tremor, the character voice layer, and the user-facing UI design are later phases; the current screen is an instrument panel for verifying the engine and the score.
+- HRV in the score, tremor, the character voice layer, and the user-facing UI design are later phases; the current screen is an instrument panel for verifying the engine and the score.
 
 ## Documentation
 
