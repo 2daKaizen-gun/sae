@@ -1,0 +1,30 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "NSHealthShareUsageDescription": {
+      "comment": "System permission prompt: why the app reads heart rate variability (SDNN) from Health. Read-only, on device, not part of the score.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sae reads your heart rate variability from Health to show it next to your result. It stays on this device and is not part of the Sae score."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴えは、結果の横に表示するため「ヘルスケア」から心拍変動を読み取ります。データはこの端末の中だけで扱い、冴え度には含めません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "사에는 결과 옆에 보여 주기 위해 건강 앱에서 심박 변이도를 읽습니다. 데이터는 이 기기 안에서만 다루며 冴え度 점수에는 포함하지 않습니다."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}
