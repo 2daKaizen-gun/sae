@@ -25,7 +25,7 @@ enum TrendDemo {
     @MainActor
     private static func makeContainer() -> ModelContainer {
         let container = try! ModelContainer(
-            for: PVTSession.self, DailyScore.self,
+            for: PVTSession.self, DailyScore.self, HRVReading.self,
             configurations: ModelConfiguration(isStoredInMemoryOnly: true)
         )
         let context = container.mainContext

@@ -4,7 +4,7 @@
 > 범위는 MVP 4주 계획(`CONCEPT.md` §7). 그 너머는 **Deferred**로 명시해 미리 만들지 않는다(헌법 제7조).
 > 모든 데이터는 **온디바이스**에 남고 서버로 보내지 않는다(제3조).
 
-- **최종 수정:** 2026-09-26 (코드 정합: 무응답≠lapse, `DailyScore.session` 관계·날짜 조회 확정)
+- **최종 수정:** 2026-09-29 (`HRVReading.rmssdMs` → `sdnnMs`: HealthKit HRV는 SDNN)
 - **저장소:** SwiftData (로컬)
 
 ---
@@ -56,9 +56,10 @@ erDiagram
     HRVReading {
         UUID id PK
         Date measuredAt
-        Double rmssdMs "심박변이도"
+        Double sdnnMs "심박변이도 SDNN (HealthKit)"
         String source "healthKit | cameraPPG"
         Bool isEstimated "추정치 표시 (제2조)"
+        UUID healthKitSampleID "HealthKit 샘플 키 (중복 저장 방지, optional)"
     }
 
     TremorReading {
@@ -100,7 +101,7 @@ erDiagram
 `stimulusAt`은 **null일 수 있다**: false start는 자극이 켜지기 전에 누른 것이라 기록할 온셋이 없다. 예정돼 있던 목표 시각을 마치 표시된 것처럼 적으면 없는 측정을 지어내는 셈이 된다(제2조 1항). 벽시계 값(`stimulusAt`·`respondedAt`)은 **사람이 읽기 위한 기록**이고, 반응시간은 단조 시계로 이미 계산돼 저장된다 — 저장된 두 Date를 빼서 RT를 재구성하지 않는다(timing-engine §2).
 
 ### `HRVReading` — 자율신경/회복 (2~3주차)
-HealthKit(애플워치) 또는 스트레치의 카메라 PPG에서 온 HRV(RMSSD). `source`로 출처, `isEstimated`로 추정 여부를 명시한다(제2조 3항).
+HealthKit(애플워치) 또는 스트레치의 카메라 PPG에서 온 HRV. **HealthKit이 주는 HRV는 SDNN**이라 필드도 `sdnnMs`다(2026-09-29 정정 — 처음엔 RMSSD로 적었으나 HealthKit에 RMSSD 타입은 없다). 카메라 PPG를 도입하면 그때 지표를 다시 정한다. `healthKitSampleID`는 HealthKit 샘플의 UUID로, 같은 샘플을 다시 읽어도 **한 번만 저장**하게 하는 키다(2026-09-29 추가). HRV는 **冴え度에 들어가지 않는 참고 지표**다(score-algorithm §2). `source`로 출처, `isEstimated`로 추정 여부를 명시한다(제2조 3항).
 
 ### `TremorReading` — 신체 피로 (3주차)
 CoreMotion(가속도/자이로) 약 10초 측정에서 뽑은 생리적 손떨림 지표.

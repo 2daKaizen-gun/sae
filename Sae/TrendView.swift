@@ -126,5 +126,5 @@ struct TrendView: View {
 
 #Preview {
     NavigationStack { TrendView() }
-        .modelContainer(for: [PVTSession.self, DailyScore.self], inMemory: true)
+        .modelContainer(for: [PVTSession.self, DailyScore.self, HRVReading.self], inMemory: true)
 }
