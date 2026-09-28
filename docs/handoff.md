@@ -59,7 +59,7 @@
 
 ## [2026-09-29] Phase 3a — HealthKit HRV(참고 지표)
 
-**한 줄 상태:** 이슈 #10을 먼저 올리고 7커밋으로 HRV를 **점수 밖 참고 지표**로 들였다: 문서 정정(RMSSD→SDNN) → 순수 선택 로직 → HealthKit 설정 → 저장 모델 → 조회 → 결과 화면 → 문서. 브랜치 `phase3a-hrv` → PR. **#10은 열어둔다** — 권한 시트 이후 흐름(허용 → 값/없음 표시)은 탭이 필요한데 이번 세션엔 시뮬 탭이 불가능했다.
+**한 줄 상태:** 이슈 #10을 먼저 올리고 7커밋으로 HRV를 **점수 밖 참고 지표**로 들였다: 문서 정정(RMSSD→SDNN) → 순수 선택 로직 → HealthKit 설정 → 저장 모델 → 조회 → 결과 화면 → 문서. **PR #11로 `main`에 머지.** 권한 시트 이후 흐름은 처음엔 탭이 막혀 미관찰이었으나, 같은 날 권한이 돌아와 **3가지 모두 시뮬에서 관찰**하고 #10을 닫았다(아래).
 
 ### ✅ 완료된 것 (검증됨)
 - **지표 정정** — HealthKit의 HRV 수치 타입은 `heartRateVariabilitySDNN`(ms) **하나뿐**(iOS SDK `HKTypeIdentifiers.h`로 확인). 문서가 가정한 RMSSD와 다른 통계량이라 **RMSSD 앵커(60/20ms) 철회**, 열린 결정으로. §5 `explanation` 잔재·§6 "왜 62점" 제목도 정리 (`3ab6699`)
@@ -71,13 +71,16 @@
 - **HRV가 점수를 못 바꿈** — `SaeScorer`는 HRV 입력이 없고, 기존 테스트 `missingComponentsAreReported`가 자율신경 결측을 고정
 
 ### 🔄 진행 중 (미완)
-- **권한 시트 이후 흐름 미관찰** — 이번 세션은 이벤트 전송·접근성 권한이 **둘 다 false**(`CGPreflightPostEventAccess`/`AXIsProcessTrusted`), `simctl privacy`엔 health가 없어 탭 없이 진행 불가. 남은 확인 3가지:
+- 없음. 아래는 해결 경위
+- ~~**권한 시트 이후 흐름 미관찰**~~ — 이번 세션은 이벤트 전송·접근성 권한이 **둘 다 false**(`CGPreflightPostEventAccess`/`AXIsProcessTrusted`), `simctl privacy`엔 health가 없어 탭 없이 진행 불가. 남은 확인 3가지:
   1. "건강 앱에서 읽기" → 시스템 시트에 목적 문구가 뜨는지
   2. 허용 후 HRV 기록이 없으면 "최근 24시간의 심박 변이도가 없습니다…"
   3. 건강 앱(시뮬)에 심박 변이도 샘플을 넣은 뒤 다시 실행 → "SDNN __ ms · 측정 __" 표시 + `ZHRVREADING` 1행
+  - **→ 전부 관찰(권한 복구 후):** ① 버튼 → 시스템 시트에 **한국어 목적 문구**, 읽기 항목은 "심박 변이" 하나 ② 토글·허용 → "최근 24시간의 심박 변이도가 없습니다. …접근이 허용되지 않았을 수 있습니다." ③ 건강 앱에 HRV 48ms 입력(건강 앱 설명도 "심장 박동간 측정치의 **표준 편차**" = SDNN) → 다음 세션 종료 후 **시트 없이 자동 조회** → "SDNN 48 ms · 측정 2026년 9월 29일 오전 12:45", DB `48.0|healthKit|isEstimated 0|샘플ID 있음`, DailyScore 수 불변 / 같은 샘플로 세션 한 번 더 → HRV 행 **여전히 1개**(중복 저장 없음)
+  - 탭 요령: 화면 **위쪽** 버튼은 겨냥보다 약 50pt 위로 찍힌다(아래쪽·중간은 정상). 메모리에 기록
 
 ### ▶️ 다음 할 일 (우선순위 순)
-1. 위 3가지 수동 확인(또는 터미널/Claude에 접근성 재허용 후 자동) → #10 닫기
+1. ~~3가지 확인 → #10 닫기~~ → **완료**
 2. Phase 3b 손떨림(CoreMotion) — 시뮬엔 가속도계가 없어 순수 신호처리만 테스트 가능, 실측은 기기(#5와 함께)
 3. Phase 3c 디자인 시스템
 
@@ -92,12 +95,12 @@
 - SDNN 앵커·개인 baseline — 점수 합류 전 필요
 
 ### 🔬 검증 상태
-- `swift test` 82개 그린, 앱 빌드 성공, 스키마 마이그레이션 확인, 권한 전 UI 관찰. **미관찰: 권한 시트·값 표시·없음 표시.** 실기기 미검증
+- `swift test` 82개 그린, 앱 빌드 성공, 스키마 마이그레이션, 권한 전 UI, 권한 시트(ko 문구), 없음 표시, 값 표시·저장·중복 방지까지 시뮬 관찰. 실기기 미검증
 
 ### 📎 관련 파일 · 커밋
 - 순수: `SaeTiming/Sources/SaeTiming/HRVSelection.swift` (+`HRVSelectionTests.swift`)
 - 앱: `Sae/{HealthKitHRV,HRVReadingModel,TimingLabView,SaeApp}.swift`, `Sae/Sae.entitlements`, `Sae/InfoPlist.xcstrings`
-- 커밋: `3ab6699` · `b4f2339` · `e571a39` · `557f662` · `5aef3b7` · `8311ee9` · 이 문서 커밋 / 이슈 **#10 OPEN**
+- 커밋: `3ab6699` · `b4f2339` · `e571a39` · `557f662` · `5aef3b7` · `8311ee9` · 이 문서 커밋 / PR **#11 MERGED** / 이슈 **#10 CLOSED**
 
 ## [2026-09-28] Phase 2b — 冴え度 일별 추이 차트
 
