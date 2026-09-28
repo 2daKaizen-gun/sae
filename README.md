@@ -27,7 +27,7 @@ Built as a portfolio piece for Japanese product ("自社開発") companies, with
 | Signal | Method | iOS tech | Meaning |
 |--------|--------|----------|---------|
 | **Alertness** | PVT reaction-time test (~60–90s) | High-precision timing (`CADisplayLink`) | Core sleep-debt indicator |
-| **Autonomic / stress** | HRV (RMSSD) | HealthKit (Apple Watch) or camera PPG* | Recovery state |
+| **Autonomic / stress** | HRV (SDNN, as HealthKit provides it) | HealthKit (Apple Watch) or camera PPG* | Recovery state |
 | **Physical fatigue** | Physiological hand tremor | CoreMotion (~10s) | Accumulated fatigue |
 
 These fuse into a daily **冴え度 (Sae-do) score, 0–100**, plus a trend chart. *(\*Camera PPG is a stretch goal.)*
