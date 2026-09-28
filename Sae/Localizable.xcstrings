@@ -47,6 +47,167 @@
         }
       }
     },
+    "hrv.explain": {
+      "comment": "Shown before the app has asked for Health access: what will be read and why, before the system prompt appears.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Read heart rate variability from Health to show it here. It stays on this device and does not change the Sae score."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「ヘルスケア」から心拍変動を読み取ってここに表示します。データは端末内だけで扱い、冴え度は変わりません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "건강 앱에서 심박 변이도를 읽어 여기에 보여 줍니다. 데이터는 기기 안에서만 다루며 冴え度는 바뀌지 않습니다."
+          }
+        }
+      }
+    },
+    "hrv.failed": {
+      "comment": "Reading HRV from Health failed with an error.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not read HRV from Health."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ヘルスケアから心拍変動を読み取れませんでした。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "건강 앱에서 심박 변이도를 읽지 못했습니다."
+          }
+        }
+      }
+    },
+    "hrv.none": {
+      "comment": "No usable HRV. HealthKit does not reveal whether read access was denied, so both causes are named.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No HRV in the last 24 hours. Health may have no recent reading, or access may not be granted."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "直近24時間の心拍変動がありません。ヘルスケアに最近の記録がないか、アクセスが許可されていない可能性があります。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "최근 24시간의 심박 변이도가 없습니다. 건강 앱에 최근 기록이 없거나, 접근이 허용되지 않았을 수 있습니다."
+          }
+        }
+      }
+    },
+    "hrv.read_button": {
+      "comment": "Button that asks for Health read access and then reads HRV.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Read HRV from Health"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ヘルスケアから読み取る"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "건강 앱에서 읽기"
+          }
+        }
+      }
+    },
+    "hrv.title": {
+      "comment": "Heading of the HRV block on the result screen. HRV is shown for reference only and does not affect the score.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HRV — reference only, not in the score"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "心拍変動（参考・冴え度には含めません）"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "심박 변이도 — 참고용, 점수에 포함 안 됨"
+          }
+        }
+      }
+    },
+    "hrv.unavailable": {
+      "comment": "Health data is not supported on this device.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Health data is not available on this device."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この端末ではヘルスケアのデータを利用できません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "이 기기에서는 건강 데이터를 사용할 수 없습니다."
+          }
+        }
+      }
+    },
+    "hrv.value": {
+      "comment": "The HRV reading shown. %1$.0f = SDNN in milliseconds, %2$@ = localized time the watch measured it.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SDNN %1$.0f ms · measured %2$@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SDNN %1$.0f ms・測定 %2$@"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SDNN %1$.0f ms · 측정 %2$@"
+          }
+        }
+      }
+    },
     "score.arousal": {
       "comment": "Alertness component behind the score. %.1f = 0-100 component value.",
       "localizations": {
