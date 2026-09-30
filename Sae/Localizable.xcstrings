@@ -254,6 +254,29 @@
         }
       }
     },
+    "score.label": {
+      "comment": "Caption above the large Sae-do number on a score card.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sae score"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度"
+          }
+        }
+      }
+    },
     "score.missing_signals": {
       "comment": "States plainly that the MVP score uses PVT only; missing signals are never hidden.",
       "localizations": {
