@@ -3,15 +3,24 @@ import Foundation
 import SwiftData
 import SaeTiming
 
-/// 추이 화면 검증용 데모 데이터 — **DEBUG 빌드에서, `-trendDemo` 실행 인자가 있을 때만** 쓴다.
+/// 화면 검증용 데모 데이터 — **DEBUG 빌드에서, 데모 실행 인자가 있을 때만** 쓴다.
 ///
-/// 여러 날의 기록은 실제로 며칠을 측정해야 생기므로, 시뮬레이터에서 빈칸·구간 분리·선택을
-/// 확인하려면 데이터를 만들어야 한다. 대신 두 가지를 지킨다:
+/// - `-trendDemo`: 데모 저장소 + 추이 화면으로 바로 진입
+/// - `-homeDemo`: 데모 저장소 + 홈(오늘 점수가 있는 상태)
+/// - `-resultDemo`: 데모 저장소 + 유효 세션의 결과 화면
+///
+/// 여러 날의 기록이나 12번을 제때 누른 유효 세션은 실제로 만들기 어렵다. 그래서 시뮬레이터에서
+/// 화면을 확인하려면 데이터를 만들어야 한다. 대신 두 가지를 지킨다:
 /// 1. **메모리에만 둔다.** 기기의 실제 저장소(`default.store`)에는 한 줄도 쓰지 않는다.
 /// 2. 점수를 손으로 적지 않는다. 가짜 trial로 세션 요약을 만들고 **실제 `SaeScorer`로 계산**해,
 ///    화면의 점수와 근거(lapse·중앙값)가 서로 맞게 한다. 릴리스 빌드에는 이 파일이 없다.
-enum TrendDemo {
-    static var isRequested: Bool { CommandLine.arguments.contains("-trendDemo") }
+enum DemoData {
+    private static let arguments = ["-trendDemo", "-homeDemo", "-resultDemo"]
+
+    /// 데모 저장소를 쓸지.
+    static var isRequested: Bool { arguments.contains(where: CommandLine.arguments.contains) }
+    static var opensTrend: Bool { CommandLine.arguments.contains("-trendDemo") }
+    static var opensResult: Bool { CommandLine.arguments.contains("-resultDemo") }
 
     /// 오늘부터 며칠 전인지 · lapse 수 · 가장 빠른 RT(ms). 빠진 날(2, 5, 6, 10일 전)은 빈칸이다.
     private static let days: [(daysAgo: Int, lapses: Int, fastestMs: Double)] = [
@@ -52,6 +61,23 @@ enum TrendDemo {
             ))
         }
         return container
+    }
+
+    /// 유효한 12-trial 세션 결과 — 결과 화면 확인용. 판정·요약·타당도는 **실제 코어**가 낸다.
+    static func sampleResult() -> PVTSessionResult {
+        let outcomes = (0..<11).map { TrialOutcome.valid(reactionTimeMs: 255 + Double($0) * 9) }
+            + [TrialOutcome.lapse(reactionTimeMs: 540)]
+        let summary = PVTSessionSummary.make(from: outcomes)
+        return PVTSessionResult(
+            startedAt: Date(),
+            startTime: 0,
+            endTime: 78,
+            displayRefreshHz: 60,
+            calibrationOffsetMs: 0,
+            trials: [],
+            summary: summary,
+            validity: SessionValidator.evaluate(summary)
+        )
     }
 }
 #endif

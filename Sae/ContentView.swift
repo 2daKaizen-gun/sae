@@ -16,6 +16,10 @@ enum Route: Hashable {
 /// 4주차 몫이라(`CONCEPT.md` §7), 그 사실을 화면에서 숨기지 않는다.
 struct ContentView: View {
     @State private var path: [Route] = []
+    #if DEBUG
+    /// `-resultDemo`로 띄우는 결과 화면(DemoData).
+    @State private var isShowingDemoResult = false
+    #endif
     @Query(sort: \DailyScore.day, order: .reverse) private var scores: [DailyScore]
 
     /// 오늘 날짜의 점수. `DailyScore.day`는 자정으로 저장된다.
@@ -46,10 +50,16 @@ struct ContentView: View {
             #if DEBUG
             // 개발 확인용 실행 인자(시뮬 자동화). `-autolab`: 타이밍 랩에 바로 진입.
             if CommandLine.arguments.contains("-autolab") { path = [.timingLab] }
-            // `-trendDemo`: 메모리 전용 데모 데이터로 추이 화면에 바로 진입(SaeApp·TrendDemo).
-            if TrendDemo.isRequested { path = [.trend] }
+            // 데모 인자(`DemoData`): 메모리 전용 데모 데이터로 추이 또는 결과 화면을 바로 연다.
+            if DemoData.opensTrend { path = [.trend] }
+            if DemoData.opensResult { isShowingDemoResult = true }
             #endif
         }
+        #if DEBUG
+        .sheet(isPresented: $isShowingDemoResult) {
+            NavigationStack { ResultView(result: DemoData.sampleResult()) }
+        }
+        #endif
     }
 
     private var header: some View {
