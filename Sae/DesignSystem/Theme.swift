@@ -31,6 +31,13 @@ enum SaeTheme {
         static let background = Color(uiColor: .systemGroupedBackground)
         /// 카드 표면.
         static let surface = Color(uiColor: .secondarySystemGroupedBackground)
+        /// 브랜드 색 **위에** 올리는 글자색 — 라이트는 흰색, 다크는 검정.
+        ///
+        /// 다크 모드 브랜드 색(#66B0FA)은 어두운 바탕 위 글자로 읽히도록 밝게 잡았기 때문에, 그 위에
+        /// 흰 글자를 얹으면 대비가 2.29:1로 AA(4.5:1)에 못 미친다. 검정은 9.16:1, 라이트의 흰색은 5.28:1.
+        static let onBrand = Color(uiColor: UIColor { traits in
+            traits.userInterfaceStyle == .dark ? .black : .white
+        })
         /// 문제를 알리는 색(저장 실패·무효 사유). 점수 평가에는 쓰지 않는다.
         static let problem = Color(uiColor: .systemRed)
     }

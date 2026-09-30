@@ -43,6 +43,7 @@ struct TimingLabView: View {
                 runner.run()
             } label: {
                 Text("timinglab.run")
+                    .foregroundStyle(SaeTheme.Palette.onBrand)
             }
             .buttonStyle(.borderedProminent)
             .disabled(runner.isRunning)

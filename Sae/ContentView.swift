@@ -96,6 +96,7 @@ struct ContentView: View {
             NavigationLink(value: Route.timingLab) {
                 Text("home.measure")
                     .frame(maxWidth: .infinity)
+                    .foregroundStyle(SaeTheme.Palette.onBrand)
             }
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
