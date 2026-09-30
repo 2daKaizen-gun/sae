@@ -47,6 +47,121 @@
         }
       }
     },
+    "home.lab_note": {
+      "comment": "Honest note: the measure button still opens the engine's instrument panel; the user-facing test design comes later.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The measurement screen is still the engine's instrument panel. Its user-facing design comes with onboarding."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "測定画面はまだエンジン検証用の計器画面です。ユーザー向けのデザインはオンボーディングと一緒に作ります。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "측정 화면은 아직 엔진 검증용 계측 화면입니다. 사용자용 디자인은 온보딩과 함께 만듭니다."
+          }
+        }
+      }
+    },
+    "home.measure": {
+      "comment": "Primary button on home: start a measurement.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Measure"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "測定する"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "측정하기"
+          }
+        }
+      }
+    },
+    "home.not_measured": {
+      "comment": "Home card title when there is no valid score for today.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not measured today"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日はまだ測定していません"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "오늘은 아직 측정하지 않았어요"
+          }
+        }
+      }
+    },
+    "home.not_measured_note": {
+      "comment": "Home card note when there is no valid score for today; yesterday's score is not shown as today's.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A 90-second test gives today's score. Earlier days are in the trend."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "90秒のテストで今日の冴え度が出ます。過去の日は推移で見られます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "90초 테스트를 하면 오늘의 冴え度가 나옵니다. 지난 날은 추이에서 볼 수 있어요."
+          }
+        }
+      }
+    },
+    "home.today_note": {
+      "comment": "Under today's score on the home screen: which measurement it is.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today's latest valid measurement."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日の最新の有効な測定です。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "오늘의 마지막 유효 측정입니다."
+          }
+        }
+      }
+    },
     "hrv.explain": {
       "comment": "Shown before the app has asked for Health access: what will be read and why, before the system prompt appears.",
       "localizations": {
@@ -618,29 +733,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Δ %.1f ms · %@"
-          }
-        }
-      }
-    },
-    "timinglab.link": {
-      "comment": "Navigation link from the home screen to the developer timing-runtime check.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Timing lab (dev)"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "タイミング検証（開発）"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "타이밍 검증 (개발)"
           }
         }
       }
