@@ -208,25 +208,163 @@
         }
       }
     },
-    "score.arousal": {
-      "comment": "Alertness component behind the score. %.1f = 0-100 component value.",
+    "result.arousal": {
+      "comment": "Metric row: the alertness (PVT) component, 0-100, that the score is made from.",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Alertness component %.1f"
+            "value": "Alertness component"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "覚醒スコア %.1f"
+            "value": "覚醒成分"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "각성 성분 %.1f"
+            "value": "각성 성분"
+          }
+        }
+      }
+    },
+    "result.done": {
+      "comment": "Button that closes the result screen.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "完了"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "완료"
+          }
+        }
+      }
+    },
+    "result.false_starts": {
+      "comment": "Metric row: taps before the stimulus appeared.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "False starts"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "フライング"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "false start"
+          }
+        }
+      }
+    },
+    "result.fastest": {
+      "comment": "Metric row: mean of the fastest 10% of reaction times.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fastest 10% mean"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最速10%の平均"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "가장 빠른 10% 평균"
+          }
+        }
+      }
+    },
+    "result.lapses": {
+      "comment": "Metric row: number of lapses (responses slower than 500 ms).",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lapses (>500 ms)"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ラプス（500 ms超）"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "랩스 (500 ms 초과)"
+          }
+        }
+      }
+    },
+    "result.median": {
+      "comment": "Metric row: median reaction time.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Median reaction time"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "反応時間の中央値"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "반응시간 중앙값"
+          }
+        }
+      }
+    },
+    "result.title": {
+      "comment": "Title of the screen shown after a measurement session ends.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Result"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "結果"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "결과"
           }
         }
       }

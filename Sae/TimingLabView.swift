@@ -16,11 +16,8 @@ struct TimingLabView: View {
     @State private var touchClockCheck: ClockContractResult?
     /// 저장 실패를 삼키지 않기 위한 플래그 — 실패했으면 실패했다고 화면에 말한다(제9조 6항).
     @State private var didSaveFail = false
-    /// 건강 앱 접근을 한 번 요청했는가. 요청 전에는 **이유를 먼저 보이고 버튼으로만** 요청한다(제3조 3항).
-    @AppStorage("hrv.accessRequested") private var hrvAccessRequested = false
-    /// HRV 조회 결과. `nil`이면 아직 읽지 않았다.
-    @State private var hrvOutcome: HealthKitHRV.Outcome?
-    @State private var didHRVFail = false
+    /// 세션이 끝나면 결과 화면(`ResultView`)을 시트로 띄운다.
+    @State private var isShowingResult = false
 
     @Environment(\.modelContext) private var modelContext
     /// 저장된 세션들. 앱을 다시 켜도 남아 있는지가 영속화의 관찰 가능한 증거다.
@@ -36,8 +33,6 @@ struct TimingLabView: View {
 
             if let result = runner.result {
                 summaryView(result)
-                scoreView(for: result)
-                hrvView
             }
 
             storageRow
@@ -45,8 +40,6 @@ struct TimingLabView: View {
             Button {
                 touchClockCheck = nil
                 didSaveFail = false
-                hrvOutcome = nil
-                didHRVFail = false
                 runner.run()
             } label: {
                 Text("timinglab.run")
@@ -67,8 +60,13 @@ struct TimingLabView: View {
             } catch {
                 didSaveFail = true
             }
-            // HRV도 측정이 끝난 뒤에만 읽는다. 이미 동의를 구한 사용자에게만 자동으로 읽는다.
-            if hrvAccessRequested { Task { await readHRV() } }
+            // 결과 화면은 측정이 끝난 뒤에만 뜬다 — 이 시점에 CADisplayLink는 이미 멈춰 있다(제1조).
+            isShowingResult = true
+        }
+        .sheet(isPresented: $isShowingResult) {
+            if let result = runner.result {
+                NavigationStack { ResultView(result: result) }
+            }
         }
     }
 
@@ -156,100 +154,6 @@ struct TimingLabView: View {
             Text(validityLabel(result.validity))
                 .font(.caption)
                 .foregroundStyle(result.validity == .valid ? Color.secondary : Color.red)
-        }
-    }
-
-    /// 冴え度 — 점수와 **그 점수의 근거**를 같이 보인다.
-    ///
-    /// 숫자만 크게 띄우면 블랙박스가 된다(제2조 2항). 성분·원지표·결측 신호를 한 화면에 두어
-    /// "왜 이 점수인가"가 화면에서 바로 답해지게 한다. 무효 세션이면 **점수를 만들지 않고**
-    /// 그 사실을 말한다 — 가짜 숫자보다 "못 쟀다"가 정직하다(§1-3).
-    @ViewBuilder
-    private func scoreView(for result: PVTSessionResult) -> some View {
-        if let sae = SaeScorer.score(from: result.summary, validity: result.validity) {
-            VStack(spacing: 2) {
-                Text(String(format: String(localized: "score.value"), sae.score))
-                    .font(.title2.bold().monospacedDigit())
-                Text(String(format: String(localized: "score.arousal"), sae.arousal.score))
-                    .font(.caption.monospacedDigit())
-                    .foregroundStyle(.secondary)
-                Text(String(
-                    format: String(localized: "score.evidence"),
-                    sae.evidence.lapseCount, sae.evidence.medianRTms
-                ))
-                .font(.caption.monospacedDigit())
-                .foregroundStyle(.secondary)
-                // 결측 신호를 숨기지 않는다 — MVP 점수는 PVT 단독이다(제2조 3항).
-                Text("score.missing_signals")
-                    .font(.caption2)
-                    .foregroundStyle(.tertiary)
-            }
-        } else {
-            Text("score.unavailable")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-        }
-    }
-
-    /// HRV — **참고 지표**. 점수에 들어가지 않는다는 사실을 제목에서 먼저 말한다(제2조).
-    ///
-    /// 아직 접근을 요청하지 않았으면 무엇을·왜 읽는지 설명과 버튼만 보인다. 시스템 권한 시트는
-    /// 사용자가 버튼을 눌렀을 때만 뜬다(제3조 3항 — 필요한 순간에, 이유를 설명하고).
-    private var hrvView: some View {
-        VStack(spacing: 4) {
-            Text("hrv.title")
-                .font(.caption.bold())
-            if !hrvAccessRequested {
-                Text("hrv.explain")
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-                Button {
-                    Task {
-                        do {
-                            try await HealthKitHRV.requestReadAccess()
-                            hrvAccessRequested = true
-                            await readHRV()
-                        } catch {
-                            didHRVFail = true
-                        }
-                    }
-                } label: {
-                    Text("hrv.read_button")
-                }
-                .font(.caption)
-            } else if didHRVFail {
-                Text("hrv.failed").font(.caption2).foregroundStyle(Color.red)
-            } else if let hrvOutcome {
-                hrvOutcomeText(hrvOutcome)
-                    .font(.caption.monospacedDigit())
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-            }
-        }
-    }
-
-    private func hrvOutcomeText(_ outcome: HealthKitHRV.Outcome) -> Text {
-        switch outcome {
-        case .unavailable:
-            return Text("hrv.unavailable")
-        case .none:
-            return Text("hrv.none")
-        case .reading(let sample):
-            return Text(String(
-                format: String(localized: "hrv.value"),
-                sample.sdnnMs,
-                sample.measuredAt.formatted(date: .abbreviated, time: .shortened)
-            ))
-        }
-    }
-
-    private func readHRV() async {
-        do {
-            hrvOutcome = try await HealthKitHRV.refresh(in: modelContext)
-            didHRVFail = false
-        } catch {
-            didHRVFail = true
         }
     }
 
