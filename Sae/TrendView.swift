@@ -25,21 +25,24 @@ struct TrendView: View {
             from: scores, day: \.day, endingOn: Date(), windowDays: windowDays, calendar: .current
         )
 
-        VStack(alignment: .leading, spacing: 12) {
-            if days.contains(where: { $0.entry != nil }) {
-                chart(days)
-                selectionDetail(days)
-                Text("trend.gap_note")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            } else {
-                Text(String(format: String(localized: "trend.empty"), windowDays))
-                    .foregroundStyle(.secondary)
-                    .frame(maxWidth: .infinity, alignment: .center)
+        ScrollView {
+            VStack(alignment: .leading, spacing: SaeTheme.Spacing.l) {
+                if days.contains(where: { $0.entry != nil }) {
+                    SaeCard {
+                        chart(days)
+                        Divider()
+                        selectionDetail(days)
+                    }
+                    NoticeText(text: Text("trend.gap_note"))
+                } else {
+                    SaeCard {
+                        NoticeText(text: Text(String(format: String(localized: "trend.empty"), windowDays)))
+                    }
+                }
             }
-            Spacer()
+            .padding(SaeTheme.Spacing.l)
         }
-        .padding()
+        .background(SaeTheme.Palette.background)
         .navigationTitle("trend.title")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
@@ -66,10 +69,12 @@ struct TrendView: View {
                         // 같은 구간끼리만 선을 잇는다 — 빈칸을 건너 이어 그리지 않는다.
                         series: .value("segment", segment)
                     )
+                    .foregroundStyle(SaeTheme.Palette.brand)
                     PointMark(
                         x: .value("trend.axis_day", day.day, unit: .day),
                         y: .value("trend.axis_score", entry.score)
                     )
+                    .foregroundStyle(SaeTheme.Palette.brand)
                 }
             }
             if let selectedDay {
@@ -93,25 +98,23 @@ struct TrendView: View {
     private func selectionDetail(_ days: [TrendDay<DailyScore>]) -> some View {
         if let selectedDay, let day = days.first(where: { $0.day == selectedDay }) {
             let date = day.day.formatted(date: .abbreviated, time: .omitted)
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: SaeTheme.Spacing.xs) {
                 if let entry = day.entry {
                     Text(String(format: String(localized: "trend.day_score"), date, entry.score))
-                        .font(.headline.monospacedDigit())
+                        .font(SaeTheme.Typography.cardTitle.monospacedDigit())
                     Text(String(
                         format: String(localized: "score.evidence"), entry.lapseCount, entry.medianRTms
                     ))
-                    .font(.caption.monospacedDigit())
+                    .font(SaeTheme.Typography.metric)
                     .foregroundStyle(.secondary)
                 } else {
                     Text(String(format: String(localized: "trend.no_measurement"), date))
-                        .font(.subheadline)
+                        .font(SaeTheme.Typography.metric)
                         .foregroundStyle(.secondary)
                 }
             }
         } else {
-            Text("trend.select_hint")
-                .font(.caption)
-                .foregroundStyle(.tertiary)
+            NoticeText(text: Text("trend.select_hint"))
         }
     }
 

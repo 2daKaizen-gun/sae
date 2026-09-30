@@ -9,9 +9,9 @@ struct SaeApp: App {
     var body: some Scene {
         WindowGroup {
             #if DEBUG
-            // 추이 화면 검증용: 메모리 전용 데모 저장소로 바꿔 끼운다. 실제 저장소는 건드리지 않는다.
-            if TrendDemo.isRequested {
-                ContentView().modelContainer(TrendDemo.container)
+            // 화면 검증용: 메모리 전용 데모 저장소로 바꿔 끼운다. 실제 저장소는 건드리지 않는다.
+            if DemoData.isRequested {
+                ContentView().modelContainer(DemoData.container)
             } else {
                 ContentView()
             }
