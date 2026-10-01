@@ -668,6 +668,52 @@
         }
       }
     },
+    "stimulus.tap": {
+      "comment": "Shown the moment the stimulus turns on; the user must tap as fast as possible.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TAP!"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "タップ！"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "탭!"
+          }
+        }
+      }
+    },
+    "stimulus.wait": {
+      "comment": "Shown in the stimulus area while waiting out the inter-stimulus interval.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wait for the stimulus"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "刺激を待つ"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "자극을 기다리세요"
+          }
+        }
+      }
+    },
     "timinglab.clock_broken": {
       "comment": "Verdict shown when the clock contract is violated; reaction times would be meaningless.",
       "localizations": {
@@ -986,52 +1032,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "기기에 저장된 세션: %lld"
-          }
-        }
-      }
-    },
-    "timinglab.stimulus_tap": {
-      "comment": "Shown the moment the stimulus turns on; the user must tap as fast as possible.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "TAP!"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "タップ！"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "탭!"
-          }
-        }
-      }
-    },
-    "timinglab.stimulus_wait": {
-      "comment": "Shown in the stimulus area while waiting out the inter-stimulus interval.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Wait for the stimulus"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "刺激を待つ"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "자극을 기다리세요"
           }
         }
       }
