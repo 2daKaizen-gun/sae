@@ -645,6 +645,29 @@
         }
       }
     },
+    "session.save_failed": {
+      "comment": "Shown when persisting the session failed; failures are never swallowed.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saving the session failed"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "セッションの保存に失敗しました"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "세션 저장 실패"
+          }
+        }
+      }
+    },
     "session.valid": {
       "comment": "Session passed the validity gate.",
       "localizations": {
@@ -710,6 +733,75 @@
           "stringUnit": {
             "state": "translated",
             "value": "자극을 기다리세요"
+          }
+        }
+      }
+    },
+    "test.hint": {
+      "comment": "Reminder under the stimulus pad during the test.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap only when it turns green. Your times are shown at the end."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "緑になったときだけタップしてください。タイムは最後に表示されます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "초록색이 됐을 때만 탭하세요. 기록은 끝난 뒤에 보여 드려요."
+          }
+        }
+      }
+    },
+    "test.progress": {
+      "comment": "Progress during the test. %1$lld = stimuli shown so far, %2$lld = total stimuli in the session.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld / %2$lld"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld / %2$lld"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld / %2$lld"
+          }
+        }
+      }
+    },
+    "test.title": {
+      "comment": "Title of the user-facing test screen.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alertness test"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "覚醒度テスト"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "각성도 테스트"
           }
         }
       }
@@ -986,29 +1078,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "다시 실행"
-          }
-        }
-      }
-    },
-    "timinglab.save_failed": {
-      "comment": "Shown when persisting the session failed; failures are never swallowed.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Saving the session failed"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "セッションの保存に失敗しました"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "세션 저장 실패"
           }
         }
       }

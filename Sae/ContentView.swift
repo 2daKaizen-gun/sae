@@ -5,6 +5,7 @@ import SwiftData
 enum Route: Hashable {
     case timingLab
     case trend
+    case test
 }
 
 /// 홈 — 오늘의 冴え度(또는 아직 재지 않았다는 사실)와, 측정·추이로 가는 입구.
@@ -43,6 +44,7 @@ struct ContentView: View {
                 switch route {
                 case .timingLab: TimingLabView()
                 case .trend: TrendView()
+                case .test: TestView(onDone: { path = [] })
                 }
             }
         }
@@ -50,6 +52,8 @@ struct ContentView: View {
             #if DEBUG
             // 개발 확인용 실행 인자(시뮬 자동화). `-autolab`: 타이밍 랩에 바로 진입.
             if CommandLine.arguments.contains("-autolab") { path = [.timingLab] }
+            // `-autotest`: 사용자용 테스트 화면에 바로 진입.
+            if CommandLine.arguments.contains("-autotest") { path = [.test] }
             // 데모 인자(`DemoData`): 메모리 전용 데모 데이터로 추이 또는 결과 화면을 바로 연다.
             if DemoData.opensTrend { path = [.trend] }
             if DemoData.opensResult { isShowingDemoResult = true }

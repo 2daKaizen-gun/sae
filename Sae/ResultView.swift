@@ -11,6 +11,8 @@ import SaeTiming
 /// 무효 세션이면 점수 자리에 **점수가 없다는 사실과 이유**를 둔다(제2조 — 가짜 숫자보다 빈칸).
 struct ResultView: View {
     let result: PVTSessionResult
+    /// "완료"를 누르면 할 일. 없으면 이 화면을 닫는다(시트로 뜬 경우).
+    var onDone: (() -> Void)? = nil
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
@@ -33,7 +35,7 @@ struct ResultView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button { dismiss() } label: { Text("result.done") }
+                Button { if let onDone { onDone() } else { dismiss() } } label: { Text("result.done") }
             }
         }
         // 이미 동의를 구한 사용자에게만 자동으로 읽는다. 측정은 이미 끝났다.

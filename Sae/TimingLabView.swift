@@ -74,7 +74,7 @@ struct TimingLabView: View {
     /// 저장 상태 — 지금까지 남은 세션 수. 실패했으면 실패했다고 말한다.
     private var storageRow: some View {
         Text(didSaveFail
-             ? String(localized: "timinglab.save_failed")
+             ? String(localized: "session.save_failed")
              : String(format: String(localized: "timinglab.saved_sessions"), savedSessions.count))
             .font(.caption.monospacedDigit())
             .foregroundStyle(didSaveFail ? Color.red : Color.secondary)
