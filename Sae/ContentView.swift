@@ -14,8 +14,8 @@ enum Route: Hashable {
 /// 오늘 점수는 `DailyScore`의 오늘 행, 즉 **그날의 마지막 유효 측정**이다(data-model). 없으면
 /// 숫자 대신 "아직 측정하지 않았다"고 말한다 — 어제 점수를 오늘처럼 보이지 않는다(제2조).
 ///
-/// 측정 버튼은 아직 엔진 계측 화면(타이밍 랩)으로 간다. 사용자용 측정 흐름은 온보딩과 함께
-/// 4주차 몫이라(`CONCEPT.md` §7), 그 사실을 화면에서 숨기지 않는다.
+/// 측정 버튼은 안내 → 테스트 → 결과로 이어지는 사용자용 흐름을 연다. 엔진 계측 화면(타이밍 랩)은
+/// 개발용이라 **DEBUG 빌드에서만** 입구를 보인다.
 struct ContentView: View {
     @State private var path: [Route] = []
     #if DEBUG
@@ -101,7 +101,7 @@ struct ContentView: View {
 
     private var actions: some View {
         VStack(alignment: .leading, spacing: SaeTheme.Spacing.m) {
-            NavigationLink(value: Route.timingLab) {
+            NavigationLink(value: Route.testIntro) {
                 Text("home.measure")
                     .frame(maxWidth: .infinity)
                     .foregroundStyle(SaeTheme.Palette.onBrand)
@@ -116,7 +116,12 @@ struct ContentView: View {
             .buttonStyle(.bordered)
             .controlSize(.large)
 
-            NoticeText(text: Text("home.lab_note"))
+            #if DEBUG
+            NavigationLink(value: Route.timingLab) {
+                Text("home.lab_link")
+            }
+            .font(SaeTheme.Typography.notice)
+            #endif
         }
     }
 }

@@ -47,25 +47,25 @@
         }
       }
     },
-    "home.lab_note": {
-      "comment": "Honest note: the measure button still opens the engine's instrument panel; the user-facing test design comes later.",
+    "home.lab_link": {
+      "comment": "DEBUG-only link from home to the engine's instrument panel.",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The measurement screen is still the engine's instrument panel. Its user-facing design comes with onboarding."
+            "value": "Timing lab (developer)"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "測定画面はまだエンジン検証用の計器画面です。ユーザー向けのデザインはオンボーディングと一緒に作ります。"
+            "value": "タイミング検証（開発用）"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "측정 화면은 아직 엔진 검증용 계측 화면입니다. 사용자용 디자인은 온보딩과 함께 만듭니다."
+            "value": "타이밍 검증 (개발용)"
           }
         }
       }
