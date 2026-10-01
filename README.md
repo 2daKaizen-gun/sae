@@ -53,7 +53,7 @@ Development is governed by a small **[project constitution](docs/CONSTITUTION.md
 
 ## Status
 
-🚧 **In active development — week 3 underway: HRV as a reference metric and a small design system are in.** Next: tremor (CoreMotion), then onboarding and the user-facing test flow. Implementation follows a 4-week MVP plan (see [`docs/CONCEPT.md`](docs/CONCEPT.md) §7).
+🚧 **In active development — the user-facing test flow is in (instructions → test → result).** Next: onboarding and the さえちゃん copy, then tremor (CoreMotion). Implementation follows a 4-week MVP plan (see [`docs/CONCEPT.md`](docs/CONCEPT.md) §7).
 
 **Working today**
 
@@ -64,7 +64,8 @@ Development is governed by a small **[project constitution](docs/CONSTITUTION.md
 - **On-device persistence** (SwiftData): raw per-trial data with the refresh rate and calibration offset the session ran under, plus a daily score that stores the raw metrics behind it (not a frozen sentence), so past results can be recomputed and re-explained in any language.
 - **Daily trend chart** (Swift Charts, last 14 days). A day without a valid score stays **blank** — the line is broken there rather than zero-filled or bridged, because either would draw a value that was never measured. Touching a day shows the raw metrics behind its score.
 - **HRV from HealthKit, as a reference only** — read-only access, requested with its reason at the moment it is needed, kept on device. HealthKit's HRV is **SDNN** (not RMSSD, which the early design assumed), so it is labelled as SDNN and kept **out of the score** until an SDNN mapping can be sourced. A reading older than 24 hours is not shown as today's.
-- **A small native design system** — tokens and shared components on system semantic colours, one brand colour with light / dark values (all text/background pairs at WCAG AA or better), Dynamic Type intact. Home shows today's score or says it was not measured; the result opens as its own screen after a session. The score is **never colour-coded good/bad** — that would be an unsourced classification — and the stimulus rendering is outside the design system entirely.
+- **A small native design system** — tokens and shared components on system semantic colours, one brand colour with light / dark values (all text/background pairs at WCAG AA or better), Dynamic Type intact. Home shows today's score or says it was not measured. The score is **never colour-coded good/bad** — that would be an unsourced classification — and the stimulus rendering is outside the design system entirely.
+- **A user-facing test flow** — Measure opens a short instruction screen (every number in it — rounds, false-start and minimum-response limits — read from the code), then a focused test screen, then the result. The test uses **the same engine and the same stimulus view** as the verification lab: one `StimulusPad`, the unchanged `PVTSessionRunner`. It starts only after the screen transition has finished, shows no reaction times until the end, keeps the screen awake, and stores nothing if abandoned. The instrument panel is now a DEBUG-only tool.
 - **Trilingual from the first screen** (JA / EN / KO) via String Catalog — the result screen shows the score with its breakdown in all three.
 
 **Deliberately not claimed yet**
@@ -72,7 +73,7 @@ Development is governed by a small **[project constitution](docs/CONSTITUTION.md
 - The **calibration offset is 0 — uncalibrated.** Deriving the real display/touch latency constant needs photodiode hardware ([`timing-engine.md`](docs/timing-engine.md) §8-3), so the app records "uncalibrated" rather than a made-up number.
 - Verified **in the iOS simulator, not yet on a physical device** ([#5](https://github.com/2daKaizen-gun/sae/issues/5)).
 - The MVP score is **PVT-only**: HRV and tremor stay out of the headline number until their anchors can be grounded.
-- HRV in the score, tremor, the character voice layer, onboarding and a user-facing measurement screen are later phases; the measurement itself still runs on the engine's instrument panel, and the app says so on its home screen.
+- HRV in the score, tremor, the character voice layer and onboarding are later phases.
 
 ## Documentation
 
