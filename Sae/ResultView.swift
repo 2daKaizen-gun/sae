@@ -59,16 +59,8 @@ struct ResultView: View {
             SaeCard {
                 Text("score.unavailable")
                     .font(SaeTheme.Typography.cardTitle)
-                NoticeText(text: Text(invalidReason), isProblem: true)
+                NoticeText(text: Text(result.validity.localizedDescription), isProblem: true)
             }
-        }
-    }
-
-    private var invalidReason: LocalizedStringKey {
-        switch result.validity {
-        case .valid: return "timinglab.summary_valid"
-        case .invalid(.tooManyFalseStarts): return "timinglab.summary_invalid_false_starts"
-        case .invalid(.tooFewValidTrials): return "timinglab.summary_invalid_few_trials"
         }
     }
 

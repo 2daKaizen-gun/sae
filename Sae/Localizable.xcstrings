@@ -599,6 +599,75 @@
         }
       }
     },
+    "session.invalid_false_starts": {
+      "comment": "Session rejected: too many taps before the stimulus.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "invalid — too many false starts"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無効 — フライングが多すぎます"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "무효 — false start가 너무 많음"
+          }
+        }
+      }
+    },
+    "session.invalid_few_trials": {
+      "comment": "Session rejected: not enough responses to trust the metrics.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "invalid — too few responses"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無効 — 応答が少なすぎます"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "무효 — 응답이 너무 적음"
+          }
+        }
+      }
+    },
+    "session.valid": {
+      "comment": "Session passed the validity gate.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "valid session"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "有効なセッション"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "유효한 세션"
+          }
+        }
+      }
+    },
     "timinglab.clock_broken": {
       "comment": "Verdict shown when the clock contract is violated; reaction times would be meaningless.",
       "localizations": {
@@ -967,52 +1036,6 @@
         }
       }
     },
-    "timinglab.summary_invalid_false_starts": {
-      "comment": "Session rejected: too many taps before the stimulus.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "invalid — too many false starts"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "無効 — フライングが多すぎます"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "무효 — false start가 너무 많음"
-          }
-        }
-      }
-    },
-    "timinglab.summary_invalid_few_trials": {
-      "comment": "Session rejected: not enough responses to trust the metrics.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "invalid — too few responses"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "無効 — 応答が少なすぎます"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "무효 — 응답이 너무 적음"
-          }
-        }
-      }
-    },
     "timinglab.summary_line": {
       "comment": "Session summary. %1$.1f = median reaction time in ms, %2$lld = lapses, %3$lld = false starts.",
       "localizations": {
@@ -1032,29 +1055,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "중앙값 %1$.1f ms · 랩스 %2$lld · false start %3$lld"
-          }
-        }
-      }
-    },
-    "timinglab.summary_valid": {
-      "comment": "Session passed the validity gate.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "valid session"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "有効なセッション"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "유효한 세션"
           }
         }
       }

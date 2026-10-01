@@ -152,7 +152,7 @@ struct TimingLabView: View {
             ))
             .font(.subheadline.monospacedDigit())
 
-            Text(validityLabel(result.validity))
+            Text(result.validity.localizedDescription)
                 .font(.caption)
                 .foregroundStyle(result.validity == .valid ? Color.secondary : Color.red)
         }
@@ -188,17 +188,6 @@ struct TimingLabView: View {
             return String(localized: "timinglab.outcome_false_start")
         case .noResponse:
             return String(localized: "timinglab.outcome_no_response")
-        }
-    }
-
-    private func validityLabel(_ validity: SessionValidity) -> String {
-        switch validity {
-        case .valid:
-            return String(localized: "timinglab.summary_valid")
-        case .invalid(.tooManyFalseStarts):
-            return String(localized: "timinglab.summary_invalid_false_starts")
-        case .invalid(.tooFewValidTrials):
-            return String(localized: "timinglab.summary_invalid_few_trials")
         }
     }
 }
