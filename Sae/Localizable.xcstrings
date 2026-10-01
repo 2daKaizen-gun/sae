@@ -323,6 +323,144 @@
         }
       }
     },
+    "intro.note_invalid": {
+      "comment": "What invalidates a session. %1$lld = false starts that invalidate a session, %2$lld = minimum responses (both from SessionValidator). Leaving early stores nothing.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The session gets no score with %1$lld or more early taps, or fewer than %2$lld responses. Leaving before the end saves nothing."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "フライングが%1$lld回以上、または反応が%2$lld回未満だとスコアは出ません。途中で離れると何も保存されません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "false start가 %1$lld번 이상이거나 응답이 %2$lld번 미만이면 점수가 나오지 않아요. 중간에 나가면 아무것도 저장되지 않습니다."
+          }
+        }
+      }
+    },
+    "intro.start": {
+      "comment": "Button that starts the test.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "はじめる"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "시작"
+          }
+        }
+      }
+    },
+    "intro.step_conditions": {
+      "comment": "Instruction step 4: keep conditions comparable across days.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For comparable days, test in a similar setting and hold the phone the way you usually do."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日ごとに比べやすいよう、似た環境で、いつもと同じ持ち方でテストしてください。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "날마다 비교할 수 있게, 비슷한 환경에서 평소처럼 폰을 들고 해 주세요."
+          }
+        }
+      }
+    },
+    "intro.step_length": {
+      "comment": "Instruction step 3: session length. %lld = number of stimuli in the session (from code). The duration is approximate.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "There are %lld rounds, about 80 seconds in all. Stay on the screen until it ends."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全%lld回、合計で約80秒です。終わるまで画面を離れないでください。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "모두 %lld번, 약 80초 걸려요. 끝날 때까지 화면을 떠나지 마세요."
+          }
+        }
+      }
+    },
+    "intro.step_tap": {
+      "comment": "Instruction step 1: the task.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When the box turns green, tap it as fast as you can."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "四角が緑になったら、できるだけ速くタップしてください。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "네모가 초록색이 되면 최대한 빨리 탭하세요."
+          }
+        }
+      }
+    },
+    "intro.step_wait": {
+      "comment": "Instruction step 2: do not tap early. Early taps are false starts.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Don't tap before it turns green — tapping early counts as a false start."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "緑になる前にタップしないでください。早いタップはフライングになります。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "초록색이 되기 전에는 탭하지 마세요. 먼저 누르면 false start로 기록돼요."
+          }
+        }
+      }
+    },
     "result.arousal": {
       "comment": "Metric row: the alertness (PVT) component, 0-100, that the score is made from.",
       "localizations": {

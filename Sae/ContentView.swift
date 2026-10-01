@@ -5,6 +5,7 @@ import SwiftData
 enum Route: Hashable {
     case timingLab
     case trend
+    case testIntro
     case test
 }
 
@@ -44,6 +45,7 @@ struct ContentView: View {
                 switch route {
                 case .timingLab: TimingLabView()
                 case .trend: TrendView()
+                case .testIntro: TestIntroView(onStart: { path.append(.test) })
                 case .test: TestView(onDone: { path = [] })
                 }
             }
@@ -54,6 +56,8 @@ struct ContentView: View {
             if CommandLine.arguments.contains("-autolab") { path = [.timingLab] }
             // `-autotest`: 사용자용 테스트 화면에 바로 진입.
             if CommandLine.arguments.contains("-autotest") { path = [.test] }
+            // `-autointro`: 테스트 안내 화면에 바로 진입.
+            if CommandLine.arguments.contains("-autointro") { path = [.testIntro] }
             // 데모 인자(`DemoData`): 메모리 전용 데모 데이터로 추이 또는 결과 화면을 바로 연다.
             if DemoData.opensTrend { path = [.trend] }
             if DemoData.opensResult { isShowingDemoResult = true }
