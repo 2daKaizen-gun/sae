@@ -74,7 +74,7 @@ struct TimingLabView: View {
     /// 저장 상태 — 지금까지 남은 세션 수. 실패했으면 실패했다고 말한다.
     private var storageRow: some View {
         Text(didSaveFail
-             ? String(localized: "timinglab.save_failed")
+             ? String(localized: "session.save_failed")
              : String(format: String(localized: "timinglab.saved_sessions"), savedSessions.count))
             .font(.caption.monospacedDigit())
             .foregroundStyle(didSaveFail ? Color.red : Color.secondary)
@@ -97,33 +97,16 @@ struct TimingLabView: View {
         }
     }
 
-    /// 자극 영역 — 표시는 **색 플래그 토글 하나**뿐이고, 탭은 저수준 경로로 받는다.
-    ///
-    /// 애니메이션을 명시적으로 끈다(`animation(nil)`): 페이드·스케일이 끼면 "자극이 켜진 시각"이
-    /// 흐려져 온셋 기준이 무너진다(제1조 1항, timing-engine §6). 레이아웃도 바뀌지 않게
-    /// 크기를 고정해, 자극 프레임에서 레이아웃 패스가 돌지 않도록 한다.
+    /// 자극 영역 — 공유 `StimulusPad`(테스트 화면과 같은 구현). 랩은 터치마다 시계 계약도 잰다.
     private var stimulusArea: some View {
-        RoundedRectangle(cornerRadius: 16)
-            .fill(runner.isStimulusVisible ? Color.green : Color.gray.opacity(0.15))
-            .frame(height: 180)
-            .animation(nil, value: runner.isStimulusVisible)
-            .overlay {
-                Text(runner.isStimulusVisible ? "timinglab.stimulus_tap" : "timinglab.stimulus_wait")
-                    .font(.title3.bold())
-                    .foregroundStyle(runner.isStimulusVisible ? Color.white : Color.secondary)
-                    .animation(nil, value: runner.isStimulusVisible)
-            }
-            .overlay {
-                TouchCatcher { sample in
-                    runner.recordTouch(sample)
-                    touchClockCheck = RuntimeClockCheck.verify(
-                        sampleTs: sample.timestamp,
-                        referenceTs: sample.referenceTime,
-                        source: "UITouch.timestamp"
-                    )
-                }
-                .accessibilityIdentifier("touchCatcher")
-            }
+        StimulusPad(isStimulusVisible: runner.isStimulusVisible, height: 180) { sample in
+            runner.recordTouch(sample)
+            touchClockCheck = RuntimeClockCheck.verify(
+                sampleTs: sample.timestamp,
+                referenceTs: sample.referenceTime,
+                source: "UITouch.timestamp"
+            )
+        }
     }
 
     /// trial 원자료 — 판정과 반응시간을 그대로 나열한다(요약만 보여주지 않는다, 제1·2조).
@@ -152,7 +135,7 @@ struct TimingLabView: View {
             ))
             .font(.subheadline.monospacedDigit())
 
-            Text(validityLabel(result.validity))
+            Text(result.validity.localizedDescription)
                 .font(.caption)
                 .foregroundStyle(result.validity == .valid ? Color.secondary : Color.red)
         }
@@ -188,17 +171,6 @@ struct TimingLabView: View {
             return String(localized: "timinglab.outcome_false_start")
         case .noResponse:
             return String(localized: "timinglab.outcome_no_response")
-        }
-    }
-
-    private func validityLabel(_ validity: SessionValidity) -> String {
-        switch validity {
-        case .valid:
-            return String(localized: "timinglab.summary_valid")
-        case .invalid(.tooManyFalseStarts):
-            return String(localized: "timinglab.summary_invalid_false_starts")
-        case .invalid(.tooFewValidTrials):
-            return String(localized: "timinglab.summary_invalid_few_trials")
         }
     }
 }

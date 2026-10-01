@@ -47,25 +47,25 @@
         }
       }
     },
-    "home.lab_note": {
-      "comment": "Honest note: the measure button still opens the engine's instrument panel; the user-facing test design comes later.",
+    "home.lab_link": {
+      "comment": "DEBUG-only link from home to the engine's instrument panel.",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The measurement screen is still the engine's instrument panel. Its user-facing design comes with onboarding."
+            "value": "Timing lab (developer)"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "測定画面はまだエンジン検証用の計器画面です。ユーザー向けのデザインはオンボーディングと一緒に作ります。"
+            "value": "タイミング検証（開発用）"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "측정 화면은 아직 엔진 검증용 계측 화면입니다. 사용자용 디자인은 온보딩과 함께 만듭니다."
+            "value": "타이밍 검증 (개발용)"
           }
         }
       }
@@ -319,6 +319,144 @@
           "stringUnit": {
             "state": "translated",
             "value": "SDNN %1$.0f ms · 측정 %2$@"
+          }
+        }
+      }
+    },
+    "intro.note_invalid": {
+      "comment": "What invalidates a session. %1$lld = false starts that invalidate a session, %2$lld = minimum responses (both from SessionValidator). Leaving early stores nothing.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The session gets no score with %1$lld or more early taps, or fewer than %2$lld responses. Leaving before the end saves nothing."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "フライングが%1$lld回以上、または反応が%2$lld回未満だとスコアは出ません。途中で離れると何も保存されません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "false start가 %1$lld번 이상이거나 응답이 %2$lld번 미만이면 점수가 나오지 않아요. 중간에 나가면 아무것도 저장되지 않습니다."
+          }
+        }
+      }
+    },
+    "intro.start": {
+      "comment": "Button that starts the test.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "はじめる"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "시작"
+          }
+        }
+      }
+    },
+    "intro.step_conditions": {
+      "comment": "Instruction step 4: keep conditions comparable across days.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For comparable days, test in a similar setting and hold the phone the way you usually do."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日ごとに比べやすいよう、似た環境で、いつもと同じ持ち方でテストしてください。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "날마다 비교할 수 있게, 비슷한 환경에서 평소처럼 폰을 들고 해 주세요."
+          }
+        }
+      }
+    },
+    "intro.step_length": {
+      "comment": "Instruction step 3: session length. %lld = number of stimuli in the session (from code). The duration is approximate.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "There are %lld rounds, about 80 seconds in all. Stay on the screen until it ends."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全%lld回、合計で約80秒です。終わるまで画面を離れないでください。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "모두 %lld번, 약 80초 걸려요. 끝날 때까지 화면을 떠나지 마세요."
+          }
+        }
+      }
+    },
+    "intro.step_tap": {
+      "comment": "Instruction step 1: the task.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When the box turns green, tap it as fast as you can."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "四角が緑になったら、できるだけ速くタップしてください。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "네모가 초록색이 되면 최대한 빨리 탭하세요."
+          }
+        }
+      }
+    },
+    "intro.step_wait": {
+      "comment": "Instruction step 2: do not tap early. Early taps are false starts.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Don't tap before it turns green — tapping early counts as a false start."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "緑になる前にタップしないでください。早いタップはフライングになります。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "초록색이 되기 전에는 탭하지 마세요. 먼저 누르면 false start로 기록돼요."
           }
         }
       }
@@ -599,6 +737,213 @@
         }
       }
     },
+    "session.invalid_false_starts": {
+      "comment": "Session rejected: too many taps before the stimulus.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "invalid — too many false starts"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無効 — フライングが多すぎます"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "무효 — false start가 너무 많음"
+          }
+        }
+      }
+    },
+    "session.invalid_few_trials": {
+      "comment": "Session rejected: not enough responses to trust the metrics.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "invalid — too few responses"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無効 — 応答が少なすぎます"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "무효 — 응답이 너무 적음"
+          }
+        }
+      }
+    },
+    "session.save_failed": {
+      "comment": "Shown when persisting the session failed; failures are never swallowed.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saving the session failed"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "セッションの保存に失敗しました"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "세션 저장 실패"
+          }
+        }
+      }
+    },
+    "session.valid": {
+      "comment": "Session passed the validity gate.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "valid session"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "有効なセッション"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "유효한 세션"
+          }
+        }
+      }
+    },
+    "stimulus.tap": {
+      "comment": "Shown the moment the stimulus turns on; the user must tap as fast as possible.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TAP!"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "タップ！"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "탭!"
+          }
+        }
+      }
+    },
+    "stimulus.wait": {
+      "comment": "Shown in the stimulus area while waiting out the inter-stimulus interval.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wait for the stimulus"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "刺激を待つ"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "자극을 기다리세요"
+          }
+        }
+      }
+    },
+    "test.hint": {
+      "comment": "Reminder under the stimulus pad during the test.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap only when it turns green. Your times are shown at the end."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "緑になったときだけタップしてください。タイムは最後に表示されます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "초록색이 됐을 때만 탭하세요. 기록은 끝난 뒤에 보여 드려요."
+          }
+        }
+      }
+    },
+    "test.progress": {
+      "comment": "Progress during the test. %1$lld = stimuli shown so far, %2$lld = total stimuli in the session.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld / %2$lld"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld / %2$lld"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld / %2$lld"
+          }
+        }
+      }
+    },
+    "test.title": {
+      "comment": "Title of the user-facing test screen.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alertness test"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "覚醒度テスト"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "각성도 테스트"
+          }
+        }
+      }
+    },
     "timinglab.clock_broken": {
       "comment": "Verdict shown when the clock contract is violated; reaction times would be meaningless.",
       "localizations": {
@@ -875,29 +1220,6 @@
         }
       }
     },
-    "timinglab.save_failed": {
-      "comment": "Shown when persisting the session failed; failures are never swallowed.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Saving the session failed"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "セッションの保存に失敗しました"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "세션 저장 실패"
-          }
-        }
-      }
-    },
     "timinglab.saved_sessions": {
       "comment": "Number of PVT sessions persisted on device. %lld = count.",
       "localizations": {
@@ -921,98 +1243,6 @@
         }
       }
     },
-    "timinglab.stimulus_tap": {
-      "comment": "Shown the moment the stimulus turns on; the user must tap as fast as possible.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "TAP!"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "タップ！"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "탭!"
-          }
-        }
-      }
-    },
-    "timinglab.stimulus_wait": {
-      "comment": "Shown in the stimulus area while waiting out the inter-stimulus interval.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Wait for the stimulus"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "刺激を待つ"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "자극을 기다리세요"
-          }
-        }
-      }
-    },
-    "timinglab.summary_invalid_false_starts": {
-      "comment": "Session rejected: too many taps before the stimulus.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "invalid — too many false starts"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "無効 — フライングが多すぎます"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "무효 — false start가 너무 많음"
-          }
-        }
-      }
-    },
-    "timinglab.summary_invalid_few_trials": {
-      "comment": "Session rejected: not enough responses to trust the metrics.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "invalid — too few responses"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "無効 — 応答が少なすぎます"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "무효 — 응답이 너무 적음"
-          }
-        }
-      }
-    },
     "timinglab.summary_line": {
       "comment": "Session summary. %1$.1f = median reaction time in ms, %2$lld = lapses, %3$lld = false starts.",
       "localizations": {
@@ -1032,29 +1262,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "중앙값 %1$.1f ms · 랩스 %2$lld · false start %3$lld"
-          }
-        }
-      }
-    },
-    "timinglab.summary_valid": {
-      "comment": "Session passed the validity gate.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "valid session"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "有効なセッション"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "유효한 세션"
           }
         }
       }
