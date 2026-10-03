@@ -59,7 +59,7 @@
 
 ## [2026-10-03] Phase 4b — さえちゃん 대사 · 첫 실행 온보딩
 
-**한 줄 상태:** 시작 전에 `character-voice.md`의 **밴드 상태 라벨이 9/30 "점수 색 구간 없음" 결정과 모순**됨을 찾아 사용자 결정을 받았다(추천안: 밴드는 톤만, 라벨 미표시, 사람이 아니라 측정을 묘사). 이슈 #16을 올리고 7커밋: 설계 개정 → `SaeVoice` 타깃 → 3언어 대사 → 결과 화면 대사 → 온보딩 → 홈 문구 정정 → 문서. PR 머지까지(사용자 사전 승인).
+**한 줄 상태:** 시작 전에 `character-voice.md`의 **밴드 상태 라벨이 9/30 "점수 색 구간 없음" 결정과 모순**됨을 찾아 사용자 결정을 받았다(추천안: 밴드는 톤만, 라벨 미표시, 사람이 아니라 측정을 묘사). 이슈 #16을 올리고 7커밋: 설계 개정 → `SaeVoice` 타깃 → 3언어 대사 → 결과 화면 대사 → 온보딩 → 홈 문구 정정 → 문서. **PR #17로 `main`에 머지**(사용자 사전 승인), 브랜치 삭제, #16 CLOSED.
 
 ### ✅ 완료된 것 (검증됨)
 - **설계 개정** — character-voice §4(밴드=톤만, 라벨 열은 내부 이름, 경계 임시), §3 "측정을 묘사", 입력을 `explanation`→원지표로 정정, 연속 저점은 보류. CONCEPT §3·score-algorithm §6의 "피곤해 보여요/무딘 편" 예시도 정정 (`12c0931`)
@@ -95,7 +95,7 @@
 - `SaeTiming/Sources/SaeVoice/SaeVoice.swift`(+`Tests/SaeVoiceTests`), `SaeTiming/Package.swift`
 - `Sae/{VoiceCard,OnboardingView,ResultView,ContentView,DemoData}.swift`, `Sae/Localizable.xcstrings`, `Sae.xcodeproj`(SaeVoice 링크)
 - 문서: `docs/{character-voice,CONCEPT,score-algorithm,tech-stack}.md`, `README.md`
-- 커밋: `12c0931` · `9c4423f` · `64891a1` · `12508fb` · `53fac44` · `c8181fb` · 이 문서 커밋 / 이슈 **#16**
+- 커밋: `12c0931` · `9c4423f` · `64891a1` · `12508fb` · `53fac44` · `c8181fb` · 이 문서 커밋 / PR **#17 MERGED** / 이슈 **#16 CLOSED**
 
 ## [2026-10-01] Phase 4a — 사용자용 테스트 흐름
 
