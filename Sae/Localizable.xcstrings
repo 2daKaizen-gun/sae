@@ -461,6 +461,190 @@
         }
       }
     },
+    "onboarding.hello": {
+      "comment": "First-run greeting in Saechaan's voice.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hi, I'm Saechaan. I'll be with you for your daily check."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "はじめまして、さえちゃんです。毎日のチェックにお付き合いしますね。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "안녕하세요, 사에짱이에요. 매일의 측정을 함께할게요."
+          }
+        }
+      }
+    },
+    "onboarding.not_body": {
+      "comment": "Onboarding: limits. Not a medical device, no diagnosis, does not estimate sleep hours; one test is one moment.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "It is not a medical device. It does not diagnose anything or tell you how much sleep you need. One test reflects one moment, so the trend over days says more than any single score."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "医療機器ではありません。診断をしたり、必要な睡眠時間を教えたりはしません。1回のテストはその時点のひとこまなので、1回の点数より日々の推移のほうが多くを語ります。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "의료기기가 아니에요. 무언가를 진단하거나 필요한 수면 시간을 알려 주지 않아요. 한 번의 테스트는 그 순간의 모습이라, 점수 하나보다 날마다의 추이가 더 많은 걸 말해 줘요."
+          }
+        }
+      }
+    },
+    "onboarding.not_title": {
+      "comment": "Onboarding: what the app is not (title).",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What it is not"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "できないこと"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "할 수 없는 것"
+          }
+        }
+      }
+    },
+    "onboarding.privacy_body": {
+      "comment": "Onboarding: privacy. On-device only, no server, no ads or tracking; HRV read only if allowed.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only on this device. Nothing is sent to a server, and there are no ads or tracking. Heart rate variability is read from Health only if you allow it."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この端末の中だけです。サーバーには送らず、広告やトラッキングもありません。心拍変動は、許可したときだけ「ヘルスケア」から読み取ります。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "이 기기 안에만 있어요. 서버로 보내지 않고, 광고나 추적도 없어요. 심박 변이도는 허용했을 때만 건강 앱에서 읽어요."
+          }
+        }
+      }
+    },
+    "onboarding.privacy_title": {
+      "comment": "Onboarding: where data lives (title).",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Where your data stays"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "データの置き場所"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "데이터는 어디에"
+          }
+        }
+      }
+    },
+    "onboarding.start": {
+      "comment": "Button that closes onboarding.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get started"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "はじめる"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "시작하기"
+          }
+        }
+      }
+    },
+    "onboarding.what_body": {
+      "comment": "Onboarding: what the app measures. Based on the PVT reaction-time test; ~80 s.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A reaction-time test of about 80 seconds, based on the PVT used in sleep research. From your reaction times it shows today's alertness as a Sae score from 0 to 100, with the numbers behind it."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠研究で使われるPVTにもとづく、約80秒の反応時間テストです。反応時間から今日の覚醒度を0〜100の冴え度で示し、その根拠の数字も一緒に見せます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "수면 연구에서 쓰는 PVT에 바탕을 둔, 약 80초짜리 반응시간 테스트예요. 반응시간으로 오늘의 각성도를 0~100의 冴え度로 보여 주고, 그 근거가 된 숫자도 함께 보여 드려요."
+          }
+        }
+      }
+    },
+    "onboarding.what_title": {
+      "comment": "Onboarding: what the app measures (title).",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What it measures"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "何を測るの？"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "무엇을 재나요"
+          }
+        }
+      }
+    },
     "result.arousal": {
       "comment": "Metric row: the alertness (PVT) component, 0-100, that the score is made from.",
       "localizations": {
