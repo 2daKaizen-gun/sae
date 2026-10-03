@@ -18,6 +18,8 @@ enum Route: Hashable {
 /// 개발용이라 **DEBUG 빌드에서만** 입구를 보인다.
 struct ContentView: View {
     @State private var path: [Route] = []
+    /// 첫 실행 안내를 마쳤는가. 한 번 보면 다시 뜨지 않는다.
+    @AppStorage("onboarding.completed") private var onboardingCompleted = false
     #if DEBUG
     /// `-resultDemo`로 띄우는 결과 화면(DemoData).
     @State private var isShowingDemoResult = false
@@ -50,8 +52,17 @@ struct ContentView: View {
                 }
             }
         }
+        // 첫 실행에만 뜬다. 개발용 자동 진입 인자로 띄운 실행에서는 가리지 않는다(시뮬 자동화).
+        .fullScreenCover(isPresented: Binding(
+            get: { !onboardingCompleted && !Self.isDevLaunch },
+            set: { if !$0 { onboardingCompleted = true } }
+        )) {
+            OnboardingView { onboardingCompleted = true }
+        }
         .onAppear {
             #if DEBUG
+            // `-resetOnboarding`: 첫 실행 안내를 다시 보이게 한다.
+            if CommandLine.arguments.contains("-resetOnboarding") { onboardingCompleted = false }
             // 개발 확인용 실행 인자(시뮬 자동화). `-autolab`: 타이밍 랩에 바로 진입.
             if CommandLine.arguments.contains("-autolab") { path = [.timingLab] }
             // `-autotest`: 사용자용 테스트 화면에 바로 진입.
@@ -67,6 +78,16 @@ struct ContentView: View {
         .sheet(isPresented: $isShowingDemoResult) {
             NavigationStack { ResultView(result: DemoData.sampleResult()) }
         }
+        #endif
+    }
+
+    /// 개발용 자동 진입 인자로 띄운 실행인가(DEBUG 전용). 릴리스에서는 항상 `false`.
+    private static var isDevLaunch: Bool {
+        #if DEBUG
+        let devArguments = ["-autolab", "-autotest", "-autointro"]
+        return DemoData.isRequested || devArguments.contains(where: CommandLine.arguments.contains)
+        #else
+        return false
         #endif
     }
 

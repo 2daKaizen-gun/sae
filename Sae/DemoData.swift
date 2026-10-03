@@ -7,7 +7,7 @@ import SaeTiming
 ///
 /// - `-trendDemo`: 데모 저장소 + 추이 화면으로 바로 진입
 /// - `-homeDemo`: 데모 저장소 + 홈(오늘 점수가 있는 상태)
-/// - `-resultDemo`: 데모 저장소 + 유효 세션의 결과 화면
+/// - `-resultDemo`: 데모 저장소 + 유효 세션의 결과 화면(`-demoLapses N`·`-demoInvalid`·`-demoNoHistory`로 조절)
 ///
 /// 여러 날의 기록이나 12번을 제때 누른 유효 세션은 실제로 만들기 어렵다. 그래서 시뮬레이터에서
 /// 화면을 확인하려면 데이터를 만들어야 한다. 대신 두 가지를 지킨다:
@@ -40,7 +40,9 @@ enum DemoData {
         let context = container.mainContext
         let today = Calendar.current.startOfDay(for: Date())
 
-        for spec in days {
+        // `-demoNoHistory`: 기록 없는 상태(첫 측정 대사 확인용).
+        let specs = CommandLine.arguments.contains("-demoNoHistory") ? [] : days
+        for spec in specs {
             // 12 trial: 응답은 가장 빠른 값에서 8ms씩 늘어나고, lapse는 500ms를 넘긴다.
             let responses = (0..<(12 - spec.lapses)).map { TrialOutcome.valid(reactionTimeMs: spec.fastestMs + Double($0) * 8) }
             let lapses = (0..<spec.lapses).map { TrialOutcome.lapse(reactionTimeMs: 560 + Double($0) * 40) }
@@ -64,9 +66,16 @@ enum DemoData {
     }
 
     /// 유효한 12-trial 세션 결과 — 결과 화면 확인용. 판정·요약·타당도는 **실제 코어**가 낸다.
+    ///
+    /// `-demoLapses N`으로 랩스 수(0~12)를, `-demoInvalid`로 무효 세션을 만든다 — 대사 밴드별 화면 확인용.
     static func sampleResult() -> PVTSessionResult {
-        let outcomes = (0..<11).map { TrialOutcome.valid(reactionTimeMs: 255 + Double($0) * 9) }
-            + [TrialOutcome.lapse(reactionTimeMs: 540)]
+        let args = CommandLine.arguments
+        let lapses = args.firstIndex(of: "-demoLapses").flatMap { i in
+            i + 1 < args.count ? Int(args[i + 1]) : nil
+        }.map { min(max($0, 0), 12) } ?? 1
+        let responses = args.contains("-demoInvalid") ? 3 - min(lapses, 3) : 12 - lapses
+        let outcomes = (0..<responses).map { TrialOutcome.valid(reactionTimeMs: 255 + Double($0) * 9) }
+            + (0..<lapses).map { TrialOutcome.lapse(reactionTimeMs: 540 + Double($0) * 30) }
         let summary = PVTSessionSummary.make(from: outcomes)
         return PVTSessionResult(
             startedAt: Date(),

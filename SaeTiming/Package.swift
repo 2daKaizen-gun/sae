@@ -14,9 +14,14 @@ let package = Package(
     ],
     products: [
         .library(name: "SaeTiming", targets: ["SaeTiming"]),
+        .library(name: "SaeVoice", targets: ["SaeVoice"]),
     ],
     targets: [
         .target(name: "SaeTiming"),
         .testTarget(name: "SaeTimingTests", dependencies: ["SaeTiming"]),
+        // さえちゃん 대사 선택 — 측정 코어와 **물리적으로 분리**된 표현 계층(timing-engine §6).
+        // SaeTiming을 읽기만 하고, SaeTiming은 SaeVoice를 모른다(character-voice §1).
+        .target(name: "SaeVoice", dependencies: ["SaeTiming"]),
+        .testTarget(name: "SaeVoiceTests", dependencies: ["SaeVoice", "SaeTiming"]),
     ]
 )

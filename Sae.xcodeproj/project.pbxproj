@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		000000000000000000000012 /* SaeTiming in Frameworks */ = {isa = PBXBuildFile; productRef = 000000000000000000000011 /* SaeTiming */; };
+		000000000000000000000013 /* SaeVoice in Frameworks */ = {isa = PBXBuildFile; productRef = 000000000000000000000014 /* SaeVoice */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				000000000000000000000012 /* SaeTiming in Frameworks */,
+				000000000000000000000013 /* SaeVoice in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,6 +69,7 @@
 			name = Sae;
 			packageProductDependencies = (
 				000000000000000000000011 /* SaeTiming */,
+				000000000000000000000014 /* SaeVoice */,
 			);
 			productName = Sae;
 			productReference = 000000000000000000000005 /* Sae.app */;
@@ -339,6 +342,10 @@
 		000000000000000000000011 /* SaeTiming */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SaeTiming;
+		};
+		000000000000000000000014 /* SaeVoice */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SaeVoice;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

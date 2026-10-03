@@ -53,7 +53,7 @@ Development is governed by a small **[project constitution](docs/CONSTITUTION.md
 
 ## Status
 
-🚧 **In active development — the user-facing test flow is in (instructions → test → result).** Next: onboarding and the さえちゃん copy, then tremor (CoreMotion). Implementation follows a 4-week MVP plan (see [`docs/CONCEPT.md`](docs/CONCEPT.md) §7).
+🚧 **In active development — the full user flow is in: onboarding → instructions → test → result with Saechaan's line.** Next: tremor (CoreMotion), app icon and the demo video. Implementation follows a 4-week MVP plan (see [`docs/CONCEPT.md`](docs/CONCEPT.md) §7).
 
 **Working today**
 
@@ -66,6 +66,7 @@ Development is governed by a small **[project constitution](docs/CONSTITUTION.md
 - **HRV from HealthKit, as a reference only** — read-only access, requested with its reason at the moment it is needed, kept on device. HealthKit's HRV is **SDNN** (not RMSSD, which the early design assumed), so it is labelled as SDNN and kept **out of the score** until an SDNN mapping can be sourced. A reading older than 24 hours is not shown as today's.
 - **A small native design system** — tokens and shared components on system semantic colours, one brand colour with light / dark values (all text/background pairs at WCAG AA or better), Dynamic Type intact. Home shows today's score or says it was not measured. The score is **never colour-coded good/bad** — that would be an unsourced classification — and the stimulus rendering is outside the design system entirely.
 - **A user-facing test flow** — Measure opens a short instruction screen (every number in it — rounds, false-start and minimum-response limits — read from the code), then a focused test screen, then the result. The test uses **the same engine and the same stimulus view** as the verification lab: one `StimulusPad`, the unchanged `PVTSessionRunner`. It starts only after the screen transition has finished, shows no reaction times until the end, keeps the screen awake, and stores nothing if abandoned. The instrument panel is now a DEBUG-only tool.
+- **Saechaan's voice, kept apart from the engine** — the result opens with one line from the character, chosen in a separate `SaeVoice` target that only reads the engine's output. Every line starts with the engine's own numbers, then describes **the measurement, not the person** ("your responses were a little slow this time", never "you look tired"), then offers an optional, non-medical suggestion. The score bands that pick the tone (80/60/40/20) have no source, so they choose wording only and are never shown as labels. First-run onboarding states what the app is not: not a medical device, no diagnosis, data on the device only.
 - **Trilingual from the first screen** (JA / EN / KO) via String Catalog — the result screen shows the score with its breakdown in all three.
 
 **Deliberately not claimed yet**
@@ -73,7 +74,7 @@ Development is governed by a small **[project constitution](docs/CONSTITUTION.md
 - The **calibration offset is 0 — uncalibrated.** Deriving the real display/touch latency constant needs photodiode hardware ([`timing-engine.md`](docs/timing-engine.md) §8-3), so the app records "uncalibrated" rather than a made-up number.
 - Verified **in the iOS simulator, not yet on a physical device** ([#5](https://github.com/2daKaizen-gun/sae/issues/5)).
 - The MVP score is **PVT-only**: HRV and tremor stay out of the headline number until their anchors can be grounded.
-- HRV in the score, tremor, the character voice layer and onboarding are later phases.
+- HRV in the score, tremor, character visuals and adaptive lines are later phases.
 
 ## Documentation
 
