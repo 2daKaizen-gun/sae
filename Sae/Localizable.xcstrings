@@ -122,19 +122,19 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "A 90-second test gives today's score. Earlier days are in the trend."
+            "value": "A test of about 80 seconds gives today's score. Earlier days are in the trend."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "90秒のテストで今日の冴え度が出ます。過去の日は推移で見られます。"
+            "value": "約80秒のテストで今日の冴え度が出ます。過去の日は推移で見られます。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "90초 테스트를 하면 오늘의 冴え度가 나옵니다. 지난 날은 추이에서 볼 수 있어요."
+            "value": "약 80초 테스트를 하면 오늘의 冴え度가 나옵니다. 지난 날은 추이에서 볼 수 있어요."
           }
         }
       }
