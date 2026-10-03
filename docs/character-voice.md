@@ -7,7 +7,7 @@
 > 이 문서는 카피의 *실제 번역*이 아니라 **목소리의 설계**를 정의한다.
 
 - **최종 수정:** 2026-10-03 (밴드는 톤만 고른다 — 상태 라벨 미표시 · 대사는 사람이 아니라 측정을 묘사 · 입력을 원지표로 정정)
-- **상태:** 구현 중(Phase 4b, 이슈 #16)
+- **상태:** 구현됨(Phase 4b, 이슈 #16) — 대사 선택 `SaeVoice` 타깃, 문장 `Localizable.xcstrings`의 `voice.*`, 화면 `VoiceCard`·`OnboardingView`. 연속 저점 대사는 미구현(§7)
 - **입력:** 冴え 엔진의 점수(`SaeScore` / `DailyScore.score`)와 그 **원지표**(lapse 수 등). 2026-09-23부터 `explanation` 문자열은 저장하지 않는다(`data-model.md`)
 - **캐릭터:** さえちゃん / Saechaan / 사에짱 (`CONCEPT.md` §3)
 
