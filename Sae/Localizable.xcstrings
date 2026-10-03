@@ -1518,6 +1518,328 @@
           }
         }
       }
+    },
+    "voice.dull.0": {
+      "comment": "Saechaan line, band 40-59 (provisional), variant 0. Same rules as voice.sharp.0.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sae score %1$lld, lapses: %2$lld. Your responses were a little slow this time. How about closing your eyes for a moment, or some water?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度は%1$lld、ラプスは%2$lld回でした。今回は反応が少しゆっくりめでした。少し目を閉じるか、お水でもどうですか？"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度 %1$lld점, 랩스 %2$lld번이에요. 이번 측정에선 반응이 조금 느린 편이었어요. 잠깐 눈을 감거나 물 한 잔 어때요?"
+          }
+        }
+      }
+    },
+    "voice.dull.1": {
+      "comment": "Saechaan line, band 40-59, variant 1. Same rules as voice.sharp.0.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sae score %1$lld, lapses: %2$lld — responses came a little late. Maybe a quick stretch before you carry on?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度%1$lld、ラプス%2$lld回。反応が少し遅めでした。軽くストレッチしてから再開しませんか？"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度 %1$lld점, 랩스 %2$lld번. 반응이 조금 늦은 편이었어요. 가볍게 스트레칭하고 다시 시작해 볼까요?"
+          }
+        }
+      }
+    },
+    "voice.first.0": {
+      "comment": "Saechaan line for the first valid measurement. No comparison or judgement - there is no history yet. %1$lld = Sae score, %2$lld = lapse count.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your first measurement — Sae score %1$lld, lapses: %2$lld. There's nothing to compare with yet, so today's numbers are your starting point. Try again around the same time tomorrow?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "はじめての測定です。冴え度%1$lld、ラプス%2$lld回。まだ比べる記録がないので、今日の数字がこれからの出発点になります。明日も同じくらいの時間に測ってみませんか？"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "첫 측정이에요. 冴え度 %1$lld점, 랩스 %2$lld번. 아직 비교할 기록이 없어서, 오늘 숫자가 앞으로의 출발점이 돼요. 내일도 비슷한 때 한 번 재 볼까요?"
+          }
+        }
+      }
+    },
+    "voice.invalid.0": {
+      "comment": "Saechaan line for an invalid session: no score, no numbers, invite one retry without blame.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This measurement was a little unsteady, so there's no score. Wait for the green, then give it one more try?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今回は測定が少し不安定だったので、スコアは出していません。緑になるまで待って、もう一度だけやってみませんか？"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "이번엔 측정이 조금 흔들려서 점수를 내지 않았어요. 초록색이 될 때까지 기다렸다가, 한 번만 더 해 볼까요?"
+          }
+        }
+      }
+    },
+    "voice.invalid.1": {
+      "comment": "Saechaan line for an invalid session, variant 1. Same rules as voice.invalid.0.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This measurement wasn't steady enough to score. Let's try once more somewhere quiet."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今回の測定は、スコアを出せるほど安定していませんでした。静かな場所で、もう一度試してみましょう。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "이번 측정은 점수를 낼 만큼 안정적이지 않았어요. 조용한 곳에서 다시 한 번 해 봐요."
+          }
+        }
+      }
+    },
+    "voice.low.0": {
+      "comment": "Saechaan line, band 0-19 (provisional), variant 0. Gentlest tone, reassuring, no blame. Same rules as voice.sharp.0.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sae score %1$lld, lapses: %2$lld. Your responses were very slow this time. Don't push yourself — rest if you can."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度は%1$lld、ラプスは%2$lld回でした。今回は反応がとてもゆっくりでした。自分を追い込まず、休めるなら休みましょう。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度 %1$lld점, 랩스 %2$lld번이에요. 이번엔 반응이 많이 느린 편이었어요. 스스로를 몰아붙이지 말고, 쉴 수 있다면 쉬어 가요."
+          }
+        }
+      }
+    },
+    "voice.low.1": {
+      "comment": "Saechaan line, band 0-19, variant 1. Gentlest tone, reassuring, no blame.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sae score %1$lld, lapses: %2$lld — responses came very late. It's okay to take it easy today."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度%1$lld、ラプス%2$lld回。反応がとても遅めでした。今日は無理しなくて大丈夫ですよ。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度 %1$lld점, 랩스 %2$lld번. 반응이 많이 늦은 편이었어요. 오늘은 무리하지 않아도 괜찮아요."
+          }
+        }
+      }
+    },
+    "voice.name": {
+      "comment": "Name shown above Saechaan's line.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saechaan"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "さえちゃん"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "사에짱"
+          }
+        }
+      }
+    },
+    "voice.sharp.0": {
+      "comment": "Saechaan line, score band 80-100 (provisional), variant 0. Fact first (%1$lld = Sae score, %2$lld = lapse count, both from the engine), then a description of the measurement (never of the person), then an optional, non-medical suggestion.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sae score %1$lld, lapses: %2$lld. Your responses were very quick and even this time. How about tackling something that needs focus right now?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度は%1$lld、ラプスは%2$lld回でした。今回はとても速く、そろった反応でしたね。集中したいことに、今取りかかってみませんか？"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度 %1$lld점, 랩스 %2$lld번이에요. 이번 측정은 반응이 아주 빠르고 고른 편이었어요. 집중이 필요한 일을 지금 해 보면 어때요?"
+          }
+        }
+      }
+    },
+    "voice.sharp.1": {
+      "comment": "Saechaan line, band 80-100, variant 1. Same rules as voice.sharp.0.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sae score %1$lld, lapses: %2$lld — quick, even responses. Could be a good moment for that important task you've been saving."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度%1$lld、ラプス%2$lld回。速くてそろった反応でした。後回しにしていた大事なことに手をつけるのに、いいタイミングかもしれません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度 %1$lld점, 랩스 %2$lld번. 빠르고 고른 반응이었어요. 미뤄 둔 중요한 일을 해 보기 좋은 때일지도 몰라요."
+          }
+        }
+      }
+    },
+    "voice.slow.0": {
+      "comment": "Saechaan line, band 20-39 (provisional), variant 0. Same rules as voice.sharp.0.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sae score %1$lld, lapses: %2$lld. Your responses were fairly slow this time. It's fine to save the heavy-focus work for later."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度は%1$lld、ラプスは%2$lld回でした。今回は反応がかなりゆっくりめでした。大きな集中が要ることは、少し後にしても大丈夫ですよ。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度 %1$lld점, 랩스 %2$lld번이에요. 이번엔 반응이 꽤 느린 편이었어요. 큰 집중이 필요한 일은 조금 미뤄도 괜찮아요."
+          }
+        }
+      }
+    },
+    "voice.slow.1": {
+      "comment": "Saechaan line, band 20-39, variant 1. Same rules as voice.sharp.0.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sae score %1$lld, lapses: %2$lld — responses were fairly late. How about a short break first?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度%1$lld、ラプス%2$lld回。反応がかなり遅めでした。ひと休みしてからにしませんか？"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度 %1$lld점, 랩스 %2$lld번. 반응이 꽤 늦은 편이었어요. 잠깐 쉬었다 가는 건 어때요?"
+          }
+        }
+      }
+    },
+    "voice.steady.0": {
+      "comment": "Saechaan line, band 60-79 (provisional), variant 0. Same rules as voice.sharp.0.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sae score %1$lld, lapses: %2$lld. Pretty even responses. Carry on at your usual pace."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度は%1$lld、ラプスは%2$lld回でした。かなりそろった反応でしたよ。いつものペースでいきましょう。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度 %1$lld점, 랩스 %2$lld번이에요. 꽤 고른 반응이었어요. 평소 페이스대로 가요."
+          }
+        }
+      }
+    },
+    "voice.steady.1": {
+      "comment": "Saechaan line, band 60-79, variant 1. Same rules as voice.sharp.0.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sae score %1$lld, lapses: %2$lld — a steady measurement. Keep going, no need to push."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度%1$lld、ラプス%2$lld回。安定した測定でした。無理のない範囲で続けていきましょう。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冴え度 %1$lld점, 랩스 %2$lld번. 안정적인 측정이었어요. 무리하지 않는 선에서 하던 일을 이어 가요."
+          }
+        }
+      }
     }
   },
   "version": "1.0"
