@@ -59,7 +59,7 @@
 
 ## [2026-10-18] Phase 4c — 포트폴리오 마감 (개인정보 선언 · 아이콘 · 스크린샷 · README)
 
-**한 줄 상태:** GitHub 계정 실측(전부 `2daKaizen-gun`, 푸시는 gh 자격증명 헬퍼 경유)부터 확인하고, 이슈 #18을 올려 6커밋으로 면접관이 처음 만나는 표면을 마감했다. 패드 대비 항목은 **측정해 보니 원래 계획(채움 진하게)이 제1조와 부딪혀** 테두리 방식으로 바꾸고 이슈에 사유를 남겼다. PR 머지까지(사용자 사전 승인).
+**한 줄 상태:** GitHub 계정 실측(전부 `2daKaizen-gun`, 푸시는 gh 자격증명 헬퍼 경유)부터 확인하고, 이슈 #18을 올려 6커밋으로 면접관이 처음 만나는 표면을 마감했다. 패드 대비 항목은 **측정해 보니 원래 계획(채움 진하게)이 제1조와 부딪혀** 테두리 방식으로 바꾸고 이슈에 사유를 남겼다. **PR #19로 `main`에 머지**(사용자 사전 승인), 브랜치 삭제, #18 CLOSED.
 
 ### ✅ 완료된 것 (검증됨)
 - **계정 실측** — `gh` 활성 계정·git author·push 자격증명 모두 `2daKaizen-gun`, 저장소 admin/push. 옛 `yigun03` 토큰 경로는 쓰이지 않음
@@ -92,7 +92,7 @@
 
 ### 📎 관련 파일 · 커밋
 - `Sae/PrivacyInfo.xcprivacy`, `tools/make-app-icon.swift`, `Sae/Assets.xcassets/AppIcon.appiconset/`, `Sae/StimulusPad.swift`, `docs/screenshots/`, `README.md`, `docs/{timing-engine,CONCEPT}.md`
-- 커밋: `69c78ae` · `376bf61` · `7e72ab1` · `e0b5fac` · `7718309` · 이 문서 커밋 / 이슈 **#18**
+- 커밋: `69c78ae` · `376bf61` · `7e72ab1` · `e0b5fac` · `7718309` · 이 문서 커밋 / PR **#19 MERGED** / 이슈 **#18 CLOSED**
 
 ## [2026-10-03] Phase 4b — さえちゃん 대사 · 첫 실행 온보딩
 
