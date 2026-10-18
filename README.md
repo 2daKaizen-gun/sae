@@ -28,7 +28,7 @@ Built as a portfolio piece for Japanese product ("自社開発") companies, with
 |--------|--------|----------|---------|
 | **Alertness** | PVT reaction-time test (~60–90s) | High-precision timing (`CADisplayLink`) | Core sleep-debt indicator |
 | **Autonomic / stress** | HRV (SDNN, as HealthKit provides it) | HealthKit (Apple Watch) or camera PPG* | Recovery state |
-| **Physical fatigue** | Physiological hand tremor | CoreMotion (~10s) | Accumulated fatigue |
+| **Physical fatigue** | Physiological hand tremor, 5–12 Hz band | CoreMotion (10 s hold) | Reference only, same-device comparisons |
 
 These fuse into a daily **冴え度 (Sae-do) score, 0–100**, plus a trend chart. *(\*Camera PPG is a stretch goal.)*
 
@@ -55,7 +55,7 @@ This project is deliberately built around a few hard problems, each designed bef
 
 ## Tech stack
 
-Native Apple stack, zero third-party dependencies: **SwiftUI · SwiftData · Swift Charts · `CADisplayLink` + `UITouch.timestamp` + `CACurrentMediaTime` (precision timing) · HealthKit · String Catalog · Swift Testing.** CoreMotion is planned for the tremor signal and not used yet. Minimum iOS 17.
+Native Apple stack, zero third-party dependencies: **SwiftUI · SwiftData · Swift Charts · `CADisplayLink` + `UITouch.timestamp` + `CACurrentMediaTime` (precision timing) · HealthKit · CoreMotion · String Catalog · Swift Testing.** Minimum iOS 17.
 → [`docs/tech-stack.md`](docs/tech-stack.md)
 
 ## Design principles
@@ -64,11 +64,11 @@ Development is governed by a small **[project constitution](docs/CONSTITUTION.md
 
 ## Status
 
-🚧 **In active development — the full user flow is in: onboarding → instructions → test → result with Saechaan's line.** Next: tremor (CoreMotion), app icon and the demo video. Implementation follows a 4-week MVP plan (see [`docs/CONCEPT.md`](docs/CONCEPT.md) §7).
+🚧 **In active development — all three signals are in: the PVT score, plus HRV and hand tremor as references.** Next: the demo video and device verification ([#5](https://github.com/2daKaizen-gun/sae/issues/5)). Implementation follows a 4-week MVP plan (see [`docs/CONCEPT.md`](docs/CONCEPT.md) §7).
 
 **Working today**
 
-- **Pure timing & scoring core** (`SaeTiming`, a local Swift package with no platform dependencies): reaction-time math, lapse / false-start / no-response classification, seeded ISI scheduler, session aggregation, validity gate, stimulus-schedule state machine, the clock contract, the Sae-do score, the day-by-day trend series and HRV sample selection. Proven by **82 Swift Testing cases** that run without a simulator.
+- **Pure timing & scoring core** (`SaeTiming`, a local Swift package with no platform dependencies): reaction-time math, lapse / false-start / no-response classification, seeded ISI scheduler, session aggregation, validity gate, stimulus-schedule state machine, the clock contract, the Sae-do score, the day-by-day trend series, HRV sample selection and tremor analysis. Proven by **96 Swift Testing cases** that run without a simulator.
 - **Measurement runtime**: stimulus onset taken from the `CADisplayLink` frame timestamp, response from `UITouch.timestamp` via a low-level touch path, no animation or async work inside the timing loop. A session is **12 trials** with a 10s response timeout.
 - **Clock contract verified at runtime** — both timestamps are checked against a common clock, because reaction time is a direct subtraction and is meaningless if the two come from different bases.
 - **Explainable Sae-do score (0–100)** — raw PVT metrics map onto sub-indices, combine into an alertness component, and produce the final score. The tests reproduce the worked example published in [`score-algorithm.md`](docs/score-algorithm.md) §6 to the same number, so the code and the document cannot silently drift. An **invalid session produces no score** rather than a made-up low one.
@@ -78,6 +78,7 @@ Development is governed by a small **[project constitution](docs/CONSTITUTION.md
 - **A small native design system** — tokens and shared components on system semantic colours, one brand colour with light / dark values (all text/background pairs at WCAG AA or better), Dynamic Type intact. Home shows today's score or says it was not measured. The score is **never colour-coded good/bad** — that would be an unsourced classification — and the stimulus rendering is outside the design system entirely.
 - **A user-facing test flow** — Measure opens a short instruction screen (every number in it — rounds, false-start and minimum-response limits — read from the code), then a focused test screen, then the result. The test uses **the same engine and the same stimulus view** as the verification lab: one `StimulusPad`, the unchanged `PVTSessionRunner`. It starts only after the screen transition has finished, shows no reaction times until the end, keeps the screen awake, and stores nothing if abandoned. The instrument panel is now a DEBUG-only tool.
 - **Saechaan's voice, kept apart from the engine** — the result opens with one line from the character, chosen in a separate `SaeVoice` target that only reads the engine's output. Every line starts with the engine's own numbers, then describes **the measurement, not the person** ("your responses were a little slow this time", never "you look tired"), then offers an optional, non-medical suggestion. The score bands that pick the tone (80/60/40/20) have no source, so they choose wording only and are never shown as labels. First-run onboarding states what the app is not: not a medical device, no diagnosis, data on the device only.
+- **Hand tremor as a sourced reference** — a 10-second hold after the test; the accelerometer signal is detrended and the **5–12 Hz** band analysed, following the smartphone method of Santos et al. (2022, *Scientific Reports*, [DOI 10.1038/s41598-022-21310-4](https://doi.org/10.1038/s41598-022-21310-4)). The app reports band RMS (m/s²) and peak frequency, uses the *measured* sample rate, and says on screen that values compare only within one device — the same paper shows device mass changes the spectrum. Not in the score: there are no sourced anchors.
 - **Trilingual from the first screen** (JA / EN / KO) via String Catalog — the result screen shows the score with its breakdown in all three.
 
 **Deliberately not claimed yet**
@@ -85,7 +86,7 @@ Development is governed by a small **[project constitution](docs/CONSTITUTION.md
 - The **calibration offset is 0 — uncalibrated.** Deriving the real display/touch latency constant needs photodiode hardware ([`timing-engine.md`](docs/timing-engine.md) §8-3), so the app records "uncalibrated" rather than a made-up number.
 - Verified **in the iOS simulator, not yet on a physical device** ([#5](https://github.com/2daKaizen-gun/sae/issues/5)).
 - The MVP score is **PVT-only**: HRV and tremor stay out of the headline number until their anchors can be grounded.
-- HRV in the score, tremor, character visuals and adaptive lines are later phases.
+- HRV and tremor in the score, character visuals and adaptive lines are later phases. Tremor recording on real hardware is unverified — the simulator has no motion sensor.
 
 ## Building and running
 
@@ -101,7 +102,7 @@ open Sae.xcodeproj          # then Run the "Sae" scheme on an iPhone simulator
 
 ```sh
 cd SaeTiming
-swift test                  # Swift Testing, 90 cases
+swift test                  # Swift Testing, 96 cases
 ```
 
 If `xcode-select` points at the Command Line Tools instead of Xcode, prefix the command with `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`.
@@ -110,7 +111,7 @@ If `xcode-select` points at the Command Line Tools instead of Xcode, prefix the 
 
 | Path | What lives there |
 |------|------------------|
-| `SaeTiming/Sources/SaeTiming` | **Measurement core** — reaction-time math, trial classification, ISI scheduling, stimulus schedule, clock contract, session summary and validity, the Sae-do score, trend series, HRV sample selection. No UIKit/SwiftUI. |
+| `SaeTiming/Sources/SaeTiming` | **Measurement core** — reaction-time math, trial classification, ISI scheduling, stimulus schedule, clock contract, session summary and validity, the Sae-do score, trend series, HRV sample selection, tremor analysis. No UIKit/SwiftUI. |
 | `SaeTiming/Sources/SaeVoice` | **Character layer** — picks Saechaan's line. Reads `SaeTiming`; `SaeTiming` never imports it. |
 | `Sae/` | The iOS app: runtime timing (`PVTSessionRunner`, `TouchCatcher`, `StimulusPad`), SwiftData models, HealthKit read, screens, `DesignSystem/`, String Catalogs, privacy manifest. |
 | `docs/` | Design of record — constitution, timing engine, score algorithm, character voice, data model, handoff log. |

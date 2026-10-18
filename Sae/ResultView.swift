@@ -7,7 +7,7 @@ import SaeTiming
 /// 이 화면이 뜰 때 `CADisplayLink`는 이미 멈춰 있다(`PVTSessionRunner.finishSession`). 그래서 시트
 /// 애니메이션·레이아웃이 측정을 오염시킬 수 없다(제1조 1항).
 ///
-/// 보여주는 순서가 곧 설명 순서다: さえちゃん 한마디 → 점수 → 그 점수를 만든 원지표 → 빠진 신호 → 점수 밖의 참고 지표.
+/// 보여주는 순서가 곧 설명 순서다: さえちゃん 한마디 → 점수 → 그 점수를 만든 원지표 → 빠진 신호 → 점수 밖의 참고 지표(HRV·손떨림).
 /// 무효 세션이면 점수 자리에 **점수가 없다는 사실과 이유**를 둔다(제2조 — 가짜 숫자보다 빈칸).
 struct ResultView: View {
     let result: PVTSessionResult
@@ -29,6 +29,8 @@ struct ResultView: View {
                 VoiceCard(result: result)
                 scoreSection
                 hrvSection
+                // 손떨림도 점수 밖 참고 지표 — 사용자가 시작하고, 측정이 끝난 뒤에만 기록한다(제1조).
+                TremorBlock()
             }
             .padding(SaeTheme.Spacing.l)
         }
