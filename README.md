@@ -32,6 +32,17 @@ Built as a portfolio piece for Japanese product ("自社開発") companies, with
 
 These fuse into a daily **冴え度 (Sae-do) score, 0–100**, plus a trend chart. *(\*Camera PPG is a stretch goal.)*
 
+## Screenshots
+
+From first launch to the trend: onboarding → home → instructions → test → result with Saechaan's line → 14-day trend.
+
+| Onboarding | Home | Instructions | Test | Result | Trend |
+|---|---|---|---|---|---|
+| <img src="docs/screenshots/en-1-onboarding.png" width="130" alt="Onboarding (EN)"> | <img src="docs/screenshots/en-2-home.png" width="130" alt="Home (EN)"> | <img src="docs/screenshots/en-3-instructions.png" width="130" alt="Instructions (EN)"> | <img src="docs/screenshots/en-4-test.png" width="130" alt="Test (EN)"> | <img src="docs/screenshots/en-5-result.png" width="130" alt="Result (EN)"> | <img src="docs/screenshots/en-6-trend.png" width="130" alt="Trend (EN)"> |
+| <img src="docs/screenshots/ja-1-onboarding.png" width="130" alt="Onboarding (JA)"> | <img src="docs/screenshots/ja-2-home.png" width="130" alt="Home (JA)"> | <img src="docs/screenshots/ja-3-instructions.png" width="130" alt="Instructions (JA)"> | <img src="docs/screenshots/ja-4-test.png" width="130" alt="Test (JA)"> | <img src="docs/screenshots/ja-5-result.png" width="130" alt="Result (JA)"> | <img src="docs/screenshots/ja-6-trend.png" width="130" alt="Trend (JA)"> |
+
+<sub>Captured on the iOS 26.4 simulator (iPhone 17 Pro) from a DEBUG build: home, result and trend use the in-memory demo data (`-homeDemo`, `-resultDemo`, `-trendDemo`) — the scores shown are computed by the real scorer from synthetic trials, not typed in — and the DEBUG-only "Timing lab (developer)" link is visible on home.</sub>
+
 ## Engineering highlights
 
 This project is deliberately built around a few hard problems, each designed before a line of code:
@@ -44,7 +55,7 @@ This project is deliberately built around a few hard problems, each designed bef
 
 ## Tech stack
 
-Native Apple stack, zero third-party dependencies by default: **SwiftUI · SwiftData · Swift Charts · CADisplayLink / `mach_absolute_time` (precision timing) · CoreMotion · HealthKit · String Catalog · Swift Testing.** Minimum iOS 17.
+Native Apple stack, zero third-party dependencies: **SwiftUI · SwiftData · Swift Charts · `CADisplayLink` + `UITouch.timestamp` + `CACurrentMediaTime` (precision timing) · HealthKit · String Catalog · Swift Testing.** CoreMotion is planned for the tremor signal and not used yet. Minimum iOS 17.
 → [`docs/tech-stack.md`](docs/tech-stack.md)
 
 ## Design principles
@@ -75,6 +86,48 @@ Development is governed by a small **[project constitution](docs/CONSTITUTION.md
 - Verified **in the iOS simulator, not yet on a physical device** ([#5](https://github.com/2daKaizen-gun/sae/issues/5)).
 - The MVP score is **PVT-only**: HRV and tremor stay out of the headline number until their anchors can be grounded.
 - HRV in the score, tremor, character visuals and adaptive lines are later phases.
+
+## Building and running
+
+**Requirements:** Xcode 26 (developed with 26.4) and an iOS 17+ simulator or device. No package manager steps — the only packages are local.
+
+```sh
+git clone https://github.com/2daKaizen-gun/sae.git
+cd sae
+open Sae.xcodeproj          # then Run the "Sae" scheme on an iPhone simulator
+```
+
+**Tests** — the measurement core and the character layer are plain Swift packages, so they run without a simulator:
+
+```sh
+cd SaeTiming
+swift test                  # Swift Testing, 90 cases
+```
+
+If `xcode-select` points at the Command Line Tools instead of Xcode, prefix the command with `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`.
+
+### Project layout
+
+| Path | What lives there |
+|------|------------------|
+| `SaeTiming/Sources/SaeTiming` | **Measurement core** — reaction-time math, trial classification, ISI scheduling, stimulus schedule, clock contract, session summary and validity, the Sae-do score, trend series, HRV sample selection. No UIKit/SwiftUI. |
+| `SaeTiming/Sources/SaeVoice` | **Character layer** — picks Saechaan's line. Reads `SaeTiming`; `SaeTiming` never imports it. |
+| `Sae/` | The iOS app: runtime timing (`PVTSessionRunner`, `TouchCatcher`, `StimulusPad`), SwiftData models, HealthKit read, screens, `DesignSystem/`, String Catalogs, privacy manifest. |
+| `docs/` | Design of record — constitution, timing engine, score algorithm, character voice, data model, handoff log. |
+| `tools/` | `make-app-icon.swift` — regenerates the app icon. |
+
+### DEBUG launch arguments
+
+Set under *Edit Scheme → Run → Arguments*. They exist only in DEBUG builds; the demo ones use an in-memory store and never touch the on-device data.
+
+| Argument | Opens |
+|----------|-------|
+| `-autolab` | The timing lab (instrument panel: refresh rate, clock-contract deltas, raw trials) |
+| `-autointro` / `-autotest` | The test instructions / the test screen |
+| `-homeDemo` | Home with demo history (today has a score) |
+| `-resultDemo` | A result screen for a synthetic session — add `-demoLapses N` (0–12), `-demoInvalid` or `-demoNoHistory` (first-measurement line) |
+| `-trendDemo` | The trend with 10 demo days — add `-trendSelect N` to preselect N days ago |
+| `-resetOnboarding` | Shows the first-run onboarding again |
 
 ## Documentation
 

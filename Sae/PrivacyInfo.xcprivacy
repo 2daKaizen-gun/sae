@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- 冴え 개인정보 선언 (헌법 제3조). 코드가 실제로 하는 것만 적는다. -->
+	<!-- 추적 없음: 광고·분석 SDK가 없고, 어떤 데이터도 기기 밖으로 나가지 않는다. -->
+	<key>NSPrivacyTracking</key>
+	<false/>
+	<key>NSPrivacyTrackingDomains</key>
+	<array/>
+	<!-- 수집 데이터 없음: 측정·HRV는 온디바이스에만 저장되고 개발자에게 전송되지 않는다. -->
+	<key>NSPrivacyCollectedDataTypes</key>
+	<array/>
+	<!-- 필수 사유 API: @AppStorage(온보딩 완료·HRV 접근 요청 여부)가 UserDefaults를 쓴다. -->
+	<key>NSPrivacyAccessedAPITypes</key>
+	<array>
+		<dict>
+			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSPrivacyAccessedAPICategoryUserDefaults</string>
+			<key>NSPrivacyAccessedAPITypeReasons</key>
+			<array>
+				<string>CA92.1</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

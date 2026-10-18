@@ -28,6 +28,15 @@ struct StimulusPad: View {
                     .foregroundStyle(isStimulusVisible ? Color.white : Color.secondary)
                     .animation(nil, value: isStimulusVisible)
             }
+            // 패드의 가장자리 — 대기 상태 채움(회색 15%)은 바탕과 1.15:1이라 패드가 거의 안 보였다.
+            // 채움을 진하게 하면 초록 자극과의 차이(라이트 1.74:1)가 더 줄어 온셋이 덜 눈에 띈다(제1조).
+            // 그래서 채움·자극 색은 그대로 두고, **자극과 무관하게 늘 같은** 테두리만 더한다
+            // (secondaryLabel: 라이트 3.29:1 / 다크 6.36:1). 토글되지 않으니 자극 프레임에 바뀌는 것이 없다.
+            .overlay {
+                RoundedRectangle(cornerRadius: 16)
+                    .strokeBorder(Color(uiColor: .secondaryLabel), lineWidth: 1.5)
+                    .allowsHitTesting(false)
+            }
             .overlay {
                 TouchCatcher(onTouchDown: onTouchDown)
                     .accessibilityIdentifier("touchCatcher")
