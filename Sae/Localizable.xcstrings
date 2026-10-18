@@ -853,24 +853,24 @@
       }
     },
     "score.missing_signals": {
-      "comment": "States plainly that the MVP score uses PVT only; missing signals are never hidden.",
+      "comment": "Under the score: the Sae score uses the alertness (PVT) component only. HRV and tremor may be shown below as references but are not part of the score.",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "alertness only — HRV and tremor not measured"
+            "value": "Score uses alertness only — HRV and tremor are shown as references, not scored."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "覚醒のみ — HRV・手の震えは未計測"
+            "value": "冴え度は覚醒のみで算出 — 心拍変動と手のふるえは参考表示で、点数には含めません。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "각성만 측정 — HRV·손떨림 없음"
+            "value": "점수는 각성만으로 계산 — 심박 변이도와 손떨림은 참고로만 보여 주고 점수에 넣지 않아요."
           }
         }
       }
@@ -1492,6 +1492,213 @@
           "stringUnit": {
             "state": "translated",
             "value": "보정 오프셋 %.0f ms (미보정)"
+          }
+        }
+      }
+    },
+    "tremor.explain": {
+      "comment": "Before the 10-second tremor recording: what to do and what is recorded. Data stays on the device.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hold the phone the way you usually do and keep still for 10 seconds. The accelerometer records the small 5–12 Hz tremor of your hand. Nothing leaves this device."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "いつものようにスマホを持ち、10秒間じっとしていてください。加速度センサーが手の小さな5〜12 Hzのふるえを記録します。データは端末の外に出ません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "평소처럼 폰을 들고 10초 동안 가만히 있어 주세요. 가속도 센서가 손의 작은 5~12 Hz 떨림을 기록해요. 데이터는 기기 밖으로 나가지 않아요."
+          }
+        }
+      }
+    },
+    "tremor.failed": {
+      "comment": "Recording motion failed with an error.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not record motion."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "モーションを記録できませんでした。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "움직임을 기록하지 못했어요."
+          }
+        }
+      }
+    },
+    "tremor.recording": {
+      "comment": "During the tremor recording. %lld = seconds remaining.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep still… %lld s"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "そのまま… あと%lld秒"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "그대로 있어 주세요… %lld초"
+          }
+        }
+      }
+    },
+    "tremor.same_device_note": {
+      "comment": "Limitation shown with every tremor result (device mass changes the spectrum, Santos et al. 2022).",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compare only with readings from this same phone — a device's weight changes the result."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "同じスマホで測った値とだけ比べてください。端末の重さで結果が変わります。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "같은 폰으로 잰 값끼리만 비교해 주세요. 기기의 무게에 따라 결과가 달라져요."
+          }
+        }
+      }
+    },
+    "tremor.start": {
+      "comment": "Button that starts the 10-second tremor recording.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Measure for 10 seconds"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10秒測る"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10초 측정하기"
+          }
+        }
+      }
+    },
+    "tremor.title": {
+      "comment": "Heading of the hand-tremor block on the result screen. Reference only, not part of the score.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hand tremor — reference only, not in the score"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "手のふるえ（参考・冴え度には含めません）"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "손떨림 — 참고용, 점수에 포함 안 됨"
+          }
+        }
+      }
+    },
+    "tremor.unavailable": {
+      "comment": "Shown instead of the button when the device has no motion sensor (e.g. the simulator).",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This device has no motion sensor available."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この端末ではモーションセンサーを利用できません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "이 기기에서는 모션 센서를 사용할 수 없어요."
+          }
+        }
+      }
+    },
+    "tremor.unusable": {
+      "comment": "The recording could not be analysed (too short or uneven sampling).",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The recording was too short or uneven to analyse. Please try again."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記録が短すぎるか不安定で、分析できませんでした。もう一度お試しください。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "기록이 너무 짧거나 고르지 않아 분석하지 못했어요. 다시 해 주세요."
+          }
+        }
+      }
+    },
+    "tremor.value": {
+      "comment": "Tremor result. %1$.3f = 5–12 Hz band RMS in m/s², %2$.1f = peak frequency in Hz.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5–12 Hz band: %1$.3f m/s² · peak %2$.1f Hz"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5〜12 Hz帯域：%1$.3f m/s²・ピーク %2$.1f Hz"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5~12 Hz 대역: %1$.3f m/s² · 정점 %2$.1f Hz"
           }
         }
       }
