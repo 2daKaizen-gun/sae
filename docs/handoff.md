@@ -59,7 +59,7 @@
 
 ## [2026-10-19] GitHub 규약 정합 + Phase 3b — 손떨림(참고 지표)
 
-**한 줄 상태:** GitHub 전수 점검(계정·이슈 9·PR 10·브랜치·설정)과 규칙 대조로 규약의 어긋남 5가지를 찾아 **실제 운영대로 문서화**했고, 이슈 #20을 올려 손떨림을 **출처 있는 방법(Santos et al. 2022)으로 점수 밖 참고 지표**로 들였다. 6커밋, PR 머지까지(사용자 사전 승인). 이로써 기획의 세 신호가 모두 구현됐다 — 단 손떨림 실측은 시뮬에 센서가 없어 **미검증**.
+**한 줄 상태:** GitHub 전수 점검(계정·이슈 9·PR 10·브랜치·설정)과 규칙 대조로 규약의 어긋남 5가지를 찾아 **실제 운영대로 문서화**했고, 이슈 #20을 올려 손떨림을 **출처 있는 방법(Santos et al. 2022)으로 점수 밖 참고 지표**로 들였다. 6커밋, **PR #21로 `main`에 머지**(사용자 사전 승인), 브랜치 삭제, #20 CLOSED. 이로써 기획의 세 신호가 모두 구현됐다 — 단 손떨림 실측은 시뮬에 센서가 없어 **미검증**.
 
 ### ✅ 완료된 것 (검증됨)
 - **GitHub 점검** — 계정 전부 `2daKaizen-gun`(gh·author·push 자격증명), 닫힌 이슈 8개 체크박스 전부 체크, PR 10개 머지, 원격 브랜치 `main`뿐, 한국어 커밋 제목 0. 초기 커밋 8개(7/19~21)에 트레일러 없음 — 공개 히스토리 재작성은 하지 않음
@@ -95,7 +95,7 @@
 ### 📎 관련 파일 · 커밋
 - `SaeTiming/Sources/SaeTiming/TremorAnalysis.swift`(+테스트), `Sae/{TremorReadingModel,TremorRecorder,TremorBlock,ResultView}.swift`
 - 문서: `docs/{collaboration,workflow,score-algorithm,data-model,tech-stack,CONCEPT}.md`, `README.md`
-- 커밋: `49c3c26` · `2582682` · `678def2` · `5d5acc1` · `43768ff` · 이 문서 커밋 / 이슈 **#20**
+- 커밋: `49c3c26` · `2582682` · `678def2` · `5d5acc1` · `43768ff` · 이 문서 커밋 / PR **#21 MERGED** / 이슈 **#20 CLOSED**
 
 ## [2026-10-18] Phase 4c — 포트폴리오 마감 (개인정보 선언 · 아이콘 · 스크린샷 · README)
 
