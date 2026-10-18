@@ -4,7 +4,7 @@
 > 범위는 MVP 4주 계획(`CONCEPT.md` §7). 그 너머는 **Deferred**로 명시해 미리 만들지 않는다(헌법 제7조).
 > 모든 데이터는 **온디바이스**에 남고 서버로 보내지 않는다(제3조).
 
-- **최종 수정:** 2026-09-29 (`HRVReading.rmssdMs` → `sdnnMs`: HealthKit HRV는 SDNN)
+- **최종 수정:** 2026-10-19 (`TremorReading`을 실제 분석 출력으로: 대역 RMS·정점 주파수·표본률·기종)
 - **저장소:** SwiftData (로컬)
 
 ---
@@ -65,9 +65,11 @@ erDiagram
     TremorReading {
         UUID id PK
         Date measuredAt
-        Int durationMs "약 10초"
-        Double amplitude "생리적 손떨림 지표"
-        String axis "가속도/자이로 기반"
+        Int durationMs "기록 시간 (약 10초)"
+        Double sampleRateHz "실측 표본률"
+        Double bandRMS "5-12 Hz 대역 RMS (m/s2)"
+        Double peakFrequencyHz "대역 안 정점 주파수"
+        String deviceModel "기종 - 같은 기기끼리만 비교"
     }
 
     DailyScore {
@@ -103,8 +105,10 @@ erDiagram
 ### `HRVReading` — 자율신경/회복 (2~3주차)
 HealthKit(애플워치) 또는 스트레치의 카메라 PPG에서 온 HRV. **HealthKit이 주는 HRV는 SDNN**이라 필드도 `sdnnMs`다(2026-09-29 정정 — 처음엔 RMSSD로 적었으나 HealthKit에 RMSSD 타입은 없다). 카메라 PPG를 도입하면 그때 지표를 다시 정한다. `healthKitSampleID`는 HealthKit 샘플의 UUID로, 같은 샘플을 다시 읽어도 **한 번만 저장**하게 하는 키다(2026-09-29 추가). HRV는 **冴え度에 들어가지 않는 참고 지표**다(score-algorithm §2). `source`로 출처, `isEstimated`로 추정 여부를 명시한다(제2조 3항).
 
-### `TremorReading` — 신체 피로 (3주차)
-CoreMotion(가속도/자이로) 약 10초 측정에서 뽑은 생리적 손떨림 지표.
+### `TremorReading` — 신체 피로 (참고 지표, 2026-10-19 구현)
+CoreMotion 가속도 약 10초 기록에서 뽑은 생리적 손떨림. 처음 설계의 `amplitude`·`axis` 대신 **실제 분석이 내는 값**을 저장한다: 5–12 Hz 대역 RMS(m/s², 세 축 합산)와 정점 주파수, 그리고 해석에 필요한 조건(실측 표본률·기록 시간). 방법과 출처는 `score-algorithm.md` §3-1(Santos et al. 2022).
+
+**`deviceModel`을 함께 남긴다** — 같은 논문이 기기 질량이 손떨림 스펙트럼을 바꾼다고 보고하므로, 다른 기기에서 잰 값과 섞어 비교하면 안 된다(제2조). 기종 식별자는 기기 밖으로 나가지 않는다(제3조). 冴え度에는 들어가지 않는다(score-algorithm §3-2).
 
 ### `DailyScore` — 冴え度 (2주차~)
 하루 1개. 세 신호를 융합한 0~100 점수. **구성요소를 분리 저장**해 설명 가능성을 보장하고, さえちゃん 대사는 이 값을 왜곡 없이 전달한다(제4조). HRV·손떨림이 없는 날은 각성(PVT) 성분만으로도 산출 가능하도록 두 성분은 optional이며, **MVP에서는 항상 nil**이다(Phase 2 확정 ①).

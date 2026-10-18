@@ -149,5 +149,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: [PVTSession.self, DailyScore.self, HRVReading.self], inMemory: true)
+        .modelContainer(for: [PVTSession.self, DailyScore.self, HRVReading.self, TremorReading.self], inMemory: true)
 }
