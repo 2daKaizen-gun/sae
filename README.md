@@ -32,6 +32,17 @@ Built as a portfolio piece for Japanese product ("自社開発") companies, with
 
 These fuse into a daily **冴え度 (Sae-do) score, 0–100**, plus a trend chart. *(\*Camera PPG is a stretch goal.)*
 
+## Screenshots
+
+From first launch to the trend: onboarding → home → instructions → test → result with Saechaan's line → 14-day trend.
+
+| Onboarding | Home | Instructions | Test | Result | Trend |
+|---|---|---|---|---|---|
+| <img src="docs/screenshots/en-1-onboarding.png" width="130" alt="Onboarding (EN)"> | <img src="docs/screenshots/en-2-home.png" width="130" alt="Home (EN)"> | <img src="docs/screenshots/en-3-instructions.png" width="130" alt="Instructions (EN)"> | <img src="docs/screenshots/en-4-test.png" width="130" alt="Test (EN)"> | <img src="docs/screenshots/en-5-result.png" width="130" alt="Result (EN)"> | <img src="docs/screenshots/en-6-trend.png" width="130" alt="Trend (EN)"> |
+| <img src="docs/screenshots/ja-1-onboarding.png" width="130" alt="Onboarding (JA)"> | <img src="docs/screenshots/ja-2-home.png" width="130" alt="Home (JA)"> | <img src="docs/screenshots/ja-3-instructions.png" width="130" alt="Instructions (JA)"> | <img src="docs/screenshots/ja-4-test.png" width="130" alt="Test (JA)"> | <img src="docs/screenshots/ja-5-result.png" width="130" alt="Result (JA)"> | <img src="docs/screenshots/ja-6-trend.png" width="130" alt="Trend (JA)"> |
+
+<sub>Captured on the iOS 26.4 simulator (iPhone 17 Pro) from a DEBUG build: home, result and trend use the in-memory demo data (`-homeDemo`, `-resultDemo`, `-trendDemo`) — the scores shown are computed by the real scorer from synthetic trials, not typed in — and the DEBUG-only "Timing lab (developer)" link is visible on home.</sub>
+
 ## Engineering highlights
 
 This project is deliberately built around a few hard problems, each designed before a line of code:
