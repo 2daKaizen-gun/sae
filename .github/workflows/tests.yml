@@ -1,0 +1,28 @@
+# 순수 코어 테스트 — 모든 PR과 main 푸시에서 돈다(헌법 제6조: 핵심에는 테스트, 그리고 보이게).
+#
+# 로컬 패키지 SaeTiming(측정 코어 + SaeVoice)은 UIKit/SwiftUI 없이 macOS에서 `swift test`로 돈다.
+# 앱 테스트(SaeTests)는 iOS 26 SDK가 필요하다 — 러너에 있는 Xcode를 기록해 두어, CI에서 돌릴 수 있는지를
+# 추측이 아니라 로그로 판단한다.
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  core:
+    name: Core — swift test
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain on this runner
+        run: |
+          xcodebuild -version
+          swift --version
+          ls /Applications | grep -i '^Xcode' || true
+
+      - name: swift test (SaeTiming + SaeVoice)
+        working-directory: SaeTiming
+        run: swift test
