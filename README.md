@@ -100,7 +100,7 @@ cd sae
 open Sae.xcodeproj          # then Run the "Sae" scheme on an iPhone simulator
 ```
 
-**Tests** — two suites, both Swift Testing:
+**Tests** — two suites, both Swift Testing, both run by [CI](.github/workflows/tests.yml) on every pull request:
 
 ```sh
 cd SaeTiming && swift test  # core + character layer, 96 cases, no simulator needed
@@ -112,7 +112,7 @@ xcodebuild test -project Sae.xcodeproj -scheme Sae \
 | Suite | Runs | What it proves |
 |-------|------|----------------|
 | `SaeTiming/Tests` (`SaeTimingTests`, `SaeVoiceTests`) | `swift test` · **CI on every PR and push to `main`** | Reaction-time math and classification, ISI scheduling, the stimulus schedule, the clock contract, session validity, every score anchor and the published worked example, the trend series, HRV selection, tremor analysis on synthetic signals, and Saechaan's line selection |
-| `SaeTests` | `xcodebuild test` (iOS simulator) | What reaches the on-device store: a valid session stores its raw trials and the day's score, an invalid one stores no score, one score per day (the last valid session wins, a later invalid one erases nothing), and when a measurement counts as the first |
+| `SaeTests` | `xcodebuild test` (iOS simulator) · **CI on every PR and push to `main`** (newest Xcode 26 on the runner) | What reaches the on-device store: a valid session stores its raw trials and the day's score, an invalid one stores no score, one score per day (the last valid session wins, a later invalid one erases nothing), and when a measurement counts as the first |
 
 If `xcode-select` points at the Command Line Tools instead of Xcode, prefix the command with `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`.
 
