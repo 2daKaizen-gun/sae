@@ -21,10 +21,19 @@ struct PVTSessionStoreTests {
 
     /// 유효 세션: 12회 응답(랩스 1). 무효 세션: 응답 2회 + 무응답 10회.
     static func result(valid: Bool, startedAt: Date = Date(), lapses: Int = 1) -> PVTSessionResult {
-        let outcomes: [TrialOutcome] = valid
-            ? (0..<(12 - lapses)).map { .valid(reactionTimeMs: 260 + Double($0) * 10) }
-                + (0..<lapses).map { _ in .lapse(reactionTimeMs: 620) }
-            : [.valid(reactionTimeMs: 300), .valid(reactionTimeMs: 320)] + Array(repeating: .noResponse, count: 10)
+        // 단계별로 타입을 적어 둔다 — 한 식으로 쓰면 CI(Xcode 26.3)의 타입 검사기가 시간 안에 못 푼다.
+        var outcomes: [TrialOutcome] = []
+        if valid {
+            for i in 0..<(12 - lapses) {
+                outcomes.append(.valid(reactionTimeMs: 260 + Double(i) * 10))
+            }
+            for _ in 0..<lapses {
+                outcomes.append(.lapse(reactionTimeMs: 620))
+            }
+        } else {
+            outcomes = [.valid(reactionTimeMs: 300), .valid(reactionTimeMs: 320)]
+            outcomes += [TrialOutcome](repeating: .noResponse, count: 10)
+        }
         let trials = outcomes.enumerated().map { index, outcome in
             TrialRecord(
                 index: index,
