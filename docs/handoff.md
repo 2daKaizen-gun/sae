@@ -59,7 +59,7 @@
 
 ## [2026-10-22] Phase 5a — 검증 기반 (CI · 공유 scheme · 앱 계층 테스트)
 
-**한 줄 상태:** 계정 실측 후 이슈 #22를 올려 **CI 2잡(순수 96 + 앱 11)이 PR마다 초록**인 상태를 만들었다. 푸시는 처음에 토큰에 `workflow` 권한이 없어 거절됐고, 사용자가 브라우저에서 기기 승인을 해 해결. CI 첫 실행에서 **로컬에선 안 보이던 문제(테스트 픽스처 타입 검사 시간 초과)**를 잡아 고쳤다. 7커밋, PR 머지까지(사용자 사전 승인).
+**한 줄 상태:** 계정 실측 후 이슈 #22를 올려 **CI 2잡(순수 96 + 앱 11)이 PR마다 초록**인 상태를 만들었다. 푸시는 처음에 토큰에 `workflow` 권한이 없어 거절됐고, 사용자가 브라우저에서 기기 승인을 해 해결. CI 첫 실행에서 **로컬에선 안 보이던 문제(테스트 픽스처 타입 검사 시간 초과)**를 잡아 고쳤다. 8커밋(계획 6 + CI가 드러낸 문제 2), **PR #23으로 `main`에 머지**(사용자 사전 승인), 브랜치 삭제, #22 CLOSED.
 
 ### ✅ 완료된 것 (검증됨)
 - **계정** — `2daKaizen-gun`(gh·author·push). `workflow` 권한 부여 후 스코프 `gist, read:org, repo, workflow`
@@ -93,7 +93,7 @@
 
 ### 📎 관련 파일 · 커밋
 - `.github/workflows/tests.yml`, `SaeTests/{PVTSessionStoreTests,DailyScoreRuleTests}.swift`, `Sae.xcodeproj/{project.pbxproj,xcshareddata/xcschemes/Sae.xcscheme}`, `Sae/VoiceCard.swift`, `README.md`, `docs/collaboration.md`
-- PR **#23** / 이슈 **#22**
+- PR **#23 MERGED** / 이슈 **#22 CLOSED**
 
 ## [2026-10-19] GitHub 규약 정합 + Phase 3b — 손떨림(참고 지표)
 
