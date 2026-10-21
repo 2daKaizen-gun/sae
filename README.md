@@ -1,5 +1,7 @@
 # 冴え (Sae)
 
+[![Tests](https://github.com/2daKaizen-gun/sae/actions/workflows/tests.yml/badge.svg)](https://github.com/2daKaizen-gun/sae/actions/workflows/tests.yml)
+
 > **Know your sharpness.** Measure your brain's alertness and sleep debt in 90 seconds a day — no wearable required.
 
 冴え (*Sae*, from 「頭が冴える」— "the mind is sharp and clear") is a native iOS app that turns a
@@ -98,12 +100,19 @@ cd sae
 open Sae.xcodeproj          # then Run the "Sae" scheme on an iPhone simulator
 ```
 
-**Tests** — the measurement core and the character layer are plain Swift packages, so they run without a simulator:
+**Tests** — two suites, both Swift Testing:
 
 ```sh
-cd SaeTiming
-swift test                  # Swift Testing, 96 cases
+cd SaeTiming && swift test  # core + character layer, 96 cases, no simulator needed
+
+xcodebuild test -project Sae.xcodeproj -scheme Sae \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro'   # app layer, 11 cases
 ```
+
+| Suite | Runs | What it proves |
+|-------|------|----------------|
+| `SaeTiming/Tests` (`SaeTimingTests`, `SaeVoiceTests`) | `swift test` · **CI on every PR and push to `main`** | Reaction-time math and classification, ISI scheduling, the stimulus schedule, the clock contract, session validity, every score anchor and the published worked example, the trend series, HRV selection, tremor analysis on synthetic signals, and Saechaan's line selection |
+| `SaeTests` | `xcodebuild test` (iOS simulator) | What reaches the on-device store: a valid session stores its raw trials and the day's score, an invalid one stores no score, one score per day (the last valid session wins, a later invalid one erases nothing), and when a measurement counts as the first |
 
 If `xcode-select` points at the Command Line Tools instead of Xcode, prefix the command with `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`.
 
