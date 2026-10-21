@@ -1,0 +1,62 @@
+# 순수 코어 테스트 — 모든 PR과 main 푸시에서 돈다(헌법 제6조: 핵심에는 테스트, 그리고 보이게).
+#
+# 로컬 패키지 SaeTiming(측정 코어 + SaeVoice)은 UIKit/SwiftUI 없이 macOS에서 `swift test`로 돈다.
+# 앱 테스트(SaeTests)는 iOS 26 SDK가 필요하다 — 러너에 있는 Xcode를 기록해 두어, CI에서 돌릴 수 있는지를
+# 추측이 아니라 로그로 판단한다.
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  core:
+    name: Core — swift test
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain on this runner
+        run: |
+          xcodebuild -version
+          swift --version
+          ls /Applications | grep -i '^Xcode' || true
+
+      - name: swift test (SaeTiming + SaeVoice)
+        working-directory: SaeTiming
+        run: swift test
+
+  app:
+    name: App — xcodebuild test
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      # 앱은 iOS 26 SDK가 필요하다. 이 러너의 최신 Xcode 26을 쓴다(로컬 개발은 26.4).
+      - name: Select Xcode 26
+        run: |
+          XCODE=$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)
+          echo "Using $XCODE"
+          sudo xcode-select -s "$XCODE"
+          xcodebuild -version
+
+      # 기기 이름을 하드코딩하지 않는다 — 러너 이미지마다 시뮬레이터 목록이 다르다.
+      - name: Pick an available iPhone simulator
+        id: sim
+        run: |
+          UDID=$(xcrun simctl list devices available -j | python3 -c "
+          import json, sys
+          devices = json.load(sys.stdin)['devices']
+          ios = sorted((k for k in devices if 'iOS' in k), reverse=True)
+          print(next(d['udid'] for k in ios for d in devices[k] if d['name'].startswith('iPhone')))
+          ")
+          xcrun simctl list devices available | grep "$UDID"
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+
+      - name: xcodebuild test (SaeTests)
+        run: |
+          xcodebuild test \
+            -project Sae.xcodeproj -scheme Sae \
+            -destination "id=${{ steps.sim.outputs.udid }}" \
+            CODE_SIGNING_ALLOWED=NO

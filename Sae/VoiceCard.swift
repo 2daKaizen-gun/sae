@@ -29,13 +29,27 @@ struct VoiceCard: View {
         return SaeVoice.line(facts: facts, isFirstMeasurement: isFirstMeasurement, rotation: rotation)
     }
 
-    /// 이 세션 전에 유효한 측정이 한 번도 없었는가.
-    ///
-    /// 앞선 유효 세션도, 앞선 날의 점수도 없을 때만 "첫 측정"이다. 같은 날 두 번째 측정은 첫 측정이 아니다.
     private var isFirstMeasurement: Bool {
-        let resultDay = Calendar.current.startOfDay(for: result.startedAt)
-        let earlierValid = sessions.contains { $0.isValid && $0.startedAt < result.startedAt }
-        let earlierDay = scores.contains { $0.day < resultDay }
+        Self.isFirstMeasurement(
+            startedAt: result.startedAt,
+            earlierSessions: sessions.map { (startedAt: $0.startedAt, isValid: $0.isValid) },
+            scoreDays: scores.map(\.day)
+        )
+    }
+
+    /// 이 세션 전에 유효한 측정이 한 번도 없었는가 — 저장소와 분리된 규칙(SaeTests가 증명).
+    ///
+    /// 앞선 유효 세션도, 앞선 날의 점수도 없을 때만 "첫 측정"이다. 같은 날 두 번째 측정은 첫 측정이 아니고,
+    /// 무효 세션만 있었다면 아직 첫 측정이다.
+    static func isFirstMeasurement(
+        startedAt: Date,
+        earlierSessions: [(startedAt: Date, isValid: Bool)],
+        scoreDays: [Date],
+        calendar: Calendar = .current
+    ) -> Bool {
+        let resultDay = calendar.startOfDay(for: startedAt)
+        let earlierValid = earlierSessions.contains { $0.isValid && $0.startedAt < startedAt }
+        let earlierDay = scoreDays.contains { $0 < resultDay }
         return !earlierValid && !earlierDay
     }
 
