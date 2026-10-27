@@ -29,12 +29,13 @@ struct TremorBlock: View {
         }
     }
 
+    // 보조 버튼 글자는 기본 레이블색 — 옅은 브랜드 틴트 바탕 위 브랜드색 글자는 AA 미달(3.88:1, #24).
     @ViewBuilder
     private var content: some View {
         switch phase {
         case .idle:
             NoticeText(text: Text("tremor.explain"))
-            Button { start() } label: { Text("tremor.start") }
+            Button { start() } label: { Text("tremor.start").foregroundStyle(Color.primary) }
                 .buttonStyle(.bordered)
         case .recording(let progress):
             let remaining = Int((TremorRecorder.recordingSeconds * (1 - progress)).rounded(.up))
@@ -47,7 +48,7 @@ struct TremorBlock: View {
             NoticeText(text: Text("tremor.same_device_note"))
         case .done(.unusable):
             NoticeText(text: Text("tremor.unusable"), isProblem: true)
-            Button { start() } label: { Text("tremor.start") }
+            Button { start() } label: { Text("tremor.start").foregroundStyle(Color.primary) }
                 .buttonStyle(.bordered)
         case .done(.unavailable):
             NoticeText(text: Text("tremor.unavailable"))

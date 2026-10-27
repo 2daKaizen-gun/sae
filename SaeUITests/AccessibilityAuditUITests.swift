@@ -39,8 +39,12 @@ final class AccessibilityAuditUITests: XCTestCase {
         try audit(["-autointro"]) { $0.buttons["Start"] }
     }
 
+    /// 건강 앱 접근을 아직 요청하지 않은 상태로 고정한다 — 이전 실행이 남긴 설정(AppStorage)에 따라 HRV 버튼이
+    /// 보이기도 안 보이기도 했다. 인자 도메인 값은 저장된 값보다 우선한다. CI의 새 시뮬에서만 드러났던 문제(#24).
+    private let hrvNotYetRequested = ["-hrv.accessRequested", "NO"]
+
     func testResult() throws {
-        try audit(["-resultDemo"]) { $0.buttons["Done"] }
+        try audit(["-resultDemo"] + hrvNotYetRequested) { $0.buttons["Done"] }
     }
 
     func testTrend() throws {
@@ -61,7 +65,7 @@ final class AccessibilityAuditUITests: XCTestCase {
     }
 
     func testResultAtTheLargestTextSize() throws {
-        try audit(["-resultDemo"] + largestText) { $0.buttons["Done"] }
+        try audit(["-resultDemo"] + hrvNotYetRequested + largestText) { $0.buttons["Done"] }
     }
 
     func testTrendAtTheLargestTextSize() throws {
