@@ -49,7 +49,14 @@ enum SaeTheme {
             traits.userInterfaceStyle == .dark ? .black : .white
         })
         /// 문제를 알리는 색(저장 실패·무효 사유). 점수 평가에는 쓰지 않는다.
-        static let problem = Color(uiColor: .systemRed)
+        ///
+        /// 시스템 빨강은 옅은 빨강 틴트(파괴적 버튼) 위에서 2.63:1로 AA 미달이었다(접근성 점검, #26).
+        /// 라이트 #A8201A(틴트 위 5.39 / 흰 바탕 6.3), 다크 #FF6961(틴트 위 6.59). 파괴적 버튼 글자에도 쓴다.
+        static let problem = Color(uiColor: UIColor { traits in
+            traits.userInterfaceStyle == .dark
+                ? UIColor(red: 0xFF / 255, green: 0x69 / 255, blue: 0x61 / 255, alpha: 1)
+                : UIColor(red: 0xA8 / 255, green: 0x20 / 255, blue: 0x1A / 255, alpha: 1)
+        })
     }
 
     /// 글자 역할 — 모두 텍스트 스타일 기반이라 Dynamic Type을 따른다.

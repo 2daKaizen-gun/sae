@@ -78,6 +78,22 @@ final class AccessibilityAuditUITests: XCTestCase {
         try audit(["-trendDemo", "-trendSelect", "3"], allowUnattributedChartText: true) { $0.staticTexts["Trend"] }
     }
 
+    /// 무효 세션 — 점수 대신 빨간 사유 문구가 나오는 화면.
+    func testInvalidResult() throws {
+        try audit(["-resultDemo", "-demoInvalid"] + hrvNotYetRequested) { $0.buttons["Done"] }
+    }
+
+    func testDataScreen() throws {
+        let app = FlowUITests.launch(["-homeDemo"])
+        XCTAssertTrue(app.buttons["Data on this device"].waitForExistence(timeout: 5))
+        app.buttons["Data on this device"].tap()
+        XCTAssertTrue(app.buttons["Delete all measurement records"].waitForExistence(timeout: 5))
+        try app.performAccessibilityAudit { issue in
+            XCTFail("Audit: \(issue.compactDescription) — '\(issue.element?.label ?? "-")'")
+            return true
+        }
+    }
+
     // MARK: 가장 큰 접근성 글자 크기(AX5)에서 같은 점검
 
     /// UIKit가 읽는 기본 설정 키로 앱의 글자 크기를 AX5로 띄운다(시스템 설정은 건드리지 않는다).

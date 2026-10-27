@@ -28,6 +28,8 @@ struct DataView: View {
                 } label: {
                     Text("data.delete")
                         .frame(maxWidth: .infinity)
+                        .foregroundStyle(SaeTheme.Palette.problem) // 시스템 빨강은 틴트 위 2.63:1
+
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.large)
