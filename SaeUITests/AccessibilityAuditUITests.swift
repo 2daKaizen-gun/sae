@@ -46,4 +46,25 @@ final class AccessibilityAuditUITests: XCTestCase {
     func testTrend() throws {
         try audit(["-trendDemo", "-trendSelect", "3"]) { $0.staticTexts["Trend"] }
     }
+
+    // MARK: 가장 큰 접근성 글자 크기(AX5)에서 같은 점검
+
+    /// UIKit가 읽는 기본 설정 키로 앱의 글자 크기를 AX5로 띄운다(시스템 설정은 건드리지 않는다).
+    private let largestText = ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+
+    func testHomeAtTheLargestTextSize() throws {
+        try audit(["-homeDemo"] + largestText) { $0.buttons["Measure"] }
+    }
+
+    func testInstructionsAtTheLargestTextSize() throws {
+        try audit(["-autointro"] + largestText) { $0.buttons["Start"] }
+    }
+
+    func testResultAtTheLargestTextSize() throws {
+        try audit(["-resultDemo"] + largestText) { $0.buttons["Done"] }
+    }
+
+    func testTrendAtTheLargestTextSize() throws {
+        try audit(["-trendDemo", "-trendSelect", "3"] + largestText) { $0.staticTexts["Trend"] }
+    }
 }

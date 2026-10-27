@@ -41,14 +41,23 @@ struct ScoreCard<Details: View>: View {
 }
 
 /// 지표 한 줄 — 이름과 값. 값은 고정폭 숫자라 줄끼리 자릿수가 맞는다.
+///
+/// 접근성 글자 크기(AX1~AX5)에서는 이름 위, 값 아래로 **세로로** 놓는다. 가로로 두면 이름이 단어 중간에서
+/// 끊긴다("reac-tion time", #24). 보통 크기에서는 그대로 한 줄이다.
 struct MetricRow: View {
     let title: LocalizedStringKey
     let value: String
 
+    @Environment(\.dynamicTypeSize) private var typeSize
+
     var body: some View {
-        HStack {
+        let stacked = typeSize.isAccessibilitySize
+        let layout = stacked
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: SaeTheme.Spacing.xs))
+            : AnyLayout(HStackLayout())
+        layout {
             Text(title)
-            Spacer()
+            if !stacked { Spacer() }
             Text(value)
                 .foregroundStyle(SaeTheme.Palette.secondaryText)
         }
