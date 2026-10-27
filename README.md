@@ -51,7 +51,7 @@ This project is deliberately built around a few hard problems, each designed bef
 
 - **⏱ Millisecond-accurate reaction timing.** Measuring true reaction time on iOS is harder than it looks — most apps get it wrong. Stimulus onset is taken from the `CADisplayLink` frame timestamp and the response from `UITouch.timestamp` (hardware event time), so display and dispatch latency never contaminate the measurement. Calibration offset and refresh rate are stored per session for reproducibility. → [`docs/timing-engine.md`](docs/timing-engine.md)
 - **🔍 An explainable score, not a black box.** Every point of the 0–100 Sae-do score maps back to raw PVT metrics — "why 60?" always has an answer. → [`docs/score-algorithm.md`](docs/score-algorithm.md)
-- **🔒 Privacy by default.** All health data is processed on-device. No servers, no tracking, no ad SDKs.
+- **🔒 Privacy by default.** All health data is processed on-device. No servers, no tracking, no ad SDKs. A *Data on this device* screen shows what the app keeps and deletes all of it on request (the Health app's own data is never touched).
 - **🌏 Internationalization as a design premise.** Trilingual (JA / EN / KO) from day one via String Catalog (`.xcstrings`) — no hardcoded strings, all three languages treated as equal. → [`docs/character-voice.md`](docs/character-voice.md)
 - **🌡 Cold data, warm delivery.** A character layer (*Saechaan*) delivers hard numbers gently — warming the tone without ever distorting the data.
 
@@ -107,14 +107,14 @@ open Sae.xcodeproj          # then Run the "Sae" scheme on an iPhone simulator
 cd SaeTiming && swift test  # core + character layer, 96 cases, no simulator needed
 
 xcodebuild test -project Sae.xcodeproj -scheme Sae \
-  -destination 'platform=iOS Simulator,name=iPhone 17 Pro'   # app layer (11) + UI tests (11)
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro'   # app layer (15) + UI tests (16)
 ```
 
 | Suite | Runs | What it proves |
 |-------|------|----------------|
 | `SaeTiming/Tests` (`SaeTimingTests`, `SaeVoiceTests`) | `swift test` · **CI on every PR and push to `main`** | Reaction-time math and classification, ISI scheduling, the stimulus schedule, the clock contract, session validity, every score anchor and the published worked example, the trend series, HRV selection, tremor analysis on synthetic signals, and Saechaan's line selection |
-| `SaeTests` | `xcodebuild test` (iOS simulator) · **CI on every PR and push to `main`** (newest Xcode 26 on the runner) | What reaches the on-device store: a valid session stores its raw trials and the day's score, an invalid one stores no score, one score per day (the last valid session wins, a later invalid one erases nothing), and when a measurement counts as the first |
-| `SaeUITests` | same command (XCUITest) · **CI** | The first-run flow by real taps (onboarding → home → instructions, onboarding shown once), and Apple's automated accessibility audit on onboarding, home, instructions, result and trend — at the default text size and at the largest accessibility size. Two narrow exceptions, each explained in code: the system-sized 'Done' bar button, and one unattributed trend-screen finding that appears only on the CI runtime and is still open. |
+| `SaeTests` | `xcodebuild test` (iOS simulator) · **CI on every PR and push to `main`** (newest Xcode 26 on the runner) | What reaches the on-device store: a valid session stores its raw trials and the day's score, an invalid one stores no score, one score per day (the last valid session wins, a later invalid one erases nothing), when a measurement counts as the first, and that deleting all records leaves nothing behind |
+| `SaeUITests` | same command (XCUITest) · **CI** | **A valid session end to end** — instructions → a real test (the UI test taps when the stimulus shows) → scored result → today's score on home; the first-run flow; deleting data (cancel keeps everything, confirm removes it); and Apple's accessibility audit on every user screen, at the default and the largest text size. Two narrow exceptions, explained in code: the system-sized 'Done' bar button, and Swift Charts' drawn axis labels, which the CI runtime's audit (iOS 26.2) reports as text without an accessibility element. |
 
 If `xcode-select` points at the Command Line Tools instead of Xcode, prefix the command with `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`.
 
