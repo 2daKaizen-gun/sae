@@ -28,7 +28,7 @@ jobs:
         run: swift test
 
   app:
-    name: App — xcodebuild test
+    name: App — unit + UI tests
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
@@ -54,9 +54,19 @@ jobs:
           xcrun simctl list devices available | grep "$UDID"
           echo "udid=$UDID" >> "$GITHUB_OUTPUT"
 
-      - name: xcodebuild test (SaeTests)
+      - name: xcodebuild test (SaeTests + SaeUITests)
         run: |
           xcodebuild test \
             -project Sae.xcodeproj -scheme Sae \
             -destination "id=${{ steps.sim.outputs.udid }}" \
+            -resultBundlePath "$RUNNER_TEMP/Sae.xcresult" \
             CODE_SIGNING_ALLOWED=NO
+
+      # 실패하면 결과 번들(스크린샷·접근성 점검 상세 포함)을 남긴다 — 로컬에서 재현되지 않는 실패를 읽기 위해.
+      - name: Keep the test results when something failed
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Sae-xcresult
+          path: ${{ runner.temp }}/Sae.xcresult
+          retention-days: 7
