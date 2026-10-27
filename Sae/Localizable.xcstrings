@@ -47,6 +47,328 @@
         }
       }
     },
+    "data.confirm_cancel": {
+      "comment": "Cancel button in the delete confirmation.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "キャンセル"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "취소"
+          }
+        }
+      }
+    },
+    "data.confirm_delete": {
+      "comment": "Confirm button: delete everything.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "削除"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "지우기"
+          }
+        }
+      }
+    },
+    "data.confirm_message": {
+      "comment": "Delete confirmation message. %lld = number of test sessions that will be deleted.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This permanently deletes %lld test sessions and every score, HRV and tremor record the app saved on this device. Data in the Health app is not affected. This cannot be undone."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld件のテストのセッションと、アプリがこの端末に保存したすべての冴え度・心拍変動・手のふるえの記録を完全に削除します。「ヘルスケア」のデータには影響しません。元に戻せません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "테스트 세션 %lld개와 앱이 이 기기에 저장한 모든 점수·심박 변이도·손떨림 기록을 영구히 지웁니다. 건강 앱의 데이터에는 영향이 없어요. 되돌릴 수 없습니다."
+          }
+        }
+      }
+    },
+    "data.confirm_title": {
+      "comment": "Title of the delete confirmation.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete all measurement records?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "測定記録をすべて削除しますか？"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "측정 기록을 모두 지울까요?"
+          }
+        }
+      }
+    },
+    "data.daily_scores": {
+      "comment": "Count row: daily Sae scores stored.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily scores"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日ごとの冴え度"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "하루 점수"
+          }
+        }
+      }
+    },
+    "data.delete": {
+      "comment": "Destructive button that opens the delete confirmation.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete all measurement records"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "測定記録をすべて削除"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "측정 기록 모두 지우기"
+          }
+        }
+      }
+    },
+    "data.delete_failed": {
+      "comment": "Shown if deletion failed.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not delete the records. Nothing was changed."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記録を削除できませんでした。何も変更されていません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "기록을 지우지 못했어요. 아무것도 바뀌지 않았습니다."
+          }
+        }
+      }
+    },
+    "data.deleted": {
+      "comment": "Shown after deletion succeeded.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All measurement records were deleted."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "測定記録をすべて削除しました。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "측정 기록을 모두 지웠어요."
+          }
+        }
+      }
+    },
+    "data.hrv": {
+      "comment": "Count row: HRV readings the app stored (copies; Health keeps its own).",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HRV readings saved by the app"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アプリが保存した心拍変動"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "앱이 저장한 심박 변이도"
+          }
+        }
+      }
+    },
+    "data.link": {
+      "comment": "Link from home to the on-device data screen.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Data on this device"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この端末のデータ"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "이 기기의 데이터"
+          }
+        }
+      }
+    },
+    "data.note": {
+      "comment": "What the data is and what deletion affects.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Everything here stays on this device and is never sent anywhere. Deleting removes the app's records only — data in the Health app is not touched."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ここにあるデータはすべてこの端末の中だけにあり、どこにも送られません。削除するとアプリの記録だけが消え、「ヘルスケア」のデータはそのままです。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "여기 있는 데이터는 모두 이 기기 안에만 있고 어디에도 보내지 않아요. 지우면 앱의 기록만 지워지고, 건강 앱의 데이터는 그대로예요."
+          }
+        }
+      }
+    },
+    "data.sessions": {
+      "comment": "Count row: measurement sessions stored on the device.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Test sessions"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "テストのセッション"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "테스트 세션"
+          }
+        }
+      }
+    },
+    "data.title": {
+      "comment": "Title of the on-device data screen.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Data on this device"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この端末のデータ"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "이 기기의 데이터"
+          }
+        }
+      }
+    },
+    "data.tremor": {
+      "comment": "Count row: tremor readings stored.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hand tremor readings"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "手のふるえの記録"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "손떨림 기록"
+          }
+        }
+      }
+    },
     "home.lab_link": {
       "comment": "DEBUG-only link from home to the engine's instrument panel.",
       "localizations": {

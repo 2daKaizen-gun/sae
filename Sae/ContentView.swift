@@ -7,6 +7,7 @@ enum Route: Hashable {
     case trend
     case testIntro
     case test
+    case data
 }
 
 /// 홈 — 오늘의 冴え度(또는 아직 재지 않았다는 사실)와, 측정·추이로 가는 입구.
@@ -49,6 +50,7 @@ struct ContentView: View {
                 case .trend: TrendView()
                 case .testIntro: TestIntroView(onStart: { path.append(.test) })
                 case .test: TestView(onDone: { path = [] })
+                case .data: DataView()
                 }
             }
         }
@@ -138,6 +140,14 @@ struct ContentView: View {
             }
             .buttonStyle(.bordered)
             .controlSize(.large)
+
+            // 이 기기에 저장된 기록 보기·지우기(제3조).
+            NavigationLink(value: Route.data) {
+                Text("data.link")
+                    .frame(minHeight: 44)
+                    .contentShape(Rectangle())
+            }
+            .font(SaeTheme.Typography.notice)
 
             #if DEBUG
             NavigationLink(value: Route.timingLab) {
