@@ -59,7 +59,7 @@
 
 ## [2026-10-27] Phase 5b — 접근성 자동 점검 · UI 테스트
 
-**한 줄 상태:** 이슈 #24를 올려 UI 테스트 타깃 `SaeUITests`를 만들고, 흐름 테스트 2개와 **애플 접근성 자동 점검 9개**(5화면 × 기본 + AX5 4화면)를 CI에 올렸다. 첫 점검이 **25건**을 찾아 고쳤고(억누르지 않고), CI가 로컬에서 안 보이던 2건을 더 찾았다. 1건(추이 화면, 요소 미지목)은 원인을 특정하지 못해 **좁은 예외 + 열린 항목**으로 남겼다. PR 머지까지(사용자 사전 승인).
+**한 줄 상태:** 이슈 #24를 올려 UI 테스트 타깃 `SaeUITests`를 만들고, 흐름 테스트 2개와 **애플 접근성 자동 점검 9개**(5화면 × 기본 + AX5 4화면)를 CI에 올렸다. 첫 점검이 **25건**을 찾아 고쳤고(억누르지 않고), CI가 로컬에서 안 보이던 2건을 더 찾았다. 1건(추이 화면, 요소 미지목)은 원인을 특정하지 못해 **좁은 예외 + 열린 항목**으로 남겼다. 9커밋(계획 6 + CI가 드러낸 3), **PR #25로 `main`에 머지**(사용자 사전 승인), 브랜치 삭제, #24 CLOSED(열린 항목 1건은 handoff에 유지).
 
 ### ✅ 완료된 것 (검증됨)
 - **UI 테스트 타깃** — XCUITest, 공유 scheme에 포함. 흐름: 온보딩 → 홈 → 안내(12회는 코드 값), 온보딩 1회만
@@ -90,7 +90,7 @@
 
 ### 📎 관련 파일 · 커밋
 - `SaeUITests/{FlowUITests,AccessibilityAuditUITests}.swift`, `Sae/DesignSystem/{Theme,Components}.swift`, `Sae/{ContentView,ResultView,TremorBlock,TrendView,OnboardingView,TestView}.swift`, `.github/workflows/tests.yml`, `Sae.xcodeproj`
-- 이슈 **#24**
+- PR **#25 MERGED** / 이슈 **#24 CLOSED**
 
 ## [2026-10-22] Phase 5a — 검증 기반 (CI · 공유 scheme · 앱 계층 테스트)
 
