@@ -25,10 +25,12 @@ final class AccessibilityAuditUITests: XCTestCase {
                app.navigationBars.buttons[label].exists {
                 return true
             }
-            // 두 번째 예외 — 추이 화면 한정, **요소가 지목되지 않은** "Potentially inaccessible text".
-            // CI의 iOS 26.2에서만 보고되고 로컬 26.4에서는 재현되지 않는다. 실패 녹화로 보면 남는 후보는 Swift Charts가
-            // 직접 그리는 축 글자뿐인데, 차트를 이름 있는 접근성 컨테이너로 만들어도 사라지지 않았다.
-            // 원인을 특정하지 못했으므로 해결로 주장하지 않고 열린 항목으로 남긴다(#24, handoff).
+            // 두 번째 예외 — 추이 화면 한정, **요소가 지목되지 않은** "Potentially inaccessible text"(auditType 2).
+            // CI의 iOS 26.2에서만 보고되고 로컬 26.4에서는 나오지 않는다.
+            // 진단(#26, 아래 첨부를 CI 결과 번들에서 읽음): 점검은 앱 전체(Application)를 가리키고, 접근성 트리에는
+            // 차트 데이터가 날짜 구간별 값과 함께 노출돼 있지만 **Swift Charts가 그리는 축 글자("Oct 18", "0"~"100")에
+            // 해당하는 요소는 없다** — 이것이 걸리는 텍스트다. 데이터 자체는 VoiceOver로 읽힌다.
+            // 해결책(축 글자를 앱이 그리는 접근 가능한 Text로 교체)은 다음 단계 — 그때까지 이 조합만 넘긴다.
             if allowUnattributedChartText, issue.element == nil,
                issue.compactDescription.localizedCaseInsensitiveContains("inaccessible text") {
                 // 진단용: 이 예외를 탄 순간의 점검 상세와 화면 접근성 트리 전체를 결과 번들에 남긴다(#26).
