@@ -81,6 +81,7 @@ Development is governed by a small **[project constitution](docs/CONSTITUTION.md
 - **A user-facing test flow** — Measure opens a short instruction screen (every number in it — rounds, false-start and minimum-response limits — read from the code), then a focused test screen, then the result. The test uses **the same engine and the same stimulus view** as the verification lab: one `StimulusPad`, the unchanged `PVTSessionRunner`. It starts only after the screen transition has finished, shows no reaction times until the end, keeps the screen awake, and stores nothing if abandoned. The instrument panel is now a DEBUG-only tool.
 - **Saechaan's voice, kept apart from the engine** — the result opens with one line from the character, chosen in a separate `SaeVoice` target that only reads the engine's output. Every line starts with the engine's own numbers, then describes **the measurement, not the person** ("your responses were a little slow this time", never "you look tired"), then offers an optional, non-medical suggestion. The score bands that pick the tone (80/60/40/20) have no source, so they choose wording only and are never shown as labels. First-run onboarding states what the app is not: not a medical device, no diagnosis, data on the device only.
 - **Hand tremor as a sourced reference** — a 10-second hold after the test; the accelerometer signal is detrended and the **5–12 Hz** band analysed, following the smartphone method of Santos et al. (2022, *Scientific Reports*, [DOI 10.1038/s41598-022-21310-4](https://doi.org/10.1038/s41598-022-21310-4)). The app reports band RMS (m/s²) and peak frequency, uses the *measured* sample rate, and says on screen that values compare only within one device — the same paper shows device mass changes the spectrum. Not in the score: there are no sourced anchors.
+- **Checked for accessibility, automatically** — every user screen passes Apple's accessibility audit on CI, at the default and the largest text size. The audit found 25 issues the first time (secondary text at 3.3–3.4:1, a small hit area, clipped text); they were fixed rather than suppressed, and metric rows restack at accessibility sizes.
 - **Trilingual from the first screen** (JA / EN / KO) via String Catalog — the result screen shows the score with its breakdown in all three.
 
 **Deliberately not claimed yet**
@@ -106,13 +107,14 @@ open Sae.xcodeproj          # then Run the "Sae" scheme on an iPhone simulator
 cd SaeTiming && swift test  # core + character layer, 96 cases, no simulator needed
 
 xcodebuild test -project Sae.xcodeproj -scheme Sae \
-  -destination 'platform=iOS Simulator,name=iPhone 17 Pro'   # app layer, 11 cases
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro'   # app layer (11) + UI tests (11)
 ```
 
 | Suite | Runs | What it proves |
 |-------|------|----------------|
 | `SaeTiming/Tests` (`SaeTimingTests`, `SaeVoiceTests`) | `swift test` · **CI on every PR and push to `main`** | Reaction-time math and classification, ISI scheduling, the stimulus schedule, the clock contract, session validity, every score anchor and the published worked example, the trend series, HRV selection, tremor analysis on synthetic signals, and Saechaan's line selection |
 | `SaeTests` | `xcodebuild test` (iOS simulator) · **CI on every PR and push to `main`** (newest Xcode 26 on the runner) | What reaches the on-device store: a valid session stores its raw trials and the day's score, an invalid one stores no score, one score per day (the last valid session wins, a later invalid one erases nothing), and when a measurement counts as the first |
+| `SaeUITests` | same command (XCUITest) · **CI** | The first-run flow by real taps (onboarding → home → instructions, onboarding shown once), and Apple's automated accessibility audit on onboarding, home, instructions, result and trend — at the default text size and at the largest accessibility size. Two narrow exceptions, each explained in code: the system-sized 'Done' bar button, and one unattributed trend-screen finding that appears only on the CI runtime and is still open. |
 
 If `xcode-select` points at the Command Line Tools instead of Xcode, prefix the command with `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`.
 
