@@ -38,6 +38,16 @@
                ReferencedContainer = "container:Sae.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "000000000000000000000032"
+               BuildableName = "SaeUITests.xctest"
+               BlueprintName = "SaeUITests"
+               ReferencedContainer = "container:Sae.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
