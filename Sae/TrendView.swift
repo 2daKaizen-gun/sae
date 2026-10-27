@@ -92,6 +92,10 @@ struct TrendView: View {
         .chartYScale(domain: 0...100)
         .chartXScale(domain: xDomain(days))
         .frame(height: min(scaledChartHeight, 400))
+        // 차트를 이름 있는 접근성 컨테이너로 — 축 글자(날짜·눈금)는 차트가 직접 그려서 그 자체로는 접근성 요소가
+        // 아니다(iOS 26.2 자동 점검 "Potentially inaccessible text", #24). 컨테이너 안의 날짜별 점은 그대로 탐색된다.
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel(Text(String(format: String(localized: "trend.chart_label"), windowDays)))
     }
 
     /// 고른 날의 근거 — 점수만이 아니라 **그 점수를 만든 원지표**를 보인다(제2조 2항).
