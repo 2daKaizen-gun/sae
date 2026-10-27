@@ -96,7 +96,7 @@ struct ContentView: View {
             Text("app.title")
                 .font(.largeTitle.bold())
             Text("app.tagline")
-                .foregroundStyle(.secondary)
+                .foregroundStyle(SaeTheme.Palette.secondaryText)
         }
     }
 
@@ -133,6 +133,8 @@ struct ContentView: View {
             NavigationLink(value: Route.trend) {
                 Text("trend.link")
                     .frame(maxWidth: .infinity)
+                    // 브랜드색 글자는 옅은 브랜드 틴트 바탕 위에서 3.88:1(AA 미달) — 글자는 기본 레이블색, 틴트는 바탕에 남긴다.
+                    .foregroundStyle(Color.primary)
             }
             .buttonStyle(.bordered)
             .controlSize(.large)
@@ -140,6 +142,8 @@ struct ContentView: View {
             #if DEBUG
             NavigationLink(value: Route.timingLab) {
                 Text("home.lab_link")
+                    .frame(minHeight: 44) // 작은 글씨라도 누르는 영역은 44pt 이상(점검 "Hit area is too small")
+                    .contentShape(Rectangle())
             }
             .font(SaeTheme.Typography.notice)
             #endif

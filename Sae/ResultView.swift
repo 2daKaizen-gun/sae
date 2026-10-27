@@ -92,6 +92,7 @@ struct ResultView: View {
                     }
                 } label: {
                     Text("hrv.read_button")
+                        .foregroundStyle(Color.primary) // 틴트 바탕 위 브랜드색 글자는 AA 미달(3.88:1, #24)
                 }
                 .buttonStyle(.bordered)
             } else if didHRVFail {

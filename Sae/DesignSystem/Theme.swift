@@ -31,6 +31,16 @@ enum SaeTheme {
         static let background = Color(uiColor: .systemGroupedBackground)
         /// 카드 표면.
         static let surface = Color(uiColor: .secondarySystemGroupedBackground)
+        /// 보조 글자색 — 설명·지표 값·안내 문구. 라이트 #636366 / 다크 #98989D.
+        ///
+        /// 시스템 `.secondary`(라이트 #3C3C43 60%)는 흰 바탕에서 3.44:1, 그룹 바탕에서 3.29:1로 본문 글자의 AA(4.5:1)에
+        /// 못 미쳤다(접근성 자동 점검 "Contrast nearly passed", #24). 이 색은 흰 바탕 5.99 / 그룹 바탕 5.37,
+        /// 다크에서 #1C1C1E 위 5.93 / 검정 위 7.31.
+        static let secondaryText = Color(uiColor: UIColor { traits in
+            traits.userInterfaceStyle == .dark
+                ? UIColor(red: 0x98 / 255, green: 0x98 / 255, blue: 0x9D / 255, alpha: 1)
+                : UIColor(red: 0x63 / 255, green: 0x63 / 255, blue: 0x66 / 255, alpha: 1)
+        })
         /// 브랜드 색 **위에** 올리는 글자색 — 라이트는 흰색, 다크는 검정.
         ///
         /// 다크 모드 브랜드 색(#66B0FA)은 어두운 바탕 위 글자로 읽히도록 밝게 잡았기 때문에, 그 위에

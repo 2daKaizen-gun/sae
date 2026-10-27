@@ -15,6 +15,9 @@ struct TrendView: View {
 
     private let windowDays = ScoreTrend.defaultWindowDays
 
+    /// 차트 높이 — 축 글자가 커지면 그만큼 키운다(최대 400pt). 고정 240이면 큰 글자에서 그래프 영역이 줄어든다(#24).
+    @ScaledMetric(relativeTo: .caption) private var scaledChartHeight: CGFloat = 240
+
     /// 차트가 지금 가리키는 x값. 손을 떼면 `nil`로 돌아간다.
     @State private var rawSelection: Date?
     /// 마지막으로 고른 날(자정). 손을 떼도 근거가 화면에 남도록 따로 들고 있는다.
@@ -88,7 +91,11 @@ struct TrendView: View {
         }
         .chartYScale(domain: 0...100)
         .chartXScale(domain: xDomain(days))
-        .frame(height: 240)
+        .frame(height: min(scaledChartHeight, 400))
+        // 차트를 이름 있는 접근성 컨테이너로 — 축 글자(날짜·눈금)는 차트가 직접 그려서 그 자체로는 접근성 요소가
+        // 아니다(iOS 26.2 자동 점검 "Potentially inaccessible text", #24). 컨테이너 안의 날짜별 점은 그대로 탐색된다.
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel(Text(String(format: String(localized: "trend.chart_label"), windowDays)))
     }
 
     /// 고른 날의 근거 — 점수만이 아니라 **그 점수를 만든 원지표**를 보인다(제2조 2항).
@@ -106,11 +113,11 @@ struct TrendView: View {
                         format: String(localized: "score.evidence"), entry.lapseCount, entry.medianRTms
                     ))
                     .font(SaeTheme.Typography.metric)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(SaeTheme.Palette.secondaryText)
                 } else {
                     Text(String(format: String(localized: "trend.no_measurement"), date))
                         .font(SaeTheme.Typography.metric)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(SaeTheme.Palette.secondaryText)
                 }
             }
         } else {

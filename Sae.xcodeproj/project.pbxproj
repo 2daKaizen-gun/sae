@@ -19,15 +19,24 @@
 			remoteGlobalIDString = 000000000000000000000004;
 			remoteInfo = Sae;
 		};
+		000000000000000000000036 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 000000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 000000000000000000000004;
+			remoteInfo = Sae;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		000000000000000000000005 /* Sae.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sae.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		000000000000000000000030 /* SaeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SaeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		000000000000000000000020 /* SaeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SaeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		000000000000000000000006 /* Sae */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Sae; sourceTree = "<group>"; };
+		000000000000000000000031 /* SaeUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SaeUITests; sourceTree = "<group>"; };
 		000000000000000000000021 /* SaeTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SaeTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -48,6 +57,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		000000000000000000000034 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -56,6 +72,7 @@
 			children = (
 				000000000000000000000006 /* Sae */,
 				000000000000000000000021 /* SaeTests */,
+				000000000000000000000031 /* SaeUITests */,
 				000000000000000000000003 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -65,6 +82,7 @@
 			children = (
 				000000000000000000000005 /* Sae.app */,
 				000000000000000000000020 /* SaeTests.xctest */,
+				000000000000000000000030 /* SaeUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -117,6 +135,27 @@
 			productReference = 000000000000000000000020 /* SaeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		000000000000000000000032 /* SaeUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 000000000000000000000038 /* Build configuration list for PBXNativeTarget "SaeUITests" */;
+			buildPhases = (
+				000000000000000000000033 /* Sources */,
+				000000000000000000000034 /* Frameworks */,
+				000000000000000000000035 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				000000000000000000000037 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				000000000000000000000031 /* SaeUITests */,
+			);
+			name = SaeUITests;
+			productName = SaeUITests;
+			productReference = 000000000000000000000030 /* SaeUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -131,6 +170,10 @@
 						CreatedOnToolsVersion = 26.4;
 					};
 					000000000000000000000022 = {
+						CreatedOnToolsVersion = 26.4;
+						TestTargetID = 000000000000000000000004;
+					};
+					000000000000000000000032 = {
 						CreatedOnToolsVersion = 26.4;
 						TestTargetID = 000000000000000000000004;
 					};
@@ -157,6 +200,7 @@
 			targets = (
 				000000000000000000000004 /* Sae */,
 				000000000000000000000022 /* SaeTests */,
+				000000000000000000000032 /* SaeUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -170,6 +214,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		000000000000000000000025 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000035 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -193,6 +244,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		000000000000000000000033 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -200,6 +258,11 @@
 			isa = PBXTargetDependency;
 			target = 000000000000000000000004 /* Sae */;
 			targetProxy = 000000000000000000000026 /* PBXContainerItemProxy */;
+		};
+		000000000000000000000037 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 000000000000000000000004 /* Sae */;
+			targetProxy = 000000000000000000000036 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -413,6 +476,40 @@
 			};
 			name = Release;
 		};
+		000000000000000000000039 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kaizen.SaeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Sae;
+			};
+			name = Debug;
+		};
+		00000000000000000000003A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kaizen.SaeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Sae;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -439,6 +536,15 @@
 			buildConfigurations = (
 				000000000000000000000029 /* Debug */,
 				00000000000000000000002A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		000000000000000000000038 /* Build configuration list for PBXNativeTarget "SaeUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000000039 /* Debug */,
+				00000000000000000000003A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -1749,6 +1749,29 @@
         }
       }
     },
+    "trend.chart_label": {
+      "comment": "VoiceOver name of the trend chart (an accessibility container; the daily points stay navigable inside it). %lld = days in the window.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sae score over the last %lld days"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "直近%lld日間の冴え度"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "최근 %lld일 동안의 冴え度"
+          }
+        }
+      }
+    },
     "trend.day_score": {
       "comment": "Selected day and its score. %1$@ = localized date, %2$lld = 0-100 Sae-do score.",
       "localizations": {
