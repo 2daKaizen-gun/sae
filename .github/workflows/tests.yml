@@ -62,9 +62,10 @@ jobs:
             -resultBundlePath "$RUNNER_TEMP/Sae.xcresult" \
             CODE_SIGNING_ALLOWED=NO
 
-      # 실패하면 결과 번들(스크린샷·접근성 점검 상세 포함)을 남긴다 — 로컬에서 재현되지 않는 실패를 읽기 위해.
-      - name: Keep the test results when something failed
-        if: failure()
+      # 결과 번들(스크린샷·녹화·접근성 점검 진단 첨부)을 남긴다 — 실패뿐 아니라, 예외를 타서 통과한 점검의
+      # 진단 첨부도 읽어야 하므로 항상 올린다(#26). 보관 7일.
+      - name: Keep the test results
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: Sae-xcresult

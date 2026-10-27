@@ -31,6 +31,21 @@ final class AccessibilityAuditUITests: XCTestCase {
             // 원인을 특정하지 못했으므로 해결로 주장하지 않고 열린 항목으로 남긴다(#24, handoff).
             if allowUnattributedChartText, issue.element == nil,
                issue.compactDescription.localizedCaseInsensitiveContains("inaccessible text") {
+                // 진단용: 이 예외를 탄 순간의 점검 상세와 화면 접근성 트리 전체를 결과 번들에 남긴다(#26).
+                let report = XCTAttachment(string: """
+                    auditType: \(issue.auditType.rawValue)
+                    compact: \(issue.compactDescription)
+                    detailed: \(issue.detailedDescription)
+
+                    \(app.debugDescription)
+                    """)
+                report.name = "unattributed-audit-issue"
+                report.lifetime = .keepAlways
+                self.add(report)
+                let shot = XCTAttachment(screenshot: app.screenshot())
+                shot.name = "unattributed-audit-issue-screen"
+                shot.lifetime = .keepAlways
+                self.add(shot)
                 return true
             }
             // 나머지는 전부 실패로 남기되, 어느 요소인지 메시지에 적는다(점검 결과를 고칠 수 있게).
