@@ -106,11 +106,11 @@ struct TrendView: View {
                         format: String(localized: "score.evidence"), entry.lapseCount, entry.medianRTms
                     ))
                     .font(SaeTheme.Typography.metric)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(SaeTheme.Palette.secondaryText)
                 } else {
                     Text(String(format: String(localized: "trend.no_measurement"), date))
                         .font(SaeTheme.Typography.metric)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(SaeTheme.Palette.secondaryText)
                 }
             }
         } else {

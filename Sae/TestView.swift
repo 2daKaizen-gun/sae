@@ -72,7 +72,7 @@ struct TestView: View {
                 completedStimuli, PVTSessionRunner.defaultTrialCount
             ))
             .font(SaeTheme.Typography.metric)
-            .foregroundStyle(.secondary)
+            .foregroundStyle(SaeTheme.Palette.secondaryText)
 
             StimulusPad(isStimulusVisible: runner.isStimulusVisible, height: 420) { sample in
                 runner.recordTouch(sample)

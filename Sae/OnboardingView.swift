@@ -46,7 +46,7 @@ struct OnboardingView: View {
             Text(title)
                 .font(SaeTheme.Typography.cardTitle)
             Text(body)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(SaeTheme.Palette.secondaryText)
                 .fixedSize(horizontal: false, vertical: true)
         }
     }
