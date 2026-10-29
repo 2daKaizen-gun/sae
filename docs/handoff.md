@@ -84,11 +84,11 @@
 - 저장소 설명 문구(사용자 답 대기)
 
 ### 🔬 검증 상태
-- 로컬 그린(위). CI: 예외 제거 커밋 `79b48d6` 두 잡 success. 실기기 미검증(#5)
+- 로컬 그린(위). CI: 예외 제거 커밋 `79b48d6`, 최종 커밋 `ea52231` 두 잡 success(앱 20·UI 16·순수 96). 실기기 미검증(#5)
 
 ### 📎 관련 파일 · 커밋
 - `Sae/{TrendView,TrendChartDescriptor}.swift`, `SaeTests/{TrendChartDescriptorTests,LocalizationTests}.swift`, `SaeUITests/AccessibilityAuditUITests.swift`, `Sae/Localizable.xcstrings`, `README.md`
-- PR **#29** / 이슈 **#28**
+- PR **#29 MERGED** / 이슈 **#28 CLOSED**
 
 ## [2026-10-28] Phase 5d — 끝에서 끝 세션 테스트 · iOS 26.2 점검 진단 · 데이터 삭제
 
