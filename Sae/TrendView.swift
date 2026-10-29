@@ -143,6 +143,8 @@ struct TrendView: View {
         // 아니다(iOS 26.2 자동 점검 "Potentially inaccessible text", #24). 컨테이너 안의 날짜별 점은 그대로 탐색된다.
         .accessibilityElement(children: .contain)
         .accessibilityLabel(Text(String(format: String(localized: "trend.chart_label"), windowDays)))
+        // VoiceOver 오디오 그래프 — 같은 데이터를 소리로(빈 날은 데이터 점이 아니라 요약 문장으로).
+        .accessibilityChartDescriptor(TrendChartDescriptor(days: days))
     }
 
     /// 고른 날의 근거 — 점수만이 아니라 **그 점수를 만든 원지표**를 보인다(제2조 2항).

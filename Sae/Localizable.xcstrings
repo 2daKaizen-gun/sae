@@ -2094,6 +2094,29 @@
         }
       }
     },
+    "trend.chart_summary": {
+      "comment": "VoiceOver audio-graph summary of the trend chart. %1$lld = days with a valid score, %2$lld = days in the window. Blank days are stated here instead of being plotted as zeros.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld of %2$lld days have a valid score; the other days were not measured."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%2$lld日のうち%1$lld日に有効なスコアがあります。残りの日は測定していません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%2$lld일 중 %1$lld일에 유효한 점수가 있어요. 나머지 날은 측정하지 않았어요."
+          }
+        }
+      }
+    },
     "trend.day_score": {
       "comment": "Selected day and its score. %1$@ = localized date, %2$lld = 0-100 Sae-do score.",
       "localizations": {
