@@ -61,8 +61,32 @@ struct TrendView: View {
         }
     }
 
+    /// 세로축 눈금 값.
+    private static let scoreTicks = [0, 25, 50, 75, 100]
+
     /// 점수 있는 날만 표시한다. 빈칸은 마크가 없다는 것 자체로 드러난다.
+    ///
+    /// 축 **글자**는 Swift Charts가 그리지 않고 앱이 `Text`로 그린다. 차트가 직접 그린 축 글자에는 접근성 요소가
+    /// 없어서, iOS 26.2 자동 점검이 "접근성 요소 없는 텍스트"로 보고했다(#26에서 진단, #28). 눈금선은 그대로 차트가 그린다.
     private func chart(_ days: [TrendDay<DailyScore>]) -> some View {
+        VStack(alignment: .leading, spacing: SaeTheme.Spacing.xs) {
+            plot(days)
+            // 가로축: 창의 처음과 끝 날짜.
+            HStack {
+                Text(days.first?.day ?? Date(), format: .dateTime.month(.abbreviated).day())
+                Spacer()
+                Text(days.last?.day ?? Date(), format: .dateTime.month(.abbreviated).day())
+            }
+            .font(SaeTheme.Typography.notice)
+            .foregroundStyle(SaeTheme.Palette.secondaryText)
+            .padding(.trailing, trailingAxisWidth)
+        }
+    }
+
+    /// 세로축 글자 자리(오른쪽) — 글자 크기에 맞춰 넓어진다. 고정 폭이면 큰 글자에서 "100"이 카드 밖으로 넘친다.
+    @ScaledMetric(relativeTo: .caption) private var trailingAxisWidth: CGFloat = 32
+
+    private func plot(_ days: [TrendDay<DailyScore>]) -> some View {
         Chart {
             ForEach(days, id: \.day) { day in
                 if let entry = day.entry, let segment = day.segment {
@@ -85,6 +109,29 @@ struct TrendView: View {
                     .foregroundStyle(.secondary.opacity(0.4))
             }
         }
+        // 눈금선만 — 글자는 아래 오버레이와 바깥 HStack이 그린다.
+        .chartYAxis {
+            AxisMarks(position: .trailing, values: Self.scoreTicks) { _ in AxisGridLine() }
+        }
+        .chartXAxis {
+            AxisMarks(values: .stride(by: .day, count: 7)) { _ in AxisGridLine() }
+        }
+        .chartPlotStyle { $0.padding(.trailing, trailingAxisWidth) }
+        .chartOverlay { proxy in
+            GeometryReader { geometry in
+                if let frame = proxy.plotFrame.map({ geometry[$0] }) {
+                    ForEach(Self.scoreTicks, id: \.self) { tick in
+                        if let y = proxy.position(forY: tick) {
+                            Text(tick, format: .number)
+                                .font(SaeTheme.Typography.notice.monospacedDigit())
+                                .foregroundStyle(SaeTheme.Palette.secondaryText)
+                                .position(x: frame.maxX + trailingAxisWidth / 2, y: frame.minY + y)
+                        }
+                    }
+                }
+            }
+            .allowsHitTesting(false) // 날짜 선택 제스처를 가로막지 않는다
+        }
         .chartXSelection(value: $rawSelection)
         .onChange(of: rawSelection) { _, value in
             if let value { selectedDay = Calendar.current.startOfDay(for: value) }
@@ -96,6 +143,8 @@ struct TrendView: View {
         // 아니다(iOS 26.2 자동 점검 "Potentially inaccessible text", #24). 컨테이너 안의 날짜별 점은 그대로 탐색된다.
         .accessibilityElement(children: .contain)
         .accessibilityLabel(Text(String(format: String(localized: "trend.chart_label"), windowDays)))
+        // VoiceOver 오디오 그래프 — 같은 데이터를 소리로(빈 날은 데이터 점이 아니라 요약 문장으로).
+        .accessibilityChartDescriptor(TrendChartDescriptor(days: days))
     }
 
     /// 고른 날의 근거 — 점수만이 아니라 **그 점수를 만든 원지표**를 보인다(제2조 2항).
