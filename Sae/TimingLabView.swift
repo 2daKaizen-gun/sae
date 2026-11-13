@@ -14,7 +14,7 @@ struct TimingLabView: View {
     @StateObject private var runner = PVTSessionRunner()
     /// 터치 타임스탬프가 공통 기준과 같은 단조 기준인지의 확인 결과(timing-engine §8-2).
     @State private var touchClockCheck: ClockContractResult?
-    /// 저장 실패를 삼키지 않기 위한 플래그 — 실패했으면 실패했다고 화면에 말한다(제9조 6항).
+    /// 저장 실패를 삼키지 않기 위한 플래그 — 실패했으면 실패했다고 화면에 말한다.
     @State private var didSaveFail = false
     /// 세션이 끝나면 결과 화면(`ResultView`)을 시트로 띄운다.
     @State private var isShowingResult = false

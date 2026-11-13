@@ -2,94 +2,55 @@
 
 [![Tests](https://github.com/2daKaizen-gun/sae/actions/workflows/tests.yml/badge.svg)](https://github.com/2daKaizen-gun/sae/actions/workflows/tests.yml)
 
-> **Know your sharpness.** Measure your brain's alertness and sleep debt in 90 seconds a day — no wearable required.
+An iOS app that measures how alert you are with a 90-second reaction-time test, and records it as a daily score from 0 to 100. No wearable needed.
 
-冴え (*Sae*, from 「頭が冴える」— "the mind is sharp and clear") is a native iOS app that turns a
-scientifically validated reaction-time test into a daily readout of how awake your brain really is.
-No ring, no wrist band — just your phone and a 90-second micro-test.
-
-Built as a portfolio piece for Japanese product ("自社開発") companies, with internationalization (JA / EN / KO) as a first-class design constraint.
-
-| | Name | Character | Tagline |
-|--|------|-----------|---------|
-| 🇯🇵 | 冴え / さえ | さえちゃん | 「冴え」の言葉遊びがそのまま成立 |
-| 🇬🇧 | Sae | Saechaan | *Know your sharpness* |
-| 🇰🇷 | 사에 | 사에짱 | *당신의 각성을 재다* |
-
----
+90秒の反応時間テストで、その日の頭の冴えを 0–100 で記録する iOS アプリです。ウェアラブル端末は使いません。
+名前は「頭が冴える」から取りました。日本語・英語・韓国語に対応しています。
 
 ## Why
 
-- **Japan is #1 in the OECD for sleep deprivation**, and "睡眠負債" (sleep debt) is a national buzzword — yet people can't reliably judge their own alertness.
-- The **Psychomotor Vigilance Task (PVT)** is the sleep-science gold standard used by NASA and sleep labs: reaction time degrades in a precise, measurable way as sleep debt accumulates.
-- Most reaction-time apps are *games* with no scientific grounding, and most sleep apps only track *while you sleep*. Sae actively measures **waking brain alertness** — the gap those apps leave open.
+"Sleep debt" (睡眠負債) is a common phrase in Japan, but it's hard to judge your own sleepiness.
+The Psychomotor Vigilance Task (PVT) is a standard test in sleep research: reaction times get slower in a measurable way when you haven't slept enough.
+Most reaction-time apps are games, and most sleep apps record you while you sleep. I wanted something that checks how alert you are during the day.
 
 ## What it measures
 
-| Signal | Method | iOS tech | Meaning |
-|--------|--------|----------|---------|
-| **Alertness** | PVT reaction-time test (~60–90s) | High-precision timing (`CADisplayLink`) | Core sleep-debt indicator |
-| **Autonomic / stress** | HRV (SDNN, as HealthKit provides it) | HealthKit (Apple Watch) or camera PPG* | Recovery state |
-| **Physical fatigue** | Physiological hand tremor, 5–12 Hz band | CoreMotion (10 s hold) | Reference only, same-device comparisons |
-
-These fuse into a daily **冴え度 (Sae-do) score, 0–100**, plus a trend chart. *(\*Camera PPG is a stretch goal.)*
+| Signal | Method | iOS | In the score? |
+|--------|--------|-----|---------------|
+| Alertness | PVT reaction-time test (12 trials) | `CADisplayLink`, `UITouch.timestamp` | Yes |
+| HRV | SDNN from HealthKit | HealthKit | No, reference only |
+| Hand tremor | 5–12 Hz band during a 10 s hold | CoreMotion | No, reference only |
 
 ## Screenshots
-
-From first launch to the trend: onboarding → home → instructions → test → result with Saechaan's line → 14-day trend.
 
 | Onboarding | Home | Instructions | Test | Result | Trend |
 |---|---|---|---|---|---|
 | <img src="docs/screenshots/en-1-onboarding.png" width="130" alt="Onboarding (EN)"> | <img src="docs/screenshots/en-2-home.png" width="130" alt="Home (EN)"> | <img src="docs/screenshots/en-3-instructions.png" width="130" alt="Instructions (EN)"> | <img src="docs/screenshots/en-4-test.png" width="130" alt="Test (EN)"> | <img src="docs/screenshots/en-5-result.png" width="130" alt="Result (EN)"> | <img src="docs/screenshots/en-6-trend.png" width="130" alt="Trend (EN)"> |
 | <img src="docs/screenshots/ja-1-onboarding.png" width="130" alt="Onboarding (JA)"> | <img src="docs/screenshots/ja-2-home.png" width="130" alt="Home (JA)"> | <img src="docs/screenshots/ja-3-instructions.png" width="130" alt="Instructions (JA)"> | <img src="docs/screenshots/ja-4-test.png" width="130" alt="Test (JA)"> | <img src="docs/screenshots/ja-5-result.png" width="130" alt="Result (JA)"> | <img src="docs/screenshots/ja-6-trend.png" width="130" alt="Trend (JA)"> |
 
-<sub>Captured on the iOS 26.4 simulator (iPhone 17 Pro) from a DEBUG build: home, result and trend use the in-memory demo data (`-homeDemo`, `-resultDemo`, `-trendDemo`) — the scores shown are computed by the real scorer from synthetic trials, not typed in — and the DEBUG-only "Timing lab (developer)" link is visible on home.</sub>
+<sub>iOS 26.4 simulator (iPhone 17 Pro), DEBUG build with demo data. The scores are calculated by the real scorer from synthetic trials.</sub>
 
-## Engineering highlights
+## How it works
 
-This project is deliberately built around a few hard problems, each designed before a line of code:
+- **Reaction timing**: the stimulus time comes from the `CADisplayLink` frame timestamp and the tap time from `UITouch.timestamp`, so drawing and event delays don't get added to the reaction time. Both are checked against the same clock at runtime. → [`timing-engine.md`](docs/timing-engine.md)
+- **Score (0–100)**: calculated only from PVT results, and every part can be traced back to the raw numbers. A session that isn't valid gets no score instead of a low one. → [`score-algorithm.md`](docs/score-algorithm.md)
+- **Data**: everything stays on the device (SwiftData). Raw trials are saved too, so past scores can be recalculated. There is a screen that deletes all of it.
+- **Trend**: last 14 days with Swift Charts. Days without a valid score are left blank rather than drawn as zero. VoiceOver users get an audio graph.
+- **Character**: Saechaan comments on the result, but only describes the measurement ("your responses were a little slow this time"), never the person. This part is a separate target that only reads the score.
+- **Languages**: Japanese, English and Korean via String Catalog. A test fails if a string is missing in any language.
+- **Accessibility**: every screen runs Apple's accessibility audit in CI, at default and largest text size.
 
-- **⏱ Millisecond-accurate reaction timing.** Measuring true reaction time on iOS is harder than it looks — most apps get it wrong. Stimulus onset is taken from the `CADisplayLink` frame timestamp and the response from `UITouch.timestamp` (hardware event time), so display and dispatch latency never contaminate the measurement. Calibration offset and refresh rate are stored per session for reproducibility. → [`docs/timing-engine.md`](docs/timing-engine.md)
-- **🔍 An explainable score, not a black box.** Every point of the 0–100 Sae-do score maps back to raw PVT metrics — "why 60?" always has an answer. → [`docs/score-algorithm.md`](docs/score-algorithm.md)
-- **🔒 Privacy by default.** All health data is processed on-device. No servers, no tracking, no ad SDKs. A *Data on this device* screen shows what the app keeps and deletes all of it on request (the Health app's own data is never touched).
-- **🌏 Internationalization as a design premise.** Trilingual (JA / EN / KO) from day one via String Catalog (`.xcstrings`) — no hardcoded strings, all three languages treated as equal. → [`docs/character-voice.md`](docs/character-voice.md)
-- **🌡 Cold data, warm delivery.** A character layer (*Saechaan*) delivers hard numbers gently — warming the tone without ever distorting the data.
-
-## Tech stack
-
-Native Apple stack, zero third-party dependencies: **SwiftUI · SwiftData · Swift Charts · `CADisplayLink` + `UITouch.timestamp` + `CACurrentMediaTime` (precision timing) · HealthKit · CoreMotion · String Catalog · Swift Testing.** Minimum iOS 17.
-→ [`docs/tech-stack.md`](docs/tech-stack.md)
-
-## Design principles
-
-Development is governed by a small **[project constitution](docs/CONSTITUTION.md)** — a top-level set of rules that any code, feature, or design must obey. Article 1 is non-negotiable: **measurement accuracy comes first**, proven by tests. When articles conflict, the lower-numbered one wins.
+The project rules (measurement accuracy first, etc.) are in [`CONSTITUTION.md`](docs/CONSTITUTION.md).
 
 ## Status
 
-🚧 **In active development — all three signals are in: the PVT score, plus HRV and hand tremor as references.** Next: the demo video and device verification ([#5](https://github.com/2daKaizen-gun/sae/issues/5)). Implementation follows a 4-week MVP plan (see [`docs/CONCEPT.md`](docs/CONCEPT.md) §7).
+In development. The PVT score, HRV and tremor are implemented. Next is device testing and a demo video ([#5](https://github.com/2daKaizen-gun/sae/issues/5)).
 
-**Working today**
+Not done yet:
 
-- **Pure timing & scoring core** (`SaeTiming`, a local Swift package with no platform dependencies): reaction-time math, lapse / false-start / no-response classification, seeded ISI scheduler, session aggregation, validity gate, stimulus-schedule state machine, the clock contract, the Sae-do score, the day-by-day trend series, HRV sample selection and tremor analysis. Proven by **96 Swift Testing cases** that run without a simulator.
-- **Measurement runtime**: stimulus onset taken from the `CADisplayLink` frame timestamp, response from `UITouch.timestamp` via a low-level touch path, no animation or async work inside the timing loop. A session is **12 trials** with a 10s response timeout.
-- **Clock contract verified at runtime** — both timestamps are checked against a common clock, because reaction time is a direct subtraction and is meaningless if the two come from different bases.
-- **Explainable Sae-do score (0–100)** — raw PVT metrics map onto sub-indices, combine into an alertness component, and produce the final score. The tests reproduce the worked example published in [`score-algorithm.md`](docs/score-algorithm.md) §6 to the same number, so the code and the document cannot silently drift. An **invalid session produces no score** rather than a made-up low one.
-- **On-device persistence** (SwiftData): raw per-trial data with the refresh rate and calibration offset the session ran under, plus a daily score that stores the raw metrics behind it (not a frozen sentence), so past results can be recomputed and re-explained in any language.
-- **Daily trend chart** (Swift Charts, last 14 days). A day without a valid score stays **blank** — the line is broken there rather than zero-filled or bridged, because either would draw a value that was never measured. Touching a day shows the raw metrics behind its score. The axis labels are drawn by the app as real text (Swift Charts' own labels have no accessibility element), and VoiceOver users get an **audio graph** of the same data — measured days only, with the blank days stated in the summary.
-- **HRV from HealthKit, as a reference only** — read-only access, requested with its reason at the moment it is needed, kept on device. HealthKit's HRV is **SDNN** (not RMSSD, which the early design assumed), so it is labelled as SDNN and kept **out of the score** until an SDNN mapping can be sourced. A reading older than 24 hours is not shown as today's.
-- **A small native design system** — tokens and shared components on system semantic colours, one brand colour with light / dark values (all text/background pairs at WCAG AA or better), Dynamic Type intact. Home shows today's score or says it was not measured. The score is **never colour-coded good/bad** — that would be an unsourced classification — and the stimulus rendering is outside the design system entirely.
-- **A user-facing test flow** — Measure opens a short instruction screen (every number in it — rounds, false-start and minimum-response limits — read from the code), then a focused test screen, then the result. The test uses **the same engine and the same stimulus view** as the verification lab: one `StimulusPad`, the unchanged `PVTSessionRunner`. It starts only after the screen transition has finished, shows no reaction times until the end, keeps the screen awake, and stores nothing if abandoned. The instrument panel is now a DEBUG-only tool.
-- **Saechaan's voice, kept apart from the engine** — the result opens with one line from the character, chosen in a separate `SaeVoice` target that only reads the engine's output. Every line starts with the engine's own numbers, then describes **the measurement, not the person** ("your responses were a little slow this time", never "you look tired"), then offers an optional, non-medical suggestion. The score bands that pick the tone (80/60/40/20) have no source, so they choose wording only and are never shown as labels. First-run onboarding states what the app is not: not a medical device, no diagnosis, data on the device only.
-- **Hand tremor as a sourced reference** — a 10-second hold after the test; the accelerometer signal is detrended and the **5–12 Hz** band analysed, following the smartphone method of Santos et al. (2022, *Scientific Reports*, [DOI 10.1038/s41598-022-21310-4](https://doi.org/10.1038/s41598-022-21310-4)). The app reports band RMS (m/s²) and peak frequency, uses the *measured* sample rate, and says on screen that values compare only within one device — the same paper shows device mass changes the spectrum. Not in the score: there are no sourced anchors.
-- **Checked for accessibility, automatically** — every user screen passes Apple's accessibility audit on CI, at the default and the largest text size. The audit found 25 issues the first time (secondary text at 3.3–3.4:1, a small hit area, clipped text); they were fixed rather than suppressed, and metric rows restack at accessibility sizes.
-- **Trilingual from the first screen** (JA / EN / KO) via String Catalog — the result screen shows the score with its breakdown in all three. A test reads the built app's strings and fails if any key is missing or empty in one language, or if a translation changes a format specifier (a dropped placeholder or `%.0f` turned into `%lld`).
-
-**Deliberately not claimed yet**
-
-- The **calibration offset is 0 — uncalibrated.** Deriving the real display/touch latency constant needs photodiode hardware ([`timing-engine.md`](docs/timing-engine.md) §8-3), so the app records "uncalibrated" rather than a made-up number.
-- Verified **in the iOS simulator, not yet on a physical device** ([#5](https://github.com/2daKaizen-gun/sae/issues/5)).
-- The MVP score is **PVT-only**: HRV and tremor stay out of the headline number until their anchors can be grounded.
-- HRV and tremor in the score, character visuals and adaptive lines are later phases. Tremor recording on real hardware is unverified — the simulator has no motion sensor.
+- Display/touch latency is not calibrated (the offset is 0). Measuring it needs a photodiode. ([`timing-engine.md`](docs/timing-engine.md) §8-3)
+- Only tested on the simulator so far, not on a real iPhone. The simulator has no motion sensor, so tremor is untested on hardware.
+- HRV and tremor are not in the score because I haven't found reliable reference values for them yet.
 
 ## Building and running
 
@@ -125,7 +86,7 @@ If `xcode-select` points at the Command Line Tools instead of Xcode, prefix the 
 | `SaeTiming/Sources/SaeTiming` | **Measurement core** — reaction-time math, trial classification, ISI scheduling, stimulus schedule, clock contract, session summary and validity, the Sae-do score, trend series, HRV sample selection, tremor analysis. No UIKit/SwiftUI. |
 | `SaeTiming/Sources/SaeVoice` | **Character layer** — picks Saechaan's line. Reads `SaeTiming`; `SaeTiming` never imports it. |
 | `Sae/` | The iOS app: runtime timing (`PVTSessionRunner`, `TouchCatcher`, `StimulusPad`), SwiftData models, HealthKit read, screens, `DesignSystem/`, String Catalogs, privacy manifest. |
-| `docs/` | Design of record — constitution, timing engine, score algorithm, character voice, data model, handoff log. |
+| `docs/` | Design docs: concept, timing engine, score algorithm, character voice, data model. |
 | `tools/` | `make-app-icon.swift` — regenerates the app icon. |
 
 ### DEBUG launch arguments
@@ -145,13 +106,13 @@ Set under *Edit Scheme → Run → Arguments*. They exist only in DEBUG builds; 
 
 | Doc | What |
 |-----|------|
-| [`CONCEPT.md`](docs/CONCEPT.md) | What we're building, and why |
-| [`CONSTITUTION.md`](docs/CONSTITUTION.md) | Top-level principles every decision obeys |
+| [`CONCEPT.md`](docs/CONCEPT.md) | Concept and MVP plan |
+| [`CONSTITUTION.md`](docs/CONSTITUTION.md) | Project rules |
 | [`data-model.md`](docs/data-model.md) | SwiftData schema (ERD) |
-| [`tech-stack.md`](docs/tech-stack.md) | What we use, and why (by article) |
-| [`timing-engine.md`](docs/timing-engine.md) | Millisecond timing & calibration design |
-| [`score-algorithm.md`](docs/score-algorithm.md) | The explainable 0–100 Sae-do score |
-| [`character-voice.md`](docs/character-voice.md) | Saechaan persona & trilingual copy |
+| [`tech-stack.md`](docs/tech-stack.md) | Libraries and why |
+| [`timing-engine.md`](docs/timing-engine.md) | Timing and calibration |
+| [`score-algorithm.md`](docs/score-algorithm.md) | How the score is calculated |
+| [`character-voice.md`](docs/character-voice.md) | Saechaan and the three-language copy |
 
 ## License
 
