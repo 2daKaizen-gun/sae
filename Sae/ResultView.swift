@@ -2,9 +2,10 @@ import SwiftUI
 import SwiftData
 import SaeTiming
 
-/// 세션 결과 화면 — 측정이 **끝난 뒤** 시트로 뜬다.
+/// 세션 결과 화면 — 측정이 **끝난 뒤**에만 뜬다. 사용자 흐름에서는 테스트 화면(`TestView`)이 같은 자리에서
+/// 이 화면으로 바뀌고, 타이밍 랩과 데모(DEBUG)에서는 시트로 뜬다.
 ///
-/// 이 화면이 뜰 때 `CADisplayLink`는 이미 멈춰 있다(`PVTSessionRunner.finishSession`). 그래서 시트
+/// 이 화면이 뜰 때 `CADisplayLink`는 이미 멈춰 있다(`PVTSessionRunner.finishSession`). 그래서 화면 전환
 /// 애니메이션·레이아웃이 측정을 오염시킬 수 없다(제1조 1항).
 ///
 /// 보여주는 순서가 곧 설명 순서다: さえちゃん 한마디 → 점수 → 그 점수를 만든 원지표 → 빠진 신호 → 점수 밖의 참고 지표(HRV·손떨림).

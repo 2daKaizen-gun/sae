@@ -8,8 +8,8 @@ import SaeTiming
 /// 시각을 잡고, 순수 코어가 반응시간·요약·타당도를 낸다. 측정 조건(주사율·시계 계약·보정 오프셋)을
 /// 숨기지 않고 화면에 그대로 띄우는 것도 이 화면의 목적이다(제2조).
 ///
-/// 사용자용 PVT 화면의 디자인·카피는 뒤 단계(`CONCEPT.md` §7 3주차) 몫이다. 여기는 엔진을
-/// 눈으로 검증하는 계측 화면이다.
+/// 사용자용 테스트는 `TestView`가 맡고, 같은 `PVTSessionRunner`·`StimulusPad`를 쓴다. 여기는 엔진을
+/// 눈으로 검증하는 계측 화면이며, 홈의 입구는 DEBUG 빌드에만 있다.
 struct TimingLabView: View {
     @StateObject private var runner = PVTSessionRunner()
     /// 터치 타임스탬프가 공통 기준과 같은 단조 기준인지의 확인 결과(timing-engine §8-2).
