@@ -38,7 +38,7 @@ struct TrendChartDescriptorTests {
         #expect(values == [90, 55, 70], "날짜 순, 화면과 같은 값")
         #expect(!values.contains(0), "0으로 채우지 않는다")
         #expect(chart.summary?.contains("3") == true && chart.summary?.contains("14") == true)
-        let y = try #require(chart.yAxis as? AXNumericDataAxisDescriptor)
+        let y = try #require(chart.yAxis)
         #expect(y.range == 0...100)
     }
 }

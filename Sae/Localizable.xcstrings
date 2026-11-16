@@ -1220,29 +1220,6 @@
         }
       }
     },
-    "score.value": {
-      "comment": "The Sae-do score for the session. %lld = 0-100 score.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sae score %lld"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "冴え度 %lld"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "冴え度 %lld점"
-          }
-        }
-      }
-    },
     "session.invalid_false_starts": {
       "comment": "Session rejected: too many taps before the stimulus.",
       "localizations": {
