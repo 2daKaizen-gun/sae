@@ -78,7 +78,11 @@ struct ResultView: View {
 
     private var hrvSection: some View {
         ReferenceBlock(title: "hrv.title") {
-            if !hrvAccessRequested {
+            // 실패를 먼저 본다 — 권한 요청 자체가 실패하면 `hrvAccessRequested`가 false로 남아, 아래 "요청 전" 분기가
+            // 실패 문구를 가렸다(#31). 실패했으면 실패했다고 말한다(제9조 6항).
+            if didHRVFail {
+                NoticeText(text: Text("hrv.failed"), isProblem: true)
+            } else if !hrvAccessRequested {
                 NoticeText(text: Text("hrv.explain"))
                 Button {
                     Task {
@@ -95,8 +99,6 @@ struct ResultView: View {
                         .foregroundStyle(Color.primary) // 틴트 바탕 위 브랜드색 글자는 AA 미달(3.88:1, #24)
                 }
                 .buttonStyle(.bordered)
-            } else if didHRVFail {
-                NoticeText(text: Text("hrv.failed"), isProblem: true)
             } else if let hrvOutcome {
                 switch hrvOutcome {
                 case .unavailable:
