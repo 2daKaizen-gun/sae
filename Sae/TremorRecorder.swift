@@ -39,6 +39,8 @@ enum TremorRecorder {
     static var isAvailable: Bool { manager.isDeviceMotionAvailable }
 
     /// 10초 기록하고 분석해 저장한다. `progress`는 0~1(화면 표시용).
+    ///
+    /// 기록 중에 작업이 취소되면 `CancellationError`를 던지고 **아무것도 저장하지 않는다** — 센서는 `defer`가 멈춘다.
     static func record(in context: ModelContext, progress: @escaping (Double) -> Void) async throws -> Outcome {
         guard manager.isDeviceMotionAvailable else { return .unavailable }
 

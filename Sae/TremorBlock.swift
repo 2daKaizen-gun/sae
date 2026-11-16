@@ -18,6 +18,8 @@ struct TremorBlock: View {
     }
 
     @State private var phase: Phase = .idle
+    /// 진행 중인 10초 기록. 화면이 사라지면 취소한다 — 끝까지 보지 않은 기록을 측정으로 남기지 않는다(#31).
+    @State private var recording: Task<Void, Never>?
 
     var body: some View {
         ReferenceBlock(title: "tremor.title") {
@@ -27,6 +29,8 @@ struct TremorBlock: View {
                 content
             }
         }
+        // 취소되면 `TremorRecorder.record`의 대기가 `CancellationError`로 끝나고, 센서를 멈춘 뒤 저장 없이 빠져나온다.
+        .onDisappear { recording?.cancel() }
     }
 
     // 보조 버튼 글자는 기본 레이블색 — 옅은 브랜드 틴트 바탕 위 브랜드색 글자는 AA 미달(3.88:1, #24).
@@ -59,12 +63,14 @@ struct TremorBlock: View {
 
     private func start() {
         phase = .recording(progress: 0)
-        Task {
+        recording = Task {
             do {
                 let outcome = try await TremorRecorder.record(in: modelContext) { value in
                     phase = .recording(progress: value)
                 }
                 phase = .done(outcome)
+            } catch is CancellationError {
+                phase = .idle // 사용자가 떠났다 — 실패가 아니다
             } catch {
                 phase = .failed
             }
