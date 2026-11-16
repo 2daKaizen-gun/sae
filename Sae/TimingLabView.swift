@@ -77,7 +77,7 @@ struct TimingLabView: View {
              ? String(localized: "session.save_failed")
              : String(format: String(localized: "timinglab.saved_sessions"), savedSessions.count))
             .font(.caption.monospacedDigit())
-            .foregroundStyle(didSaveFail ? Color.red : Color.secondary)
+            .foregroundStyle(didSaveFail ? SaeTheme.Palette.problem : Color.secondary)
     }
 
     /// 측정 조건 — 주사율·시계 계약·보정 오프셋. 재현에 필요한 값을 공개한다(timing-engine §9).
@@ -137,7 +137,7 @@ struct TimingLabView: View {
 
             Text(result.validity.localizedDescription)
                 .font(.caption)
-                .foregroundStyle(result.validity == .valid ? Color.secondary : Color.red)
+                .foregroundStyle(result.validity == .valid ? Color.secondary : SaeTheme.Palette.problem)
         }
     }
 
@@ -152,7 +152,7 @@ struct TimingLabView: View {
                     result.deltaSeconds * 1_000,
                     String(localized: result.holds ? "timinglab.clock_ok" : "timinglab.clock_broken")
                 ))
-                .foregroundStyle(result.holds ? Color.secondary : Color.red)
+                .foregroundStyle(result.holds ? Color.secondary : SaeTheme.Palette.problem)
             } else {
                 Text("timinglab.clock_pending")
                     .foregroundStyle(.tertiary)
