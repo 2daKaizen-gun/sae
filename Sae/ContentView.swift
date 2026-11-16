@@ -27,10 +27,15 @@ struct ContentView: View {
     #endif
     @Query(sort: \DailyScore.day, order: .reverse) private var scores: [DailyScore]
 
-    /// 오늘 날짜의 점수. `DailyScore.day`는 자정으로 저장된다.
-    private var today: DailyScore? {
-        let start = Calendar.current.startOfDay(for: Date())
-        return scores.first { $0.day == start }
+    /// 오늘 날짜의 점수.
+    private var today: DailyScore? { Self.todaysScore(in: scores, now: Date()) }
+
+    /// 오늘의 점수를 찾는 규칙 — 저장소와 분리해 SaeTests가 증명한다.
+    ///
+    /// `DailyScore.day`는 저장 당시 시간대의 자정이다. 정확히 같은 `Date`로 찾으면 시간대가 바뀐 뒤엔 오늘 점수가
+    /// 사라진다. 저장 쪽(`PVTSessionStore`)이 "오늘의 [자정, 다음 자정) 안"으로 같은 날을 정하므로 같은 기준을 쓴다(#31).
+    static func todaysScore(in scores: [DailyScore], now: Date, calendar: Calendar = .current) -> DailyScore? {
+        scores.first { calendar.isDate($0.day, inSameDayAs: now) }
     }
 
     var body: some View {
